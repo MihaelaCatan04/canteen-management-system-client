@@ -1,2 +1,2 @@
-# UTMCanteen
+# Canteen Management System Client
 This repository contains the PBL project developed during the fall internship at Globant.
