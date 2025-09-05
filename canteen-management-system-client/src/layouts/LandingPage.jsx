@@ -1,6 +1,4 @@
 import { Col, Row } from "antd";
-import React from "react";
-import { useEffect } from "react";
 import "./LandingPage.css";
 
 const LandingPage = ({ left, right }) => {
