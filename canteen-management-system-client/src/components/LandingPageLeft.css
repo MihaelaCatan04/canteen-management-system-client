@@ -1,0 +1,14 @@
+.left-container {
+  padding: 170px 150px;
+  background-color: #3678eb;
+}
+
+.icon {
+  font-size: 32px;
+  color: white;
+}
+
+.text {
+  color: #eeeeee;
+  margin-left: 12px;
+}
