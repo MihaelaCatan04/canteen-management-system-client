@@ -21,7 +21,7 @@ const LogInForm = () => {
       />
       <Row justify="start" style={{ marginBottom: "16px" }}>
         <Col>
-          <Text type="link">Forgot password?</Text>
+          <Text type="link" className="poppins-medium" style={{ color: "#3678eb" }}>Forgot password?</Text>
         </Col>
       </Row>
       <Button
@@ -32,7 +32,7 @@ const LogInForm = () => {
       >
         Log In
       </Button>
-      <Divider>Are you a new user?</Divider>
+      <Divider className="poppins-regular">Are you a new user?</Divider>
       <Button
         block
         size="large"

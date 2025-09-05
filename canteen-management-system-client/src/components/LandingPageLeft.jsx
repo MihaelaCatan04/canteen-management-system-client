@@ -13,17 +13,17 @@ const Left = () => {
     <div className="left-container">
       <Row gutter={[0, 32]}>
         <Col span={24}>
-          <Title level={1} style={{ color: "white", fontWeight: "bold", fontFamily: "Poppins-Bold", fontSize: "72px", letterSpacing: "-2.30px" }}>
+          <Title level={1} style={{ color: "white", fontWeight: "bold", fontSize: "72px", letterSpacing: "-2.30px"}} className="poppins-bold">
             TrayGo
           </Title>
         </Col>
         <Col span={24}>
-          <Title level={3} style={{ color: "#eeeeee", fontWeight: "lighter" }}>
+          <Title level={3} style={{ color: "#eeeeee", fontWeight: "lighter" }} className="poppins-light">
             Simplify your lunch experience
           </Title>
         </Col>
         <Col span={24}>
-          <Paragraph style={{ color: "#eeeeee" }}>
+          <Paragraph style={{ color: "#eeeeee" }} className="poppins-regular">
             Skip the lines, skip the carry. Order your favorite campus meals
             <br />
             with just a few taps and pick them up when it's convenient for you!
@@ -35,7 +35,7 @@ const Left = () => {
               <CheckCircleOutlined className="icon" />
             </Col>
             <Col>
-              <Text className="text">Quick ordering in under 2 minutes</Text>
+              <Text className="text poppins-regular">Quick ordering in under 2 minutes</Text>
             </Col>
           </Row>
         </Col>
@@ -45,7 +45,7 @@ const Left = () => {
               <CoffeeOutlined className="icon" />
             </Col>
             <Col>
-              <Text className="text">Fresh meals from based on your wants</Text>
+              <Text className="text poppins-regular" >Fresh meals from based on your wants</Text>
             </Col>
           </Row>
         </Col>
@@ -55,7 +55,7 @@ const Left = () => {
               <CreditCardOutlined className="icon" />
             </Col>
             <Col>
-              <Text className="text">You pay off your balance</Text>
+              <Text className="text poppins-regular">You pay off your balance</Text>
             </Col>
           </Row>
         </Col>

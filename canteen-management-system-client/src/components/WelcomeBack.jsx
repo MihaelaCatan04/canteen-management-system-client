@@ -15,8 +15,8 @@ const WelcomeBack = () => {
           </div>
         </Col>
       </Row>
-      <Title level={2}>Welcome Back</Title>
-      <Text>Sign in to your account</Text>
+      <Title level={2} className="poppins-bold">Welcome Back</Title>
+      <Text className="poppins-regular">Sign in to your account</Text>
     </Col>
   );
 };
