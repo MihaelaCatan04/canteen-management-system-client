@@ -1,14 +1,13 @@
 import { Col, Row, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import React from "react";
+import "./WelcomeBack.css";
 
 const { Title, Text } = Typography;
-import "./WelcomeBack.css";
 
 const WelcomeBack = () => {
   return (
-    <Col span={24} style={{ textAlign: "center", padding: "60px" }}>
-      <Row justify="center" align="middle" style={{ marginBottom: "20px" }}>
+    <Col span={24} className="welcome-col">
+      <Row justify="center" align="middle" className="welcome-row">
         <Col>
           <div className="icon-container">
             <UserOutlined className="icon" />

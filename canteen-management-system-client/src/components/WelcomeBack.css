@@ -13,3 +13,12 @@
   color: white;
   margin-bottom: 0px;
 }
+
+.welcome-col {
+  text-align: center;
+  padding: 60px;
+}
+
+.welcome-row {
+  margin-bottom: 20px;
+}

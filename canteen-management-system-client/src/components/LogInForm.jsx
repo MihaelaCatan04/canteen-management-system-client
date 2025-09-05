@@ -1,7 +1,8 @@
-import { EyeOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { EyeOutlined, LockOutlined, UserOutlined, UserAddOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
+import "./LogInForm.css";
+
 const { Text } = Typography;
-import { UserAddOutlined } from "@ant-design/icons";
 
 const LogInForm = () => {
   return (
@@ -10,37 +11,30 @@ const LogInForm = () => {
         size="large"
         placeholder="Email Address"
         prefix={<UserOutlined />}
-        style={{ marginBottom: "16px" }}
+        className="login-input"
       />
       <Input.Password
         size="large"
         placeholder="Password"
         prefix={<LockOutlined />}
         iconRender={(visible) => (visible ? <EyeOutlined /> : <EyeOutlined />)}
-        style={{ marginBottom: "16px" }}
+        className="login-input"
       />
-      <Row justify="start" style={{ marginBottom: "16px" }}>
+      <Row justify="start" className="login-row">
         <Col>
-          <Text type="link" className="poppins-medium" style={{ color: "#3678eb" }}>Forgot password?</Text>
+          <Text type="link" className="forgot-link poppins-medium">
+            Forgot password?
+          </Text>
         </Col>
       </Row>
-      <Button
-        type="primary"
-        block
-        size="large"
-        style={{ marginBottom: "16px" }}
-      >
+      <Button type="primary" block size="large" className="login-button">
         Log In
       </Button>
       <Divider className="poppins-regular">Are you a new user?</Divider>
       <Button
         block
         size="large"
-        icon={
-          <span style={{ color: "#3678eb" }}>
-            <UserAddOutlined />
-          </span>
-        }
+        icon={<UserAddOutlined className="create-account-icon" />}
       >
         Create Account
       </Button>

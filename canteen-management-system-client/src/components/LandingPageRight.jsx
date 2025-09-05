@@ -1,20 +1,20 @@
 import { Col, Row, Typography } from "antd";
-
-const { Text, Paragraph } = Typography;
 import "./LandingPageRight.css";
 import WelcomeBack from "./WelcomeBack";
 import LogInForm from "./LogInForm";
 
+const { Text, Paragraph } = Typography;
+
 const LandingPageRight = () => {
   return (
     <Row className="right-container" justify="center" align="middle">
-      <Col span={24} style={{ maxWidth: "400px", width: "100%" }}>
+      <Col span={24} className="right-col">
         <WelcomeBack />
         <LogInForm />
-        <Paragraph style={{ textAlign: "center", marginTop: "16px" }} className="poppins-regular">
+        <Paragraph className="signin-paragraph poppins-regular">
           By signing in, you agree to our{" "}
-          <Text type="link" style={{ color: "#3678eb" }}>Terms of Service</Text> and{" "}
-          <Text type="link" style={{ color: "#3678eb" }}>Privacy Policy</Text>
+          <Text type="link" className="signin-link">Terms of Service</Text> and{" "}
+          <Text type="link" className="signin-link">Privacy Policy</Text>
         </Paragraph>
       </Col>
     </Row>
