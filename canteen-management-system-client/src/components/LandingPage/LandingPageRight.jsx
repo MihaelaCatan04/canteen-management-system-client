@@ -1,7 +1,7 @@
 import { Col, Row, Typography } from "antd";
 import "./LandingPageRight.css";
 import WelcomeBack from "./WelcomeBack";
-import LogInForm from "./LogInForm";
+import LogInForm from "../Auth/LogInForm";
 
 const { Text, Paragraph } = Typography;
 
