@@ -119,10 +119,10 @@
 }
 
 .orange-line {
-  width: 35%;       /* adjust width as needed */
-  height: 4px;       /* thickness of the line */
+  width: 35%; 
+  height: 4px;   
   background-color: orange;
-  margin-top: 8px;   /* space between title and line */
+  margin-top: 8px; 
   border-radius: 2px;
 }
 
