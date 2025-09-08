@@ -16,17 +16,21 @@ const Left = () => {
           <Title level={1} className="title-main poppins-bold">
             TrayGo
           </Title>
+          <div className="orange-line"></div>
         </Col>
         <Col span={24}>
           <Title level={3} className="title-sub poppins-light">
             Simplify your lunch experience
           </Title>
+          
         </Col>
+        
         <Col span={24}>
           <Paragraph className="paragraph poppins-regular">
-            Skip the lines, skip the carry. 
-            Order your favorite campus meals
-            <span className="mobile-br"><br /></span>
+            Skip the lines, skip the carry. Order your favorite campus meals
+            <span className="mobile-br">
+              <br />
+            </span>
             <span className="desktop-br"> </span>
             with just a few taps and pick them up when it's convenient for you!
           </Paragraph>

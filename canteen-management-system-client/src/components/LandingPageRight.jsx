@@ -2,19 +2,42 @@ import { Col, Row, Typography } from "antd";
 import "./LandingPageRight.css";
 import WelcomeBack from "./WelcomeBack";
 import LogInForm from "./LogInForm";
+import SignUpForm from "./SignUpForm";
+import CreateAccount from "./CreateAccount";
 
 const { Text, Paragraph } = Typography;
 
 const LandingPageRight = () => {
   return (
+    // <Row className="right-container" justify="center" align="middle">
+    //   <Col xs={22} sm={20} md={24} className="right-col">
+    //     <WelcomeBack />
+    //     <LogInForm />
+    //     <Paragraph className="signin-paragraph poppins-regular">
+    //       By signing in, you agree to our{" "}
+    //       <Text type="link" className="signin-link">
+    //         Terms of Service
+    //       </Text>{" "}
+    //       and{" "}
+    //       <Text type="link" className="signin-link">
+    //         Privacy Policy
+    //       </Text>
+    //     </Paragraph>
+    //   </Col>
+    // </Row>
     <Row className="right-container" justify="center" align="middle">
-      <Col xs={22} sm={20} md={24} className="right-col" >
-        <WelcomeBack />
-        <LogInForm />
+      <Col xs={22} sm={20} md={24} className="right-col">
+        <CreateAccount />
+        <SignUpForm />
         <Paragraph className="signin-paragraph poppins-regular">
           By signing in, you agree to our{" "}
-          <Text type="link" className="signin-link">Terms of Service</Text> and{" "}
-          <Text type="link" className="signin-link">Privacy Policy</Text>
+          <Text type="link" className="signin-link">
+            Terms of Service
+          </Text>{" "}
+          and{" "}
+          <Text type="link" className="signin-link">
+            Privacy Policy
+          </Text>
         </Paragraph>
       </Col>
     </Row>

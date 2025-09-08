@@ -19,7 +19,7 @@
 }
 
 .text {
-  color: #eeeeee !important; 
+  color: #eeeeee !important;
 }
 
 .title-main.ant-typography {
@@ -115,5 +115,20 @@
     font-size: 13px !important;
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+}
+
+.orange-line {
+  width: 35%;       /* adjust width as needed */
+  height: 4px;       /* thickness of the line */
+  background-color: orange;
+  margin-top: 8px;   /* space between title and line */
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .orange-line {
+    margin-left: auto;
+    margin-right: auto;
   }
 }

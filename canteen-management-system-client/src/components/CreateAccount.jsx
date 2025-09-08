@@ -1,10 +1,10 @@
 import { Col, Row, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import "./WelcomeBack.css";
+import "./CreateAccount.css";
 
 const { Title, Text } = Typography;
 
-const WelcomeBack = () => {
+const CreateAccount = () => {
   return (
     <Col span={24} className="welcome-col">
       <Row justify="center" align="middle" className="welcome-row">
@@ -15,11 +15,11 @@ const WelcomeBack = () => {
         </Col>
       </Row>
       <Title level={2} className="poppins-bold">
-        Welcome Back
+        Create Account
       </Title>
-      <Text className="poppins-regular">Sign in to your account</Text>
+      <Text className="poppins-regular">Register your new account</Text>
     </Col>
   );
 };
 
-export default WelcomeBack;
+export default CreateAccount;

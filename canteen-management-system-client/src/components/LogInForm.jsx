@@ -1,4 +1,9 @@
-import { EyeOutlined, LockOutlined, UserOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  LockOutlined,
+  UserOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
 import "./LogInForm.css";
 
@@ -7,7 +12,9 @@ const { Text } = Typography;
 const LogInForm = () => {
   return (
     <>
-      <label className="login-label poppins-regular" htmlFor="email">Email Address:</label>
+      <label className="login-label poppins-regular" htmlFor="email">
+        Email Address:
+      </label>
       <Input
         size="large"
         placeholder="Email Address"
@@ -15,7 +22,9 @@ const LogInForm = () => {
         className="login-input"
         id="email"
       />
-      <label className="login-label poppins-regular" htmlFor="password">Password:</label>
+      <label className="login-label poppins-regular" htmlFor="password">
+        Password:
+      </label>
       <Input.Password
         size="large"
         placeholder="Password"
@@ -31,7 +40,13 @@ const LogInForm = () => {
           </Text>
         </Col>
       </Row>
-      <Button type="primary" block size="large" className="login-button">
+      <Button
+        type="primary"
+        block
+        size="large"
+        className="login-button"
+        icon={<UserOutlined className="account-icon" />}
+      >
         Log In
       </Button>
       <Divider className="poppins-regular">Are you a new user?</Divider>

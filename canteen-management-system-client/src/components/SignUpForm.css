@@ -1,8 +1,8 @@
-.login-input {
+.signup-input {
   margin-bottom: 16px !important;
 }
 
-.login-row {
+.signup-row {
   margin-bottom: 16px !important;
 }
 
@@ -10,19 +10,19 @@
   color: #3678eb !important;
 }
 
-.login-button {
+.signup-button {
   margin-bottom: 16px !important;
 }
 
-.create-account-icon {
+.account-icon {
   color: #3678eb !important;
 }
 
-.account-icon {
+.create-account-icon {
   color: #ffffff !important;
 }
 
-.login-label {
+.signup-label {
   display: block;
   text-align: left;
   margin-top: 8px;
