@@ -3,7 +3,7 @@ import "./LandingPage.css";
 
 const LandingPage = ({ left, right }) => {
   return (
-    <Row className="row-container" justify="center" align="top">
+    <Row className="row-container" justify="center" align="top" >
       <Col span={15} className="col-container">
         {left}
       </Col>

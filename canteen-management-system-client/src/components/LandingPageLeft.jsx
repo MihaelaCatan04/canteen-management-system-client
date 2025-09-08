@@ -34,7 +34,7 @@ const Left = () => {
             <Col>
               <CheckCircleOutlined className="icon" />
             </Col>
-            <Col>
+            <Col style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 Quick ordering in under 2 minutes
               </Text>
@@ -46,7 +46,7 @@ const Left = () => {
             <Col>
               <CoffeeOutlined className="icon" />
             </Col>
-            <Col>
+            <Col style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 Fresh meals from based on your wants
               </Text>
@@ -58,7 +58,7 @@ const Left = () => {
             <Col>
               <CreditCardOutlined className="icon" />
             </Col>
-            <Col>
+            <Col style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 You pay off your balance
               </Text>
