@@ -7,7 +7,7 @@ const LandingPageRight = () => {
   return (
     <Row className="right-container" justify="center" align="middle">
       <Col xs={22} sm={20} md={24} className="right-col">
-        <SignUp />
+        {/* <SignUp /> */}
         <LogIn />
       </Col>
     </Row>
