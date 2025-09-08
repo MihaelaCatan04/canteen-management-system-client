@@ -22,3 +22,33 @@
 .welcome-row {
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  .welcome-col {
+    padding: 40px 24px;
+  }
+
+  .icon-container {
+    width: 56px;
+    height: 56px;
+  }
+
+  .icon {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-col {
+    padding: 32px 16px;
+  }
+
+  .icon-container {
+    width: 48px;
+    height: 48px;
+  }
+
+  .icon {
+    font-size: 24px;
+  }
+}

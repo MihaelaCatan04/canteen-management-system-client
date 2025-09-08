@@ -1,5 +1,5 @@
 .row-container {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 }
@@ -7,4 +7,26 @@
 .col-container {
   width: 100%;
   height: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 768px) {
+  .row-container {
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .col-container {
+    height: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }

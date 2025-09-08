@@ -24,17 +24,19 @@ const Left = () => {
         </Col>
         <Col span={24}>
           <Paragraph className="paragraph poppins-regular">
-            Skip the lines, skip the carry. Order your favorite campus meals
-            <br />
+            Skip the lines, skip the carry. 
+            Order your favorite campus meals
+            <span className="mobile-br"><br /></span>
+            <span className="desktop-br"> </span>
             with just a few taps and pick them up when it's convenient for you!
           </Paragraph>
         </Col>
         <Col span={24}>
-          <Row align="middle">
-            <Col>
+          <Row align="middle" justify="start">
+            <Col flex="none">
               <CheckCircleOutlined className="icon" />
             </Col>
-            <Col style={{ marginLeft: 8 }}>
+            <Col flex="auto" style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 Quick ordering in under 2 minutes
               </Text>
@@ -42,11 +44,11 @@ const Left = () => {
           </Row>
         </Col>
         <Col span={24}>
-          <Row align="middle">
-            <Col>
+          <Row align="middle" justify="start">
+            <Col flex="none">
               <CoffeeOutlined className="icon" />
             </Col>
-            <Col style={{ marginLeft: 8 }}>
+            <Col flex="auto" style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 Fresh meals from based on your wants
               </Text>
@@ -54,11 +56,11 @@ const Left = () => {
           </Row>
         </Col>
         <Col span={24}>
-          <Row align="middle">
-            <Col>
+          <Row align="middle" justify="start">
+            <Col flex="none">
               <CreditCardOutlined className="icon" />
             </Col>
-            <Col style={{ marginLeft: 8 }}>
+            <Col flex="auto" style={{ marginLeft: 8 }}>
               <Text className="text poppins-regular">
                 You pay off your balance
               </Text>

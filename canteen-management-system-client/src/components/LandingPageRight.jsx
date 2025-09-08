@@ -8,7 +8,7 @@ const { Text, Paragraph } = Typography;
 const LandingPageRight = () => {
   return (
     <Row className="right-container" justify="center" align="middle">
-      <Col span={24} className="right-col">
+      <Col xs={22} sm={20} md={24} className="right-col" >
         <WelcomeBack />
         <LogInForm />
         <Paragraph className="signin-paragraph poppins-regular">

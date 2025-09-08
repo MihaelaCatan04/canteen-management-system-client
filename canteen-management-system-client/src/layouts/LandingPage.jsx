@@ -3,11 +3,11 @@ import "./LandingPage.css";
 
 const LandingPage = ({ left, right }) => {
   return (
-    <Row className="row-container" justify="center" align="top" >
-      <Col span={15} className="col-container">
+    <Row className="row-container" justify="center" align="top">
+      <Col xs={24} sm={24} md={15} lg={15} xl={15} className="col-container">
         {left}
       </Col>
-      <Col span={9} className="col-container">
+      <Col xs={24} sm={24} md={9} lg={9} xl={9} className="col-container">
         {right}
       </Col>
     </Row>
