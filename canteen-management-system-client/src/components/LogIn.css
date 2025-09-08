@@ -1,0 +1,23 @@
+.login-paragraph.ant-typography {
+  text-align: center !important;
+  margin-top: 16px !important;
+}
+
+.login-link.ant-typography {
+  color: #3678eb !important;
+}
+
+@media (max-width: 768px) {
+  .right-container {
+    min-height: auto;
+    padding: 40px 20px;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .right-col {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

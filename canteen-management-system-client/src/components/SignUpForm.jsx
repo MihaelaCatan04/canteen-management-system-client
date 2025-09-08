@@ -98,7 +98,7 @@ const SignUpForm = () => {
               size="large"
               placeholder="Email Address"
               prefix={<UserOutlined />}
-              className="data-input"
+              className="signup-input"
               id="email"
               required
               ref={userRef}
@@ -139,7 +139,7 @@ const SignUpForm = () => {
               iconRender={(visible) =>
                 visible ? <EyeOutlined /> : <EyeOutlined />
               }
-              className="data-input"
+              className="signup-input"
               id="password"
               required
               onChange={(e) => setPwd(e.target.value)}
@@ -179,7 +179,7 @@ const SignUpForm = () => {
               iconRender={(visible) =>
                 visible ? <EyeOutlined /> : <EyeOutlined />
               }
-              className="data-input"
+              className="signup-input"
               autoComplete="off"
               id="confirm-password"
               required
@@ -188,6 +188,7 @@ const SignUpForm = () => {
               onChange={(e) => setMatchPwd(e.target.value)}
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
+              
             />
             <p
               id="confirmnote"
@@ -201,13 +202,6 @@ const SignUpForm = () => {
               />
               &nbsp; Passwords must match.
             </p>
-            <Row justify="start" className="signup-row">
-              <Col>
-                <a className="forgot-link poppins-medium" href="/reset">
-                  Forgot password?
-                </a>
-              </Col>
-            </Row>
             <Button
               type="primary"
               htmlType="submit"
