@@ -30,3 +30,9 @@ body {
   font-weight: 700;
   font-style: normal;
 }
+
+.loading-title.ant-typography {
+  color: #ff8a00;
+  font-size: 72px;
+  letter-spacing: -2px;
+}
