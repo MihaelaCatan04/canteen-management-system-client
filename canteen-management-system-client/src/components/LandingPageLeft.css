@@ -1,0 +1,29 @@
+.left-container {
+  padding: 170px 150px;
+  background-color: #3678eb;
+}
+
+.icon {
+  font-size: 32px;
+  color: white;
+}
+
+.text {
+  color: #eeeeee !important; 
+}
+
+.title-main.ant-typography {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 72px !important;
+  letter-spacing: -2.3px;
+}
+
+.title-sub.ant-typography {
+  color: #eeeeee !important;
+  font-weight: lighter !important;
+}
+
+.paragraph.ant-typography {
+  color: #eeeeee !important;
+}
