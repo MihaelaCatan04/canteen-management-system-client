@@ -17,3 +17,9 @@
 .create-account-icon {
   color: #3678eb !important;
 }
+
+.login-label {
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+}
