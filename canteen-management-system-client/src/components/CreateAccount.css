@@ -1,7 +1,7 @@
 .icon-container {
   width: 64px;
   height: 64px;
-  background-color: #1890ff;
+  background-color: #3678eb;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -52,3 +52,4 @@
     font-size: 24px;
   }
 }
+
