@@ -13,6 +13,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -67,6 +68,9 @@ const SignUpForm = () => {
     console.log(user, pwd);
     setSuccess(true);
   };
+
+  const navigate = useNavigate();
+
 
   return (
     <>
@@ -221,7 +225,7 @@ const SignUpForm = () => {
             block
             size="large"
             icon={<UserAddOutlined className="account-icon" />}
-            href="/login"
+            onClick={() => navigate("/login")}
           >
             Log In
           </Button>

@@ -8,11 +8,11 @@ import { Button, Col, Divider, Input, Row, Typography } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
-import { use } from "react";
+import { useNavigate } from "react-router-dom";
 
-const { Text } = Typography;
 
 const LogInForm = () => {
+  const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
@@ -112,6 +112,7 @@ const LogInForm = () => {
             block
             size="large"
             icon={<UserAddOutlined className="create-account-icon" />}
+            onClick={() => navigate("/register")}
           >
             Create Account
           </Button>
