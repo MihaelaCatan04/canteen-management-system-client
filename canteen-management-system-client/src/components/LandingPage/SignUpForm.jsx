@@ -14,12 +14,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 
 const { Text } = Typography;
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
-const PWD_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
+const PWD_REGEX =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
+const REGISTER_URL = "/auth/register/";
 
 const SignUpForm = () => {
   const userRef = useRef();
@@ -65,8 +66,30 @@ const SignUpForm = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-    console.log(user, pwd);
-    setSuccess(true);
+    try {
+      const response = await axios.post(REGISTER_URL,
+        JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
+        { headers: { "Content-Type": "application/json" },
+        withCredentials: true }
+      );
+      console.log(response?.data);
+      setSuccess(true);
+      setUser("");  
+      setPwd("");
+      setMatchPwd("");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Email already registered");
+      } else {
+        setErrMsg("Registration Failed");
+      }
+      errRef.current.focus();
+      console.log(err);
+    }
+
+    // setSuccess(true);
   };
 
   const navigate = useNavigate();
