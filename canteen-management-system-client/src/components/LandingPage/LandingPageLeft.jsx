@@ -22,9 +22,8 @@ const Left = () => {
           <Title level={3} className="title-sub poppins-light">
             Simplify your lunch experience
           </Title>
-          
         </Col>
-        
+
         <Col span={24}>
           <Paragraph className="paragraph poppins-regular">
             Skip the lines, skip the carry. Order your favorite campus meals

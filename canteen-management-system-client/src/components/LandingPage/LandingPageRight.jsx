@@ -5,7 +5,6 @@ import LogIn from "./LogIn";
 import { useLocation } from "react-router-dom";
 
 const LandingPageRight = () => {
-  
   const location = useLocation();
   const isRegisterPage = location.pathname === "/register";
   return (

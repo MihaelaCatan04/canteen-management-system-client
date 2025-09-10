@@ -19,7 +19,8 @@ import axios from "../../api/axios";
 const { Text } = Typography;
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
-const PWD_REGEX =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
+const PWD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
 const REGISTER_URL = "/auth/register/";
 
 const SignUpForm = () => {
@@ -67,14 +68,17 @@ const SignUpForm = () => {
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL,
+      const response = await axios.post(
+        REGISTER_URL,
         JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
-        { headers: { "Content-Type": "application/json" },
-        withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(response?.data);
       setSuccess(true);
-      setUser("");  
+      setUser("");
       setPwd("");
       setMatchPwd("");
     } catch (err) {
@@ -93,7 +97,6 @@ const SignUpForm = () => {
   };
 
   const navigate = useNavigate();
-
 
   return (
     <>
@@ -215,7 +218,6 @@ const SignUpForm = () => {
               onChange={(e) => setMatchPwd(e.target.value)}
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
-              
             />
             <p
               id="confirmnote"
