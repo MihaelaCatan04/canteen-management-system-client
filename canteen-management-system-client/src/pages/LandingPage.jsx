@@ -1,6 +1,6 @@
 import LoginLayout from "../layouts/LandingPage";
-import LandingPageLeft from "../components/LandingPage/LandingPageLeft";
-import LandingPageRight from "../components/LandingPage/LandingPageRight";
+import LandingPageLeft from "../components/LandingPage/LandingPageLeft/LandingPageLeft";
+import LandingPageRight from "../components/LandingPage/LandingPageRight/LandingPageRight";
 import { useState, useEffect } from "react";
 import { Spin, Typography } from "antd";
 

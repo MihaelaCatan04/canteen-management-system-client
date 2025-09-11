@@ -7,9 +7,9 @@ import {
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import AuthContext from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 
 const LOGIN_URL = "/auth/login/";
 
