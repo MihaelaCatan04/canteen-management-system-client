@@ -57,7 +57,7 @@ const LogInForm = () => {
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
+        setErrMsg("Invalid email or password");
       } else {
         setErrMsg("Login Failed");
       }
