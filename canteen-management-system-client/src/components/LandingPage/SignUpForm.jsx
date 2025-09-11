@@ -72,8 +72,7 @@ const SignUpForm = () => {
         REGISTER_URL,
         JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
         {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+          headers: { "Content-Type": "application/json" }
         }
       );
       console.log(response?.data);
