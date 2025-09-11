@@ -1,6 +1,6 @@
 import "./SignUp.css";
-import CreateAccount from "./CreateAccount";
-import SignUpForm from "./SignUpForm";
+import CreateAccount from "../CreateAccount/CreateAccount";
+import SignUpForm from "../SignUpForm/SignUpForm";
 import { Typography } from "antd";
 
 const { Text, Paragraph } = Typography;

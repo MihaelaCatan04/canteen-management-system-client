@@ -1,6 +1,6 @@
 import "./LogIn.css";
-import WelcomeBack from "./WelcomeBack";
-import LogInForm from "./LogInForm";
+import WelcomeBack from "../WelcomeBack/WelcomeBack";
+import LogInForm from "../LogInForm/LogInForm";
 
 import { Typography } from "antd";
 

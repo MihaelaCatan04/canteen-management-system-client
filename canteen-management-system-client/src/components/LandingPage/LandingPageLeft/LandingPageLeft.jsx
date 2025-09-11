@@ -13,20 +13,19 @@ const Left = () => {
     <div className="left-container">
       <Row gutter={[0, 32]}>
         <Col span={24}>
-          <Title level={1} className="title-main poppins-bold">
+          <Title level={1} className="title-main-landing poppins-bold">
             TrayGo
           </Title>
           <div className="orange-line"></div>
         </Col>
         <Col span={24}>
-          <Title level={3} className="title-sub poppins-light">
+          <Title level={3} className="title-sub-landing poppins-light">
             Simplify your lunch experience
           </Title>
-          
         </Col>
-        
+
         <Col span={24}>
-          <Paragraph className="paragraph poppins-regular">
+          <Paragraph className="paragraph-landing poppins-regular">
             Skip the lines, skip the carry. Order your favorite campus meals
             <span className="mobile-br">
               <br />
@@ -41,7 +40,7 @@ const Left = () => {
               <CheckCircleOutlined className="icon" />
             </Col>
             <Col flex="auto" style={{ marginLeft: 8 }}>
-              <Text className="text poppins-regular">
+              <Text className="text-landing poppins-regular">
                 Quick ordering in under 2 minutes
               </Text>
             </Col>
@@ -53,7 +52,7 @@ const Left = () => {
               <CoffeeOutlined className="icon" />
             </Col>
             <Col flex="auto" style={{ marginLeft: 8 }}>
-              <Text className="text poppins-regular">
+              <Text className="text-landing poppins-regular">
                 Fresh meals from based on your wants
               </Text>
             </Col>
@@ -65,7 +64,7 @@ const Left = () => {
               <CreditCardOutlined className="icon" />
             </Col>
             <Col flex="auto" style={{ marginLeft: 8 }}>
-              <Text className="text poppins-regular">
+              <Text className="text-landing poppins-regular">
                 You pay off your balance
               </Text>
             </Col>

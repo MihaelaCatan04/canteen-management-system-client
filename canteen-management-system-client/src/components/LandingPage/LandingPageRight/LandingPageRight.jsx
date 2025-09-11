@@ -1,11 +1,10 @@
 import { Col, Row, Typography } from "antd";
 import "./LandingPageRight.css";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
+import SignUp from "../SignUp/SignUp";
+import LogIn from "../LogIn/LogIn";
 import { useLocation } from "react-router-dom";
 
 const LandingPageRight = () => {
-  
   const location = useLocation();
   const isRegisterPage = location.pathname === "/register";
   return (

@@ -14,12 +14,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import axios from "../../../api/axios";
 
 const { Text } = Typography;
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
 const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
+const REGISTER_URL = "/auth/register/";
 
 const SignUpForm = () => {
   const userRef = useRef();
@@ -65,12 +67,35 @@ const SignUpForm = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-    console.log(user, pwd);
-    setSuccess(true);
+    try {
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
+        {
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log(response?.data);
+      setSuccess(true);
+      setUser("");
+      setPwd("");
+      setMatchPwd("");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Email already registered");
+      } else {
+        setErrMsg("Registration Failed");
+      }
+      errRef.current.focus();
+      console.log(err);
+    }
+
+    // setSuccess(true);
   };
 
   const navigate = useNavigate();
-
 
   return (
     <>
@@ -192,7 +217,6 @@ const SignUpForm = () => {
               onChange={(e) => setMatchPwd(e.target.value)}
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
-              
             />
             <p
               id="confirmnote"
@@ -212,10 +236,10 @@ const SignUpForm = () => {
               block
               size="large"
               className="signup-button"
-              icon={<UserOutlined className="create-account-icon" />}
+              icon={<UserAddOutlined className="create-account-icon-signup" />}
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
-              Log In
+              Sign Up
             </Button>
           </form>
           <Divider className="poppins-regular">
@@ -224,7 +248,7 @@ const SignUpForm = () => {
           <Button
             block
             size="large"
-            icon={<UserAddOutlined className="account-icon" />}
+            icon={<UserOutlined className="account-icon-signup" />}
             onClick={() => navigate("/login")}
           >
             Log In

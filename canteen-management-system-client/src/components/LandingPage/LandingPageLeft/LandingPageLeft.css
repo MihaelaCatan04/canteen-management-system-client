@@ -18,24 +18,24 @@
   color: white;
 }
 
-.text {
-  color: #eeeeee !important;
+.text-landing {
+  color: #eeeeee;
 }
 
-.title-main.ant-typography {
-  color: white !important;
-  font-weight: bold !important;
-  font-size: 72px !important;
+.title-main-landing.ant-typography {
+  color: white;
+  font-weight: bold;
+  font-size: 72px;
   letter-spacing: -2.3px;
 }
 
-.title-sub.ant-typography {
-  color: #eeeeee !important;
-  font-weight: lighter !important;
+.title-sub-landing.ant-typography {
+  color: #eeeeee;
+  font-weight: lighter;
 }
 
-.paragraph.ant-typography {
-  color: #eeeeee !important;
+.paragraph-landing.ant-typography {
+  color: #eeeeee;
 }
 
 @media (max-width: 768px) {
@@ -46,24 +46,24 @@
     overflow-x: hidden;
   }
 
-  .title-main.ant-typography {
-    font-size: 48px !important;
+  .title-main-landing.ant-typography {
+    font-size: 48px;
     letter-spacing: -1.5px;
     text-align: center;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
-  .title-sub.ant-typography {
+  .title-sub-landing.ant-typography {
     text-align: center;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    font-size: 18px !important;
+    font-size: 18px;
   }
 
-  .paragraph.ant-typography {
+  .paragraph-landing.ant-typography {
     text-align: center;
-    font-size: 16px !important;
+    font-size: 16px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -73,8 +73,8 @@
     font-size: 24px;
   }
 
-  .text {
-    font-size: 14px !important;
+  .text-landing {
+    font-size: 14px;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
@@ -87,21 +87,21 @@
     overflow-x: hidden;
   }
 
-  .title-main.ant-typography {
-    font-size: 36px !important;
+  .title-main-landing.ant-typography {
+    font-size: 36px;
     letter-spacing: -1px;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
-  .title-sub.ant-typography {
-    font-size: 16px !important;
+  .title-sub-landing.ant-typography {
+    font-size: 16px;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
   .paragraph.ant-typography {
-    font-size: 14px !important;
+    font-size: 14px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -111,18 +111,18 @@
     font-size: 20px;
   }
 
-  .text {
-    font-size: 13px !important;
+  .text-landing {
+    font-size: 13px;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 }
 
 .orange-line {
-  width: 35%; 
-  height: 4px;   
+  width: 35%;
+  height: 4px;
   background-color: orange;
-  margin-top: 8px; 
+  margin-top: 8px;
   border-radius: 2px;
 }
 

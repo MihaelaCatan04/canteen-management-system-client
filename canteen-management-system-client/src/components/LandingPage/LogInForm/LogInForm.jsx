@@ -7,9 +7,11 @@ import {
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import AuthContext from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import axios from "../../../api/axios";
 
+const LOGIN_URL = "/auth/login/";
 
 const LogInForm = () => {
   const navigate = useNavigate();
@@ -33,10 +35,33 @@ const LogInForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user, pwd);
-    setUser("");
-    setPwd("");
-    setSuccess(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email: user, password: pwd }),
+        {
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.access;
+      const refreshToken = response?.data?.refresh;
+      setAuth({ user, accessToken });
+      setUser("");
+      setPwd("");
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Invalid email or password");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
   };
   return (
     <>
@@ -101,7 +126,7 @@ const LogInForm = () => {
               block
               size="large"
               className="login-button"
-              icon={<UserOutlined className="account-icon" />}
+              icon={<UserOutlined className="account-icon-login" />}
               htmlType="submit"
             >
               Log In
@@ -111,7 +136,7 @@ const LogInForm = () => {
           <Button
             block
             size="large"
-            icon={<UserAddOutlined className="create-account-icon" />}
+            icon={<UserAddOutlined className="create-account-icon-login" />}
             onClick={() => navigate("/register")}
           >
             Create Account

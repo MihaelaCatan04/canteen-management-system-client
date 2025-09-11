@@ -2,9 +2,9 @@
   min-height: 100vh;
   background-color: #fff;
   padding: 40px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -18,12 +18,12 @@
 }
 
 .signin-paragraph.ant-typography {
-  text-align: center !important;
-  margin-top: 16px !important;
+  text-align: center;
+  margin-top: 16px;
 }
 
 .signin-link.ant-typography {
-  color: #3678eb !important;
+  color: #3678eb;
 }
 
 @media (max-width: 768px) {

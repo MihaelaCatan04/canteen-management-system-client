@@ -1,0 +1,43 @@
+.login-input {
+  margin-bottom: 16px;
+}
+
+.login-row {
+  margin-bottom: 16px;
+}
+
+.forgot-link.ant-typography {
+  color: #3678eb;
+}
+
+.login-button {
+  margin-bottom: 16px;
+}
+
+.create-account-icon-login {
+  color: #3678eb;
+}
+
+.account-icon-login {
+  color: #ffffff;
+}
+
+.login-label {
+  display: block;
+  text-align: left;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
