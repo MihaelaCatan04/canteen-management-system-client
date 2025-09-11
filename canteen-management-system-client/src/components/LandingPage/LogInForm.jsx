@@ -126,7 +126,7 @@ const LogInForm = () => {
               block
               size="large"
               className="login-button"
-              icon={<UserOutlined className="account-icon" />}
+              icon={<UserOutlined className="account-icon-login" />}
               htmlType="submit"
             >
               Log In
@@ -136,7 +136,7 @@ const LogInForm = () => {
           <Button
             block
             size="large"
-            icon={<UserAddOutlined className="create-account-icon" />}
+            icon={<UserAddOutlined className="create-account-icon-login" />}
             onClick={() => navigate("/register")}
           >
             Create Account

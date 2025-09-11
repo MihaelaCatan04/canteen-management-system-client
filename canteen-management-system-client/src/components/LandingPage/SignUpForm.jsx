@@ -236,10 +236,10 @@ const SignUpForm = () => {
               block
               size="large"
               className="signup-button"
-              icon={<UserOutlined className="create-account-icon" />}
+              icon={<UserAddOutlined className="create-account-icon-signup" />}
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
-              Log In
+              Sign Up
             </Button>
           </form>
           <Divider className="poppins-regular">
@@ -248,7 +248,7 @@ const SignUpForm = () => {
           <Button
             block
             size="large"
-            icon={<UserAddOutlined className="account-icon" />}
+            icon={<UserOutlined className="account-icon-signup" />}
             onClick={() => navigate("/login")}
           >
             Log In

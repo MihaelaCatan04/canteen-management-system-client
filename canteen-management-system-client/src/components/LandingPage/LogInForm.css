@@ -1,25 +1,25 @@
 .login-input {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 .login-row {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 .forgot-link.ant-typography {
-  color: #3678eb !important;
+  color: #3678eb;
 }
 
 .login-button {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
-.create-account-icon {
-  color: #3678eb !important;
+.create-account-icon-login {
+  color: #3678eb;
 }
 
-.account-icon {
-  color: #ffffff !important;
+.account-icon-login {
+  color: #ffffff;
 }
 
 .login-label {

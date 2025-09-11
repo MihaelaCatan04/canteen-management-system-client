@@ -1,25 +1,25 @@
 .signup-input {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 .signup-row {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 .forgot-link.ant-typography {
-  color: #3678eb !important;
+  color: #3678eb;
 }
 
 .signup-button {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
-.account-icon {
-  color: #3678eb !important;
+.account-icon-signup {
+  color: #3678eb;
 }
 
-.create-account-icon {
-  color: #ffffff !important;
+.create-account-signup {
+  color: #ffffff;
 }
 
 .signup-label {
