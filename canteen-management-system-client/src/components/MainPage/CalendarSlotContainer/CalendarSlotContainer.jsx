@@ -208,7 +208,9 @@ const CalendarSlotContainer = ({
               onClick={handlePreviousWeek}
             />
           )}
-          <Text className="calendar-range-text poppins-medium">{getWeekRangeText()}</Text>
+          <Text className="calendar-range-text poppins-medium">
+            {getWeekRangeText()}
+          </Text>
           <Button
             type="text"
             icon={<RightOutlined />}
@@ -221,33 +223,53 @@ const CalendarSlotContainer = ({
       <div className="calendar-grid">
         {getVisibleWeekDates().map((date, index) => (
           <div key={`date-container-${index}`}>
-          <div className="calendar-date-label inter-500">{date.label}</div>
-          <div
-            key={`${date.day}-${index}`}
-            onClick={() => handleDateSelect(date.day)}
-            className="calendar-date"
-            style={{
-              cursor: date.status !== "Past" ? date.status !== "Unavailable" ? "pointer" : "not-allowed" : "not-allowed",
-              backgroundColor:
-                date.status === "Today" ? "#306BDD" : date.status === "Available" ? "transparent" : "#F3F4F6",
-              color:
-                date.status === "Today" ? "#FFFFFF" : date.status === "Available" && date.day !== selectedDate ? "#000000" : date.day === selectedDate ? "#1E42B1" : "#9CA3AF",
-              border:
-                date.status === "Today" && date.day !== selectedDate ? "none" : date.status === "Available" && date.day !== selectedDate ? "1px solid #E5E7EB" : date.day === selectedDate ? "2px solid #1E42B1" : "1px solid #9CA3AF",
-              opacity: !date.isCurrentMonth
-                ? 0.6
-                : date.status === "Past"
-                ? 0.6
-                : 1,
-            }}
-          >
-            <div className="calendar-date-number inter-600">{date.day}</div>
-            <div className="calendar-date-status inter-400">
-              {date.status}
+            <div className="calendar-date-label inter-500">{date.label}</div>
+            <div
+              key={`${date.day}-${index}`}
+              onClick={() => handleDateSelect(date.day)}
+              className="calendar-date"
+              style={{
+                cursor:
+                  date.status !== "Past"
+                    ? date.status !== "Unavailable"
+                      ? "pointer"
+                      : "not-allowed"
+                    : "not-allowed",
+                backgroundColor:
+                  date.status === "Today"
+                    ? "#306BDD"
+                    : date.status === "Available"
+                    ? "transparent"
+                    : "#F3F4F6",
+                color:
+                  date.status === "Today"
+                    ? "#FFFFFF"
+                    : date.status === "Available" && date.day !== selectedDate
+                    ? "#000000"
+                    : date.day === selectedDate
+                    ? "#1E42B1"
+                    : "#9CA3AF",
+                border:
+                  date.status === "Today" && date.day !== selectedDate
+                    ? "none"
+                    : date.status === "Available" && date.day !== selectedDate
+                    ? "1px solid #E5E7EB"
+                    : date.day === selectedDate
+                    ? "2px solid #1E42B1"
+                    : "1px solid #9CA3AF",
+                opacity: !date.isCurrentMonth
+                  ? 0.6
+                  : date.status === "Past"
+                  ? 0.6
+                  : 1,
+              }}
+            >
+              <div className="calendar-date-number inter-600">{date.day}</div>
+              <div className="calendar-date-status inter-400">
+                {date.status}
+              </div>
             </div>
           </div>
-          </div>
-          
         ))}
       </div>
     </Card>
