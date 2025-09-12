@@ -1,0 +1,61 @@
+.calendar-card {
+  margin-bottom: 20px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.calendar-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.calendar-range-text {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: clamp(4px, 1vw, 8px);
+  width: 100%;
+}
+
+.calendar-date {
+  text-align: center;
+  border-radius: 1rem;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+}
+
+.calendar-date-number {
+  text-align: center;
+  font-size: 1.125rem;
+  margin-top: 2px;
+  padding: 0;
+}
+
+.calendar-date-label {
+  font-size: 0.875rem;
+  text-align: center;
+  color: #6B7280;
+  margin-bottom: 2px;
+  line-height: normal;
+  margin-bottom: 2px;
+  padding: 0;
+}
+
+.calendar-date-status {
+  font-size: 0.75rem;
+  text-align: center;
+}
