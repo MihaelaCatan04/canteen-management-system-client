@@ -1,0 +1,12 @@
+.nav-bar-container {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  display: flex;
+  height: 4rem;
+  padding: 0.5rem 6rem;
+  flex-shrink: 0;
+  align-self: stretch;
+}
