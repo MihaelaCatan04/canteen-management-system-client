@@ -7,12 +7,10 @@ const NavBar = () => {
   return (
     <div className="nav-bar-container">
       <Title
-        className="poppins-medium2"
+        className="poppins-medium2 app-title"
         level={2}
         style={{
           margin: 0,
-          fontSize: "1.375rem",
-          lineHeight: "2.375rem",
           color: "#000",
         }}
       >
@@ -26,13 +24,13 @@ const NavBar = () => {
             lineHeight: "2.375rem",
             color: "#000",
           }}
-          className="poppins-medium"
+          className="poppins-medium user-name"
         >
           Name Surname
         </Text>
         <Avatar
           icon={<UserOutlined />}
-          size={window.innerWidth < 768 ? "default" : "large"}
+          className="user-avatar"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

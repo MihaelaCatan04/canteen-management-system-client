@@ -1,12 +1,63 @@
 .nav-bar-container {
   justify-content: space-between;
   align-items: center;
-  padding: 0 4px;
   border: 1px solid #e5e7eb;
   background: #fff;
   display: flex;
   height: 4rem;
-  padding: 0.5rem 6rem;
+  padding: 0.5rem 1rem;
   flex-shrink: 0;
   align-self: stretch;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+  .nav-bar-container {
+    padding: 0.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-bar-container {
+    padding: 0.5rem 6rem;
+  }
+}
+
+/* Hide text on very small screens */
+@media (max-width: 480px) {
+  .nav-bar-container .user-name {
+    display: none;
+  }
+  
+  .nav-bar-container .ant-space {
+    gap: 8px;
+  }
+}
+
+.user-avatar {
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+
+@media (min-width: 768px) {
+  .user-avatar {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.app-title {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .app-title {
+    font-size: 1.375rem;
+    line-height: 2.375rem;
+  }
 }
