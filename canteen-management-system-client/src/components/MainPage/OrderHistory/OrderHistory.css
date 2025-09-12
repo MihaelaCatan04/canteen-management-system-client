@@ -1,0 +1,18 @@
+.order-history-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  height: 100%;
+}
+
+.icon-container {
+  display: flex;
+  padding: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 1.5rem;
+  background: #eff6ff;
+}
+
+
