@@ -16,7 +16,6 @@ const CalendarSlotContainer = ({
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const [currentMonth, setCurrentMonth] = useState("");
   const [weekDates, setWeekDates] = useState([]);
-  // const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
   const MONTHS = [
     "January",
@@ -43,13 +42,7 @@ const CalendarSlotContainer = ({
       setSelectedDate(propSelectedDate);
     }
   }, [propSelectedDate]);
-  const timeSlots = [
-    { id: "breakfast", label: "Breakfast", time: "11:30 AM - 12:00 PM" },
-    { id: "lunch1", label: "Lunch", time: "12:00 PM - 12:30 PM" },
-    { id: "lunch2", label: "Lunch", time: "12:30 PM - 1:00 PM" },
-    { id: "lunch3", label: "Lunch", time: "1:00 PM - 1:30 PM" },
-    { id: "lunch4", label: "Lunch", time: "1:30 PM - 2:00 PM" },
-  ];
+
 
   useEffect(() => {
     const generateCalendarDates = () => {
