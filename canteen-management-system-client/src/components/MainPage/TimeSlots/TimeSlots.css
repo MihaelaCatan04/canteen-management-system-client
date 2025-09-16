@@ -1,32 +1,60 @@
+.time-slots-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+}
+
 .time-slots-container {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(clamp(140px, 25vw, 180px), 1fr)
-  );
-  gap: clamp(8px, 2vw, 12px);
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  padding: 0px;
+  flex: 1,
 }
 
 .time-slot {
-    padding: 0;
-    text-align: center;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 4rem;
-    transition: all 0.2s;
+  padding: 0;
+  text-align: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 4rem;
+  transition: all 0.2s;
+  padding: 1rem 1.875rem;
 }
 
 .time-slot-label {
-    color: #111827;
-    text-align: center;
-    line-height: 1.5rem
+  color: #111827;
+  text-align: center;
+  line-height: 1.5rem;
 }
 
 .time-slot-time {
-    color: #4B5563;
-    text-align: center;
-    line-height: 1.25rem;
+  text-align: center;
+  line-height: 1.25rem;
+}
+
+.time-slot-name {
+  text-align: center;
+  line-height: 1.5rem; /* 150% */
+}
+
+.time-slots-navigation {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
 }

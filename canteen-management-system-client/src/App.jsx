@@ -3,6 +3,7 @@ import "./App.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import TrayGoApp from "./components/MainPage/draft.jsx";
+// import TrayGoApp from "./components/MainPage/draft2.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<LandingPage />} />
         <Route path="/register" element={<LandingPage />} />
         <Route path="/draft" element={<TrayGoApp />} />
+        {/* <Route path="/draft2" element={<TrayGoApp />} /> */}
       </Routes>
     </Router>
   );

@@ -8,11 +8,10 @@ import "./CalendarSlotContainer.css";
 const CalendarSlotContainer = ({
   selectedDate: propSelectedDate,
   onDateSelect,
+  setWeekIndex,
 }) => {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(
-    propSelectedDate || today.getDate()
-  );
+  const [selectedDate, setSelectedDate] = useState(propSelectedDate || today);
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const [currentMonth, setCurrentMonth] = useState("");
   const [weekDates, setWeekDates] = useState([]);
@@ -42,7 +41,6 @@ const CalendarSlotContainer = ({
       setSelectedDate(propSelectedDate);
     }
   }, [propSelectedDate]);
-
 
   useEffect(() => {
     const generateCalendarDates = () => {
@@ -75,6 +73,7 @@ const CalendarSlotContainer = ({
             ],
             status: "Past",
             isCurrentMonth: false,
+            date: dayDate,
           });
         }
       }
@@ -95,6 +94,7 @@ const CalendarSlotContainer = ({
           ],
           status: status,
           isCurrentMonth: true,
+          date: dayDate,
         });
       }
 
@@ -110,6 +110,7 @@ const CalendarSlotContainer = ({
             ],
             status: "Unavailable",
             isCurrentMonth: false,
+            date: dayDate,
           });
         }
       }
@@ -131,10 +132,27 @@ const CalendarSlotContainer = ({
     return date ? date.status : "Available";
   };
 
-  const handleDateSelect = (day) => {
-    if (getDateStatus(day) !== "Past" && getDateStatus(day) !== "Unavailable") {
-      setSelectedDate(day);
-      onDateSelect(day);
+  const getMenusForDate = async (weekIdx) => {
+    //   try {
+    //   const response = await axios.get('/menus', {
+    //     params: weekIdx !== undefined ? { week_offset: weekIdx } : {}
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error('Error fetching menus:', error);
+    // }
+    console.log("Fetching menus for week index:", weekIdx);
+  };
+
+  const handleDateSelect = (dayDate) => {
+    if (
+      getDateStatus(dayDate.getDate()) !== "Past" &&
+      getDateStatus(dayDate.getDate()) !== "Unavailable"
+    ) {
+      setSelectedDate(dayDate);
+      onDateSelect(dayDate);
+      setWeekIndex(currentWeekIndex);
+      getMenusForDate(currentWeekIndex);
     }
   };
 
@@ -144,8 +162,13 @@ const CalendarSlotContainer = ({
     }
 
     const weekSize = 7;
+    const maxDays = maxWeeks * weekSize;
     const startIndex = currentWeekIndex * weekSize;
-    return weekDates.slice(startIndex, startIndex + weekSize);
+    if (startIndex >= maxDays) return [];
+    return weekDates.slice( 
+      startIndex,
+      Math.min(startIndex + weekSize, maxDays)
+    );
   };
 
   const handlePreviousWeek = () => {
@@ -153,9 +176,9 @@ const CalendarSlotContainer = ({
       setCurrentWeekIndex(currentWeekIndex - 1);
     }
   };
+  const maxWeeks = Math.ceil(weekDates.length / 7);
 
   const handleNextWeek = () => {
-    const maxWeeks = Math.ceil((weekDates?.length || 0) / 7) + 1;
     if (currentWeekIndex < maxWeeks - 1) {
       setCurrentWeekIndex(currentWeekIndex + 1);
     }
@@ -204,12 +227,14 @@ const CalendarSlotContainer = ({
           <Text className="calendar-range-text poppins-medium">
             {getWeekRangeText()}
           </Text>
-          <Button
-            type="text"
-            icon={<RightOutlined />}
-            size="small"
-            onClick={handleNextWeek}
-          />
+          {currentWeekIndex < maxWeeks - 1 && (
+            <Button
+              type="text"
+              icon={<RightOutlined />}
+              size="small"
+              onClick={handleNextWeek}
+            />
+          )}
         </Space>
       </div>
 
@@ -219,7 +244,7 @@ const CalendarSlotContainer = ({
             <div className="calendar-date-label inter-500">{date.label}</div>
             <div
               key={`${date.day}-${index}`}
-              onClick={() => handleDateSelect(date.day)}
+              onClick={() => handleDateSelect(date.date)}
               className="calendar-date"
               style={{
                 cursor:
@@ -237,17 +262,17 @@ const CalendarSlotContainer = ({
                 color:
                   date.status === "Today"
                     ? "#FFFFFF"
-                    : date.status === "Available" && date.day !== selectedDate
+                    : date.status === "Available" && date.day !== selectedDate.getDate()
                     ? "#000000"
-                    : date.day === selectedDate
+                    : date.day === selectedDate.getDate()
                     ? "#1E42B1"
                     : "#9CA3AF",
                 border:
-                  date.status === "Today" && date.day !== selectedDate
+                  date.status === "Today" && date.day !== selectedDate.getDate()
                     ? "none"
-                    : date.status === "Available" && date.day !== selectedDate
+                    : date.status === "Available" && date.day !== selectedDate.getDate()
                     ? "1px solid #E5E7EB"
-                    : date.day === selectedDate
+                    : date.day === selectedDate.getDate()
                     ? "2px solid #1E42B1"
                     : "1px solid #9CA3AF",
                 opacity: !date.isCurrentMonth
