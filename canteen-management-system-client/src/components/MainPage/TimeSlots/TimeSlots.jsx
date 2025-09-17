@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Typography } from "antd";
 import "./TimeSlots.css";
+import { Card } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -36,6 +37,7 @@ const TimeSlots = ({
   };
 
   return (
+    <Card style={{ borderRadius: "1rem", marginBottom: "20px" }}>
     <div className="time-slots-wrapper">
       <div>
         <Title
@@ -87,28 +89,28 @@ const TimeSlots = ({
               {currentSlots.map((slot) => (
                 <div
                   key={slot.id}
-                  onClick={() => onSelectedTimeSlot(slot.time)}
+                  onClick={() => onSelectedTimeSlot(slot)}
                   className="time-slot"
                   style={{
                     border:
-                      selectedTimeSlot === slot.time
+                      selectedTimeSlot && selectedTimeSlot.time === slot.time
                         ? "2px solid #1E42B1"
                         : "1px solid #EFF6FF",
                     backgroundColor:
-                      selectedTimeSlot === slot.time ? "#EFF6FF" : "white",
+                      selectedTimeSlot && selectedTimeSlot.time === slot.time ? "#EFF6FF" : "white",
                     padding: "0px",
                   }}
                 >
                   <div className="time-slot-name poppins-medium2"
                     style={{
-                      color: selectedTimeSlot === slot.time ? "#1E42B1" : "#111827",
+                      color: selectedTimeSlot && selectedTimeSlot.time === slot.time ? "#1E42B1" : "#111827",
                     }}
                   >
                     {slot.name}
                   </div>
                   <div className="time-slot-time poppins-regular"
                     style={{
-                      color: selectedTimeSlot === slot.time ? "#1E42B1" : "#4B5563",
+                      color: selectedTimeSlot && selectedTimeSlot.time === slot.time ? "#1E42B1" : "#4B5563",
                     }}
                   >
                     {slot.time}
@@ -143,6 +145,7 @@ const TimeSlots = ({
         </div>
       </div>
     </div>
+    </Card>
   );
 };
 
