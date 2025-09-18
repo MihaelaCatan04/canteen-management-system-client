@@ -1,53 +1,69 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import "./PopUpOrder.css"; // Import the styles
+import "./PopUpOrder.css"; 
+import { Card } from "antd";
+import { Col, Row } from "antd";
 
 const PopUpOrder = ({ isOpen, closePopup }) => {
   if (!isOpen) return null;
 
   return createPortal(
     <div className="popup-overlay">
-      <div className="popup-box">
-        {/* Check icon */}
+      <Card className="popup-box">
         <div className="popup-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="icon"
-            viewBox="0 0 24 24"
+            width="60"
+            height="60"
+            viewBox="0 0 60 60"
             fill="none"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
           >
-            <path d="M5 13l4 4L19 7" />
+            <path
+              d="M52.5 30C52.5 32.9547 51.918 35.8806 50.7873 38.6104C49.6566 41.3402 47.9992 43.8206 45.9099 45.9099C43.8206 47.9992 41.3402 49.6566 38.6104 50.7873C35.8806 51.918 32.9547 52.5 30 52.5C27.0453 52.5 24.1194 51.918 21.3896 50.7873C18.6598 49.6566 16.1794 47.9992 14.0901 45.9099C12.0008 43.8206 10.3434 41.3402 9.21271 38.6104C8.08198 35.8806 7.5 32.9547 7.5 30C7.5 24.0326 9.87053 18.3097 14.0901 14.0901C18.3097 9.87053 24.0326 7.5 30 7.5C35.9674 7.5 41.6903 9.87053 45.9099 14.0901C50.1295 18.3097 52.5 24.0326 52.5 30Z"
+              stroke="#306BDD"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M22.5 30L26.7075 34.2075C27.145 34.645 27.855 34.645 28.2925 34.2075L37.5 25"
+              stroke="#306BDD"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </div>
 
-        <h2 className="popup-title">Order CONFIRMED!</h2>
-        <p className="popup-text">
+        <h2 className="popup-title poppins-medium2">Order <span className="poppins-bold">CONFIRMED!</span></h2>
+        <p className="popup-text poppins-regular">
           Your order has been placed and is being processed.
         </p>
+        <div className="popup-divider" />
 
-        <div className="popup-divider"></div>
-
-        {/* Order details */}
-        <div className="popup-details">
-          <div>
-            <p><strong>ORDER ID:</strong> #3823e</p>
-          </div>
-          <div>
-            <p><strong>Pick-up Time:</strong></p>
-            <p>September 11, 2025</p>
-            <p>12:00 PM - 12:30 PM</p>
-          </div>
-        </div>
+        <Row className="popup-details" align="top" gutter={[16, 16]}>
+          <Col span={8} className="poppins-regular">
+            <strong className="poppins-bold">ORDER ID:</strong> #3823e
+          </Col>
+          <Col span={8} className="poppins-regular">
+            <strong className="poppins-bold">Pick-up Time:</strong>
+          </Col>
+          <Col span={8} className="poppins-regular">
+            <p style={{ margin: 0 }}>September 11, 2025</p>
+            <p style={{ margin: 0 }}>12:00 PM - 12:30 PM</p>
+          </Col>
+        </Row>
+        <div className="popup-divider" />
 
         <div className="popup-actions">
-          <button onClick={closePopup} className="btn btn-ok">OK</button>
-          <button onClick={closePopup} className="btn btn-close">Close</button>
+          <button onClick={closePopup} className="btn btn-ok">
+            OK
+          </button>
+          {/* <button onClick={closePopup} className="btn btn-close">
+            Close
+          </button> */}
         </div>
-      </div>
+      </Card>
     </div>,
     document.body
   );
