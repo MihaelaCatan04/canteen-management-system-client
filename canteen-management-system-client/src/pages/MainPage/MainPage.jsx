@@ -36,6 +36,7 @@ const MainPage = () => {
     { id: 19, time: "5:00 PM - 5:30 PM", name: "Dinner" },
   ];
 
+  // ...existing menuItems data...
   const menuItems = {
     previous_week: "?week_offset=1",
     current_week: "?week_offset=0",
@@ -123,7 +124,8 @@ const MainPage = () => {
             id: "gggg7777-hhhh-8888-iiii-gggg7777gggg",
             quantity: 200,
             item_name: "Sparkling Water",
-            item_description: "Chilled and crisp, perfect to cleanse the palate.",
+            item_description:
+              "Chilled and crisp, perfect to cleanse the palate.",
             item_base_price: "20",
             remaining_quantity: "200",
             category: "beverages",
@@ -151,7 +153,7 @@ const MainPage = () => {
     <MainPageLayout>
       <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
         <CurrentBalance />
-        <Col xs={24} md={8}>
+        <Col xs={24} sm={8} md={8}>
           <OrderHistory />
         </Col>
       </Row>

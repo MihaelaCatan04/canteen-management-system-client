@@ -47,7 +47,7 @@ const OrderHistory = () => {
                 fontSize: "1rem",
                 fontStyle: "normal",
                 lineHeight: "100%",
-                alignSelf: "stretch"
+                alignSelf: "stretch",
               }}
             >
               View past orders

@@ -57,7 +57,7 @@ const OrderTotal = ({
     total > 0 && (
       <Card className="order-total-card">
         <Row className="order-total-header" justify="space-between">
-          <Col>
+          <Col xs={24} sm={24} md={12}>
             <Title
               level={4}
               style={{ marginBottom: 0 }}
@@ -66,7 +66,7 @@ const OrderTotal = ({
               Order <span style={{ color: "#3577E9" }}>Total</span>
             </Title>
           </Col>
-          <Col>
+          <Col xs={24} sm={24} md={12}>
             <Text className="poppins-regular text-order-date">
               {`Preordering for: ${
                 MONTHS[selectedDate.getMonth()]
@@ -78,13 +78,17 @@ const OrderTotal = ({
           </Col>
         </Row>
 
-        <Row gutter={16}>
-          <Col span={14}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={14}>
             <Card className="items-card" size="small">
               {selectedItems.map((item, index) => (
                 <div className="item-card" key={index}>
-                  <Row justify="space-between" align="flex-start">
-                    <Col span={16}>
+                  <Row
+                    justify="space-between"
+                    align="flex-start"
+                    gutter={[8, 8]}
+                  >
+                    <Col xs={24} sm={16}>
                       <Text className="poppins-medium title-item">
                         {item.item_name}
                       </Text>
@@ -93,62 +97,71 @@ const OrderTotal = ({
                         {item.item_description}
                       </Text>
                     </Col>
-                    <Col span={8}>
-                      <Row justify={"end"} spacing={8}>
-                        <Button
-                          icon={<MinusOutlined />}
-                          size="small"
-                          shape="square"
-                          style={{
-                            marginRight: "8px",
-                            backgroundColor: "#2563eb",
-                            borderColor: "#2563eb",
-                            color: "#fff",
-                            borderRadius: "0.5rem",
-                          }}
-                          onClick={() =>
-                            handleQuantityChange(
-                              item.groupIndex,
-                              item.itemIndex,
-                              -1
-                            )
-                          }
-                        />
-                        <Text strong>{item.qty}</Text>
-                        <Button
-                          icon={<PlusOutlined />}
-                          size="small"
-                          shape="square"
-                          style={{
-                            marginLeft: "8px",
-                            backgroundColor: "#2563eb",
-                            borderColor: "#2563eb",
-                            color: "#fff",
-                            borderRadius: "0.5rem",
-                          }}
-                          onClick={() =>
-                            handleQuantityChange(
-                              item.groupIndex,
-                              item.itemIndex,
-                              1
-                            )
-                          }
-                        />
-                        <Button
-                          icon={<CloseOutlined />}
-                          size="small"
-                          shape="square"
-                          style={{
-                            marginLeft: "8px",
-                            backgroundColor: "#fd6464ff",
-                            borderColor: "#fd6464ff",
-                            color: "#fff",
-                            borderRadius: "0.5rem",
-                          }}
-                          onClick={() =>
-                            handleRemoveItem(item.groupIndex, item.itemIndex)
-                          }
-                        />
+                    <Col xs={24} sm={8}>
+                      <Row
+                        justify={{ xs: "center", sm: "end" }}
+                        align="middle"
+                        gutter={8}
+                      >
+                        <Col>
+                          <Button
+                            icon={<MinusOutlined />}
+                            size="small"
+                            shape="square"
+                            style={{
+                              backgroundColor: "#2563eb",
+                              borderColor: "#2563eb",
+                              color: "#fff",
+                              borderRadius: "0.5rem",
+                            }}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.groupIndex,
+                                item.itemIndex,
+                                -1
+                              )
+                            }
+                          />
+                        </Col>
+                        <Col>
+                          <Text strong>{item.qty}</Text>
+                        </Col>
+                        <Col>
+                          <Button
+                            icon={<PlusOutlined />}
+                            size="small"
+                            shape="square"
+                            style={{
+                              backgroundColor: "#2563eb",
+                              borderColor: "#2563eb",
+                              color: "#fff",
+                              borderRadius: "0.5rem",
+                            }}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.groupIndex,
+                                item.itemIndex,
+                                1
+                              )
+                            }
+                          />
+                        </Col>
+                        <Col>
+                          <Button
+                            icon={<CloseOutlined />}
+                            size="small"
+                            shape="square"
+                            style={{
+                              backgroundColor: "#fd6464ff",
+                              borderColor: "#fd6464ff",
+                              color: "#fff",
+                              borderRadius: "0.5rem",
+                            }}
+                            onClick={() =>
+                              handleRemoveItem(item.groupIndex, item.itemIndex)
+                            }
+                          />
+                        </Col>
                       </Row>
                     </Col>
                   </Row>
@@ -157,7 +170,7 @@ const OrderTotal = ({
             </Card>
           </Col>
 
-          <Col span={10}>
+          <Col xs={24} lg={10}>
             <Card className="summary-card" size="small">
               <Text className="poppins-medium total-products-text">
                 Total Products
@@ -170,25 +183,45 @@ const OrderTotal = ({
                   </li>
                 ))}
               </ul>
-              <Row justify="space-between" align="middle">
-                <Col span={17}>
-                  <Title level={5} style={{ margin: 0 }} className="poppins-bold total-amount-text">
+              <Row justify="space-between" align="middle" gutter={[8, 8]}>
+                <Col xs={24} sm={17}>
+                  <Title
+                    level={5}
+                    style={{ margin: 0 }}
+                    className="poppins-bold total-amount-text"
+                  >
                     TOTAL: <span style={{ color: "#3b82f6" }}>{total} MDL</span>
                   </Title>
                 </Col>
-                <Col span={7}>
+                <Col xs={24} sm={7}>
                   <Button
                     className="cancel-btn"
                     onClick={clearData}
-                    classNames="poppins-medium btn-cancel"
-                    style = {{ backgroundColor: "#D9D9D9", borderColor: "#D9D9D9", color: "#374151", fontFamily: "Poppins", fontWeight: "500", fontStyle: "normal"}}
+                    block
+                    style={{
+                      backgroundColor: "#D9D9D9",
+                      borderColor: "#D9D9D9",
+                      color: "#374151",
+                      fontFamily: "Poppins",
+                      fontWeight: "500",
+                      fontStyle: "normal",
+                    }}
                   >
                     Cancel
                   </Button>
                 </Col>
               </Row>
             </Card>
-            <Button type="primary" block style={{ marginTop: "16px", fontFamily: "Poppins", fontWeight: "500", fontStyle: "normal"}}>
+            <Button
+              type="primary"
+              block
+              style={{
+                marginTop: "16px",
+                fontFamily: "Poppins",
+                fontWeight: "500",
+                fontStyle: "normal",
+              }}
+            >
               Confirm Order
             </Button>
           </Col>

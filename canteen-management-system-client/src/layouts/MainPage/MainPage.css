@@ -1,0 +1,13 @@
+.mainpage-layout {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 0;
+}
+
+.mainpage-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 8px;
+    min-height: 100vh;
+}

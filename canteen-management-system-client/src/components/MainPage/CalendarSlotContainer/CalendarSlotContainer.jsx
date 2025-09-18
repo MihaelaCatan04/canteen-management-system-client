@@ -165,7 +165,7 @@ const CalendarSlotContainer = ({
     const maxDays = maxWeeks * weekSize;
     const startIndex = currentWeekIndex * weekSize;
     if (startIndex >= maxDays) return [];
-    return weekDates.slice( 
+    return weekDates.slice(
       startIndex,
       Math.min(startIndex + weekSize, maxDays)
     );
@@ -262,7 +262,8 @@ const CalendarSlotContainer = ({
                 color:
                   date.status === "Today"
                     ? "#FFFFFF"
-                    : date.status === "Available" && date.day !== selectedDate.getDate()
+                    : date.status === "Available" &&
+                      date.day !== selectedDate.getDate()
                     ? "#000000"
                     : date.day === selectedDate.getDate()
                     ? "#1E42B1"
@@ -270,7 +271,8 @@ const CalendarSlotContainer = ({
                 border:
                   date.status === "Today" && date.day !== selectedDate.getDate()
                     ? "none"
-                    : date.status === "Available" && date.day !== selectedDate.getDate()
+                    : date.status === "Available" &&
+                      date.day !== selectedDate.getDate()
                     ? "1px solid #E5E7EB"
                     : date.day === selectedDate.getDate()
                     ? "2px solid #1E42B1"

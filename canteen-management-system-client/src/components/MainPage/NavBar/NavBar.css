@@ -22,12 +22,11 @@
   }
 }
 
-/* Hide text on very small screens */
 @media (max-width: 480px) {
   .nav-bar-container .user-name {
     display: none;
   }
-  
+
   .nav-bar-container .ant-space {
     gap: 8px;
   }

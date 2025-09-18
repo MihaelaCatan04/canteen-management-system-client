@@ -123,12 +123,12 @@ const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems }) => {
               preview={false}
             />
 
-            <Row gutter={16} className="menu-items-row">
+            <Row gutter={[16, 16]} className="menu-items-row">
               {group.menu_items.map((item, index) => (
-                <Col span={8} key={item.id}>
+                <Col xs={24} sm={12} lg={8} key={item.id}>
                   <Card className="menu-item-card">
                     <div className="menu-item-header">
-                      <Title level={5} style={{ textAlign: "left" }}>
+                      <Title level={5} style={{ textAlign: "left", margin: 0 }}>
                         {item.item_name}
                       </Title>
 
@@ -165,37 +165,32 @@ const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems }) => {
                       </div>
                     </div>
 
-                    <Text
-                      type="secondary"
-                      style={{ display: "block", marginBottom: "12px" }}
-                    >
+                    <Text type="secondary" className="item-description">
                       {item.item_description}
                     </Text>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text className="poppins-bold item-price">
-                        MDL {item.item_base_price}
-                      </Text>
-
-                      <Button
-                        onClick={() => addToCart(groupIndex, index)}
-                        type="primary"
-                        size="small"
-                        style={{
-                          backgroundColor: "#2563eb",
-                          borderColor: "#2563eb",
-                          padding: "1rem",
-                          borderRadius: "0.5rem",
-                        }}
-                      >
-                        + Add
-                      </Button>
-                    </div>
+                    <Row justify="space-between" align="middle">
+                      <Col>
+                        <Text className="poppins-bold item-price">
+                          MDL {item.item_base_price}
+                        </Text>
+                      </Col>
+                      <Col>
+                        <Button
+                          onClick={() => addToCart(groupIndex, index)}
+                          type="primary"
+                          size="small"
+                          style={{
+                            backgroundColor: "#2563eb",
+                            borderColor: "#2563eb",
+                            padding: "1rem",
+                            borderRadius: "0.5rem",
+                          }}
+                        >
+                          + Add
+                        </Button>
+                      </Col>
+                    </Row>
                   </Card>
                 </Col>
               ))}

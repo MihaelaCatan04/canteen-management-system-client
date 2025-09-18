@@ -14,10 +14,12 @@
   margin-bottom: 16px;
   line-height: 1.75rem;
   align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .title-order-total {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   line-height: 1.75rem;
   color: #111827;
 }
@@ -25,6 +27,7 @@
 .text-order-date {
   line-height: 1.25rem;
   color: #6b7280;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
 }
 
 .text-order-time {
@@ -49,16 +52,14 @@
 
 .title-item {
   color: #111827;
-  font-size: 1rem;
-
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   line-height: 1.5rem;
   margin-bottom: 10px;
 }
 
 .description-item {
   color: #4b5563;
-
-  font-size: 0.875rem;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
   line-height: 1.25rem;
 }
 
@@ -75,18 +76,20 @@
 
 .total-products-text {
   color: #111827;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   line-height: 1.5rem;
 }
 
 .product-list {
   text-align: left;
   padding-left: 1rem;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
 }
 
 .total-amount-text {
   color: #111827;
   line-height: 1.75rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
 }
 
 .btn-cancel {
@@ -96,4 +99,51 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .order-total-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-total-card .ant-row {
+    flex-direction: column;
+  }
+
+  .order-total-card .ant-col:first-child {
+    margin-bottom: 16px;
+  }
+
+  .items-card,
+  .summary-card {
+    padding: 0.75rem;
+  }
+
+  .item-card {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-total-card {
+    gap: 0.25rem;
+  }
+
+  .items-card,
+  .summary-card {
+    padding: 0.5rem;
+    gap: 0.75rem;
+  }
+
+  .item-card {
+    margin-bottom: 0.5rem;
+  }
+
+  .product-list {
+    padding-left: 0.75rem;
+  }
 }
