@@ -6,7 +6,7 @@ import { Row, Col, Image } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import OrderTotal from "../OrderTotal/OrderTotal.jsx";
 
-const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems }) => {
+const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems, openPopup }) => {
   const [items, setItems] = useState(menuItems || {});
 
   useEffect(() => {
@@ -207,6 +207,7 @@ const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems }) => {
         selectedDate={selectedDate}
         selectedTimeSlot={selectedTimeSlot}
         handleRemoveItem={handleRemoveItem}
+        openPopup={openPopup}
       />
     </div>
   );

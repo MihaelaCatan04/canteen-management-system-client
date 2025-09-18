@@ -62,7 +62,6 @@
   text-align: center;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .calendar-header {
     flex-direction: column;

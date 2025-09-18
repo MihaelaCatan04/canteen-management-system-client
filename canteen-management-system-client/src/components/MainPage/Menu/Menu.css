@@ -72,7 +72,6 @@
   }
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .menu-items-row {
     margin-top: 16px;
