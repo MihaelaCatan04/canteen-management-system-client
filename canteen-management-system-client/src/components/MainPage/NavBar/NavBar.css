@@ -10,7 +10,6 @@
   align-self: stretch;
 }
 
-/* Media queries for responsive design */
 @media (min-width: 768px) {
   .nav-bar-container {
     padding: 0.5rem 2rem;
