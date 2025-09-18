@@ -184,7 +184,7 @@ const MainPage = () => {
         menuItems={menuItems}
         openPopup={openPopup}
       />
-      <PopUpOrder isOpen={isOpen} closePopup={closePopup} />
+      <PopUpOrder isOpen={isOpen} closePopup={closePopup} selectedDate={selectedDate} selectedTimeSlot={selectedTimeSlot} />
     </MainPageLayout>
   );
 };

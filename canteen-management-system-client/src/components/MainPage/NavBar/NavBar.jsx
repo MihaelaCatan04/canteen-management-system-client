@@ -11,7 +11,6 @@ const NavBar = () => {
   const dropdownRef = useRef(null);
   const arrowRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -37,13 +36,13 @@ const NavBar = () => {
   const handleChangePassword = () => {
     console.log("Change Password clicked");
     setIsDropdownOpen(false);
-    // Add your change password logic here
+    // Add logic here
   };
 
   const handleLogOut = () => {
     console.log("Log Out clicked");
     setIsDropdownOpen(false);
-    // Add your logout logic here
+    // Add logic here
   };
 
   return (

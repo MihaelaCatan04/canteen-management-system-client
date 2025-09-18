@@ -1,10 +1,23 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import "./PopUpOrder.css"; 
+import "./PopUpOrder.css";
 import { Card } from "antd";
 import { Col, Row } from "antd";
-
-const PopUpOrder = ({ isOpen, closePopup }) => {
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const PopUpOrder = ({ isOpen, closePopup, selectedDate, selectedTimeSlot }) => {
   if (!isOpen) return null;
 
   return createPortal(
@@ -35,7 +48,9 @@ const PopUpOrder = ({ isOpen, closePopup }) => {
           </svg>
         </div>
 
-        <h2 className="popup-title poppins-medium2">Order <span className="poppins-bold">CONFIRMED!</span></h2>
+        <h2 className="popup-title poppins-medium2">
+          Order <span className="poppins-bold">CONFIRMED!</span>
+        </h2>
         <p className="popup-text poppins-regular">
           Your order has been placed and is being processed.
         </p>
@@ -49,8 +64,8 @@ const PopUpOrder = ({ isOpen, closePopup }) => {
             <strong className="poppins-bold">Pick-up Time:</strong>
           </Col>
           <Col span={8} className="poppins-regular">
-            <p style={{ margin: 0 }}>September 11, 2025</p>
-            <p style={{ margin: 0 }}>12:00 PM - 12:30 PM</p>
+            <p style={{ margin: 0 }}>{`${MONTHS[selectedDate.getMonth()]} ${selectedDate.getDate()}, ${selectedDate.getFullYear()}`}</p>
+            <p style={{ margin: 0 }}>{selectedTimeSlot?.time || "No time selected"}</p>
           </Col>
         </Row>
         <div className="popup-divider" />
