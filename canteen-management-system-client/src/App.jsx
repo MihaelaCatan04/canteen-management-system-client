@@ -3,19 +3,26 @@ import "./App.css";
 import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage.jsx";
-// import TrayGoApp from "./components/MainPage/draft2.jsx";
+import RequireAuth from "./components/LandingPage/RequireAuth/RequireAuth.jsx";
+import UnauthorizedComponent from "./components/UnauthorizedPage/UnauthorizedComponent/UnauthorizedComponent.jsx";
+
+const ROLES = {
+  "Customer": "customer",
+  "ConfirmedCustomer": "confirmedCustomer"
+};
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LandingPage />} />
-        <Route path="/register" element={<LandingPage />} />
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LandingPage />} />
+      <Route path="/register" element={<LandingPage />} />
+      <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
+        {/* Later to be replaced with verified customers */}
         <Route path="/order" element={<MainPage />} />
-        {/* <Route path="/draft2" element={<TrayGoApp />} /> */}
-      </Routes>
-    </Router>
+      </Route>
+      <Route path="/unauthorized" element={<UnauthorizedComponent />} />
+    </Routes>
   );
 }
 export default App;
