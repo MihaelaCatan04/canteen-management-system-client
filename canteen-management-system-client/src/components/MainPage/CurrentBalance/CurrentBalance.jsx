@@ -1,10 +1,55 @@
 import { Card, Col, Typography, Badge } from "antd";
 import "./CurrentBalance.css";
+import { useEffect, useState } from "react";
+import axios from "../../../api/axios";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 const CurrentBalance = () => {
-  const currentBalance = "MDL 682";
+  const [balance, setBalance] = useState(0);
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getBalance = async () => {
+      const user_id = auth?.user_id;
+
+      if (!user_id) {
+        console.log("No user_id found");
+        return;
+      }
+
+      try {
+        const response = await axiosPrivate.get(`/wallets/${user_id}`, {
+          signal: controller.signal,
+        });
+        if (isMounted) {
+          setBalance(response?.data.current_balance);
+        }
+      } catch (err) {
+        if (err.name !== "CanceledError") {
+          console.error("Error fetching balance:", err);
+          navigate('/login', { state: { from: location }, replace: true });
+        }
+      }
+    };
+
+    getBalance();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [auth?.user_id, axiosPrivate]);
+
   return (
     <Col xs={24} md={16}>
       <Card className="current-balance-card">
@@ -19,7 +64,7 @@ const CurrentBalance = () => {
                 level={2}
                 style={{ color: "white", margin: "0", fontSize: "2rem" }}
               >
-                {currentBalance}
+                MDL {balance}
               </Title>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
