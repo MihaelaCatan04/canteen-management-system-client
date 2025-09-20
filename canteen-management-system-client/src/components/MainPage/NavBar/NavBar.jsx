@@ -2,8 +2,48 @@ import "./NavBar.css";
 import { Typography, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getUserName = async () => {
+      try {
+        const response = await axiosPrivate.get("/users/me", {
+          signal: controller.signal,
+        });
+        if (isMounted) {
+          setName(response?.data.first_name);
+          setSurname(response?.data.last_name);
+        }
+      } catch (err) {
+        if (err.name !== "CanceledError") {
+          console.error("Error fetching user name:", err);
+          navigate('/login', { state: { from: location }, replace: true });
+        }
+      }
+    };
+
+    getUserName();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [auth?.user_id, axiosPrivate]);
+
   return (
     <div className="nav-bar-container">
       <Title
@@ -26,7 +66,7 @@ const NavBar = () => {
           }}
           className="poppins-medium user-name"
         >
-          Name Surname
+          {name} {surname}
         </Text>
         <Avatar icon={<UserOutlined />} className="user-avatar" />
         <svg
