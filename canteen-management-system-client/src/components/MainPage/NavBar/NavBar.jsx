@@ -3,12 +3,10 @@ import "./NavBar.css";
 import { Typography, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
-
 const { Title, Text } = Typography;
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const NavBar = () => {
 
