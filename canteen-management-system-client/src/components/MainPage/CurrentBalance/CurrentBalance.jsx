@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 const CurrentBalance = () => {
-  const [balance, setBalance] = useState(null);
+  const [balance, setBalance] = useState(0);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
@@ -25,16 +28,16 @@ const CurrentBalance = () => {
       }
 
       try {
-        console.log("Fetching balance for user:", user_id);
         const response = await axiosPrivate.get(`/wallets/${user_id}`, {
           signal: controller.signal,
         });
         if (isMounted) {
-          setBalance(response?.data);
+          setBalance(response?.data.current_balance);
         }
       } catch (err) {
         if (err.name !== "CanceledError") {
           console.error("Error fetching balance:", err);
+          navigate('/login', { state: { from: location }, replace: true });
         }
       }
     };
@@ -61,7 +64,7 @@ const CurrentBalance = () => {
                 level={2}
                 style={{ color: "white", margin: "0", fontSize: "2rem" }}
               >
-                MDL {balance?.current_balance || "0.00"}
+                MDL {balance}
               </Title>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
