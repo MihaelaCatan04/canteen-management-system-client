@@ -9,10 +9,16 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const NavBar = () => {
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const arrowRef = useRef(null);
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { auth, setAuth } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,18 +48,25 @@ const NavBar = () => {
     // Add logic here
   };
 
-  const handleLogOut = () => {
-    console.log("Log Out clicked");
+  const handleLogOut = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
     setIsDropdownOpen(false);
-    // Add logic here
-  };
+    try {
+      await axiosPrivate.post("/auth/logout/", {
+        refresh: auth?.refreshToken,
+      });
 
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const { auth } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+      setAuth({});
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Logout error:", error);
+      setAuth({});
+      navigate("/login", { replace: true });
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -71,7 +84,7 @@ const NavBar = () => {
       } catch (err) {
         if (err.name !== "CanceledError") {
           console.error("Error fetching user name:", err);
-          navigate('/login', { state: { from: location }, replace: true });
+          navigate("/login", { state: { from: location }, replace: true });
         }
       }
     };
@@ -83,7 +96,6 @@ const NavBar = () => {
       controller.abort();
     };
   }, [auth?.user_id, axiosPrivate]);
-
 
   return (
     <div className="nav-bar-container">
@@ -140,6 +152,10 @@ const NavBar = () => {
                 <div
                   className="dropdown-item poppins-medium"
                   onClick={handleLogOut}
+                  style={{ 
+                    opacity: isLoggingOut ? 0.6 : 1,
+                    cursor: isLoggingOut ? 'not-allowed' : 'pointer'
+                  }}
                 >
                   Log Out
                 </div>
