@@ -79,6 +79,7 @@ const SignUpForm = () => {
         JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
       const accessToken = response?.data?.access;
@@ -103,7 +104,6 @@ const SignUpForm = () => {
       console.log(err);
     }
 
-    // setSuccess(true);
   };
 
   return (

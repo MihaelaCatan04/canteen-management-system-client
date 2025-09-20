@@ -41,6 +41,7 @@ const LogInForm = () => {
         JSON.stringify({ email: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
       const accessToken = response?.data?.access;
