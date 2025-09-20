@@ -7,6 +7,7 @@ import TimeSlots from "../../components/MainPage/TimeSlots/TimeSlots";
 import Menu from "../../components/MainPage/Menu/Menu";
 import CurrentBalance from "../../components/MainPage/CurrentBalance/CurrentBalance";
 import OrderHistory from "../../components/MainPage/OrderHistory/OrderHistory";
+import PopUpOrder from "../../components/MainPage/PopUpOrder/PopUpOrder";
 
 const MainPage = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -149,6 +150,11 @@ const MainPage = () => {
     setWeekIndex(newIndex);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openPopup = () => setIsOpen(true);
+  const closePopup = () => setIsOpen(false);
+
   return (
     <MainPageLayout>
       <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
@@ -176,7 +182,9 @@ const MainPage = () => {
         selectedDate={selectedDate}
         selectedSlot={selectedTimeSlot}
         menuItems={menuItems}
+        openPopup={openPopup}
       />
+      <PopUpOrder isOpen={isOpen} closePopup={closePopup} selectedDate={selectedDate} selectedTimeSlot={selectedTimeSlot} />
     </MainPageLayout>
   );
 };

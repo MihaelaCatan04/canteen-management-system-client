@@ -13,8 +13,6 @@ const OrderHistory = () => {
           <div className="icon-container">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="1.875rem"
-              height="1.875rem"
               viewBox="0 0 30 30"
               fill="#1E42B1"
             >
@@ -27,28 +25,13 @@ const OrderHistory = () => {
           <div style={{ flex: 1 }}>
             <Title
               level={4}
-              style={{
-                color: "#000",
-                fontSize: "2rem",
-                lineHeight: "100%",
-                height: "2.375rem",
-                alignSelf: "stretch",
-                marginBottom: "0",
-              }}
-              className="poppins-bold"
+              className="poppins-bold order-history-title"
             >
               Order History
             </Title>
 
             <Text
-              className="poppins-medium"
-              style={{
-                color: "#666",
-                fontSize: "1rem",
-                fontStyle: "normal",
-                lineHeight: "100%",
-                alignSelf: "stretch",
-              }}
+              className="poppins-medium order-history-subtitle"
             >
               View past orders
             </Text>

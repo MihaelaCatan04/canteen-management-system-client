@@ -27,6 +27,7 @@ const OrderTotal = ({
   selectedDate,
   selectedTimeSlot,
   handleRemoveItem,
+  openPopup
 }) => {
   const getCategoryCounts = () => {
     const counts = {};
@@ -57,7 +58,7 @@ const OrderTotal = ({
     total > 0 && (
       <Card className="order-total-card">
         <Row className="order-total-header" justify="space-between">
-          <Col xs={24} sm={24} md={12}>
+          <Col xs={24} sm={24} md={8} lg={8}>
             <Title
               level={4}
               style={{ marginBottom: 0 }}
@@ -66,7 +67,7 @@ const OrderTotal = ({
               Order <span style={{ color: "#3577E9" }}>Total</span>
             </Title>
           </Col>
-          <Col xs={24} sm={24} md={12}>
+          <Col xs={24} sm={24} md={16} lg={16} style={{ textAlign: "right" }}>
             <Text className="poppins-regular text-order-date">
               {`Preordering for: ${
                 MONTHS[selectedDate.getMonth()]
@@ -221,6 +222,7 @@ const OrderTotal = ({
                 fontWeight: "500",
                 fontStyle: "normal",
               }}
+              onClick={openPopup}
             >
               Confirm Order
             </Button>
