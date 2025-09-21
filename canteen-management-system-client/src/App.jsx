@@ -4,11 +4,11 @@ import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage.jsx";
 import RequireAuth from "./components/LandingPage/RequireAuth/RequireAuth.jsx";
-import UnauthorizedComponent from "./components/UnauthorizedPage/UnauthorizedComponent/UnauthorizedComponent.jsx";
 import PersistentLogIn from "./components/PersistentLogIn/PersistentLogIn.jsx";
 import OrderHistoryPage from "./pages/OrderHistoryPage/OrderHistoryPage.jsx";
 import Page404 from "./pages/Page404/Page404.jsx";
 import Page429 from "./pages/Page429/Page429.jsx";
+import Page403 from "./pages/Page403/Page403.jsx";
 
 const ROLES = {
   "Customer": "customer",
@@ -28,7 +28,7 @@ function App() {
         <Route path="/order-history" element={<OrderHistoryPage />} />
       </Route>
       </Route>
-      <Route path="/unauthorized" element={<UnauthorizedComponent />} />
+      <Route path="/forbidden" element={<Page403 />} />
       <Route path="/429" element={<Page429 />} />
       <Route path="*" element={<Page404 />} />
       
