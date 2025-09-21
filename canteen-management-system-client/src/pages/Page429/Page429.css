@@ -1,0 +1,40 @@
+.page-429-container {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.error-container {
+  text-align: center;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.error-container img {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.error-code {
+  margin-bottom: 10px;
+  color: #000;
+  font-size: 2rem;
+  line-height: normal;
+}
+
+.error-title {
+  margin-bottom: 15px;
+  color: #000;
+  font-size: 1.5rem;
+  line-height: normal;
+}
+
+.error-description {
+  color: #4f4f4f;
+  font-size: 1rem;
+  line-height: normal;
+}
