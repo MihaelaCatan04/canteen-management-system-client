@@ -28,8 +28,9 @@ const CurrentBalance = () => {
       }
 
       try {
-        const response = await axiosPrivate.get(`/wallets/${user_id}`, {
+        const response = await axiosPrivate.get(`/wallets/me/`, {
           signal: controller.signal,
+          withCredentials: true
         });
         if (isMounted) {
           setBalance(response?.data.current_balance);
