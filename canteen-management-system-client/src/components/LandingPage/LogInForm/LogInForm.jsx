@@ -11,7 +11,7 @@ import axios from "../../../api/axios";
 import { jwtDecode } from "jwt-decode";
 import useAuth from "../../../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-const LOGIN_URL = "/auth/login/";
+const LOGIN_URL = "/auth/login/cookie/";
 
 const LogInForm = () => {
   const navigate = useNavigate();
@@ -45,11 +45,9 @@ const LogInForm = () => {
         }
       );
       const accessToken = response?.data?.access;
-      const refreshToken = response?.data?.refresh;
       const user_id = jwtDecode(accessToken).user_id;
       const role = [jwtDecode(accessToken).role];
-      console.log(role);
-      setAuth({ user_id, accessToken, refreshToken, role });
+      setAuth({ user_id, accessToken, role });
       setUser("");
       setPwd("");
       navigate(from, { replace: true });

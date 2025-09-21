@@ -22,7 +22,7 @@ const { Text } = Typography;
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
 const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
-const REGISTER_URL = "/auth/register/";
+const REGISTER_URL = "/auth/register/cookie/";
 
 const SignUpForm = () => {
   const userRef = useRef();
@@ -74,6 +74,11 @@ const SignUpForm = () => {
       return;
     }
     try {
+      console.log({
+        email: user,
+        password: pwd,
+        password2: matchPwd,
+      });
       const response = await axios.post(
         REGISTER_URL,
         JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
@@ -83,11 +88,9 @@ const SignUpForm = () => {
         }
       );
       const accessToken = response?.data?.access;
-      const refreshToken = response?.data?.refresh;
-      const role = ["customer"]; // To be modified later
+      const role = ["customer"];  // Change this later
       const email = response?.data?.email;
-      console.log(response?.data);
-      setAuth({ email, accessToken, refreshToken, role });
+      setAuth({ email, accessToken, role });
       setUser("");
       setPwd("");
       setMatchPwd("");
@@ -103,7 +106,6 @@ const SignUpForm = () => {
       errRef.current.focus();
       console.log(err);
     }
-
   };
 
   return (

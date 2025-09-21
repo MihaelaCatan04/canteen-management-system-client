@@ -54,7 +54,7 @@ const NavBar = () => {
     setIsDropdownOpen(false);
     try {
       await axiosPrivate.post("/auth/logout/", {
-        refresh: auth?.refreshToken,
+        withCredentials: true
       });
 
       setAuth({});
@@ -75,7 +75,7 @@ const NavBar = () => {
     const getUserName = async () => {
       try {
         const response = await axiosPrivate.get("/users/me", {
-          signal: controller.signal,
+          signal: controller.signal, withCredentials: true
         });
         if (isMounted) {
           setName(response?.data.first_name);
