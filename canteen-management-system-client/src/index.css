@@ -37,6 +37,13 @@ body {
   font-style: normal;
 }
 
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+
 .loading-title.ant-typography {
   color: #ff8a00;
   font-size: 72px;
