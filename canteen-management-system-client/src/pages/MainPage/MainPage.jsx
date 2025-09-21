@@ -8,6 +8,7 @@ import Menu from "../../components/MainPage/Menu/Menu";
 import CurrentBalance from "../../components/MainPage/CurrentBalance/CurrentBalance";
 import OrderHistory from "../../components/MainPage/OrderHistory/OrderHistory";
 import PopUpOrder from "../../components/MainPage/PopUpOrder/PopUpOrder";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -155,12 +156,18 @@ const MainPage = () => {
   const openPopup = () => setIsOpen(true);
   const closePopup = () => setIsOpen(false);
 
+  const navigate = useNavigate();
+
+  const handleOrderHistoryClick = () => {
+    navigate("/order-history");
+  };
+
   return (
     <MainPageLayout>
       <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
         <CurrentBalance />
         <Col xs={24} sm={8} md={8}>
-          <OrderHistory />
+          <OrderHistory onClick={handleOrderHistoryClick} />
         </Col>
       </Row>
 

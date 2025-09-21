@@ -105,7 +105,9 @@ const NavBar = () => {
         style={{
           margin: 0,
           color: "#000",
+          cursor: "pointer",
         }}
+        onClick={() => navigate("/order")} 
       >
         TrayGo
       </Title>

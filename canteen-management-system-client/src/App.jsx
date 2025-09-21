@@ -6,6 +6,7 @@ import MainPage from "./pages/MainPage/MainPage.jsx";
 import RequireAuth from "./components/LandingPage/RequireAuth/RequireAuth.jsx";
 import UnauthorizedComponent from "./components/UnauthorizedPage/UnauthorizedComponent/UnauthorizedComponent.jsx";
 import PersistentLogIn from "./components/PersistentLogIn/PersistentLogIn.jsx";
+import OrderHistoryPage from "./pages/OrderHistoryPage/OrderHistoryPage.jsx";
 
 const ROLES = {
   "Customer": "customer",
@@ -22,6 +23,7 @@ function App() {
       <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
         {/* Later to be replaced with verified customers */}
         <Route path="/order" element={<MainPage />} />
+        <Route path="/order-history" element={<OrderHistoryPage />} />
       </Route>
       </Route>
       <Route path="/unauthorized" element={<UnauthorizedComponent />} />
