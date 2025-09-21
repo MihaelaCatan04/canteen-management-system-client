@@ -8,6 +8,7 @@ import UnauthorizedComponent from "./components/UnauthorizedPage/UnauthorizedCom
 import PersistentLogIn from "./components/PersistentLogIn/PersistentLogIn.jsx";
 import OrderHistoryPage from "./pages/OrderHistoryPage/OrderHistoryPage.jsx";
 import Page404 from "./pages/Page404/Page404.jsx";
+import Page429 from "./pages/Page429/Page429.jsx";
 
 const ROLES = {
   "Customer": "customer",
@@ -28,7 +29,9 @@ function App() {
       </Route>
       </Route>
       <Route path="/unauthorized" element={<UnauthorizedComponent />} />
+      <Route path="/429" element={<Page429 />} />
       <Route path="*" element={<Page404 />} />
+      
     </Routes>
   );
 }
