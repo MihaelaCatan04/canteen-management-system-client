@@ -1,6 +1,6 @@
 import OrderHistory from "../../components/MainPage/OrderHistory/OrderHistory";
 import MainPageLayout from "../../layouts/MainPage/MainPage";
-import { Row } from "antd";
+import { Col } from "antd";
 import OrderHistoryCardContainer from "../../components/OrderHistoryPage/OrderCardContainer/OrderCardContainer";
 
 const orders = [
@@ -45,16 +45,17 @@ const orders = [
 const OrderHistoryPage = () => {
     return (
         <MainPageLayout>
-            <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
+
+          <Col xs={24} sm={24} md={16} lg={16} style={{ marginBottom: "20px" }}>
                 <OrderHistory />
-            </Row>
-
-            <OrderHistoryCardContainer orders={orders} />
 
 
+
+          </Col>
+                      <OrderHistoryCardContainer orders={orders} />
 
         </MainPageLayout>
     );
 }
- 
+
 export default OrderHistoryPage;
