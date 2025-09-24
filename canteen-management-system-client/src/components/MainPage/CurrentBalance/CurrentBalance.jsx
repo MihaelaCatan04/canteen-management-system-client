@@ -30,7 +30,7 @@ const CurrentBalance = () => {
       try {
         const response = await axiosPrivate.get(`/wallets/me/`, {
           signal: controller.signal,
-          withCredentials: true
+          withCredentials: true,
         });
         if (isMounted) {
           setBalance(response?.data.current_balance);
@@ -38,7 +38,7 @@ const CurrentBalance = () => {
       } catch (err) {
         if (err.name !== "CanceledError") {
           console.error("Error fetching balance:", err);
-          navigate('/login', { state: { from: location }, replace: true });
+          navigate("/login", { state: { from: location }, replace: true });
         }
       }
     };
@@ -82,7 +82,19 @@ const CurrentBalance = () => {
             </div>
           </div>
         </div>
-        <div className="view-transactions-button">
+        <div
+          className="view-transactions-button"
+          role="button"
+          tabIndex={0}
+          onClick={() => navigate("/transaction-history")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              navigate("/transaction-history");
+            }
+          }}
+          style={{ cursor: "pointer" }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="12"
