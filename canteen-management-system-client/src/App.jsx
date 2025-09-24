@@ -10,7 +10,7 @@ import Page404 from "./pages/Page404/Page404.jsx";
 import Page429 from "./pages/Page429/Page429.jsx";
 import Page403 from "./pages/Page403/Page403.jsx";
 import TransactionHistoryPage from "./pages/TransactionHistoryPage/TransactionHistoryPage";
-
+import "./api/Interceptors";
 const ROLES = {
   Customer: "customer",
   ConfirmedCustomer: "confirmedCustomer",

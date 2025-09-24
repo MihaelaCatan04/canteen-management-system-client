@@ -4,7 +4,7 @@ import {
   UserOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Divider, Input, Row, Typography } from "antd";
+import { Button, Divider, Input } from "antd";
 import "./SignUpForm.css";
 import { useRef, useState, useEffect } from "react";
 import {
@@ -13,20 +13,19 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import axios from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../../../services/AuthService";
 import useAuth from "../../../hooks/useAuth";
-
-const { Text } = Typography;
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
 const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
-const REGISTER_URL = "/auth/register/cookie/";
 
 const SignUpForm = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -41,15 +40,10 @@ const SignUpForm = () => {
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const navigate = useNavigate();
-
-  const location = useLocation();
-  const { setAuth } = useAuth();
-
-  const to = "/order";
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -67,44 +61,30 @@ const SignUpForm = () => {
   useEffect(() => {
     setErrMsg("");
   }, [user, pwd, matchPwd]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validName || !validPwd || !validMatch) {
       setErrMsg("Invalid Entry");
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      console.log({
-        email: user,
-        password: pwd,
-        password2: matchPwd,
-      });
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({ email: user, password: pwd, password2: matchPwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      const accessToken = response?.data?.access;
-      const role = ["customer"]; // Change this later
-      const email = response?.data?.email;
-      setAuth({ email, accessToken, role });
+      const authData = await authService.register(user, pwd, matchPwd);
+
+      setAuth(authData);
       setUser("");
       setPwd("");
       setMatchPwd("");
-      navigate(to, { replace: true });
+      navigate("/order", { replace: true });
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Email already registered");
-      } else {
-        setErrMsg("Registration Failed");
-      }
-      errRef.current.focus();
-      console.log(err);
+      setErrMsg(err.message);
+      errRef.current?.focus();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,11 +117,13 @@ const SignUpForm = () => {
           required
           ref={userRef}
           onChange={(e) => setUser(e.target.value)}
+          value={user}
           aria-invalid={validName ? "false" : "true"}
           aria-describedby="uidnote"
           onFocus={() => setUserFocus(true)}
           onBlur={() => setUserFocus(false)}
           autoComplete="off"
+          disabled={isLoading}
         />
         <p
           id="uidnote"
@@ -154,6 +136,7 @@ const SignUpForm = () => {
           &nbsp; Email should be in the format: <br />
           <code>username.lastname@domain.utm.md</code>
         </p>
+
         <label className="signup-label poppins-regular" htmlFor="password">
           Password:
           <span className={validPwd ? "valid" : "hide"}>
@@ -174,11 +157,13 @@ const SignUpForm = () => {
           id="password"
           required
           onChange={(e) => setPwd(e.target.value)}
+          value={pwd}
           aria-invalid={validPwd ? "false" : "true"}
           aria-describedby="pwdnote"
           onFocus={() => setPwdFocus(true)}
           onBlur={() => setPwdFocus(false)}
           autoComplete="off"
+          disabled={isLoading}
         />
         <p
           id="pwdnote"
@@ -188,6 +173,7 @@ const SignUpForm = () => {
           &nbsp; Password must include at least 8 characters, 1 uppercase
           letter, 1 lowercase letter, 1 number, and 1 special character.
         </p>
+
         <label
           className="signup-label poppins-regular"
           htmlFor="confirm-password"
@@ -202,7 +188,7 @@ const SignUpForm = () => {
         </label>
         <Input.Password
           size="large"
-          placeholder="Password"
+          placeholder="Confirm Password"
           prefix={<LockOutlined />}
           iconRender={(visible) =>
             visible ? <EyeOutlined /> : <EyeOutlined />
@@ -214,8 +200,10 @@ const SignUpForm = () => {
           aria-invalid={validMatch ? "false" : "true"}
           aria-describedby="confirmnote"
           onChange={(e) => setMatchPwd(e.target.value)}
+          value={matchPwd}
           onFocus={() => setMatchFocus(true)}
           onBlur={() => setMatchFocus(false)}
+          disabled={isLoading}
         />
         <p
           id="confirmnote"
@@ -224,6 +212,7 @@ const SignUpForm = () => {
           <FontAwesomeIcon icon={faInfoCircle} style={{ color: "#3678eb" }} />
           &nbsp; Passwords must match.
         </p>
+
         <Button
           type="primary"
           htmlType="submit"
@@ -231,17 +220,20 @@ const SignUpForm = () => {
           size="large"
           className="signup-button"
           icon={<UserAddOutlined className="create-account-icon-signup" />}
-          disabled={!validName || !validPwd || !validMatch ? true : false}
+          disabled={!validName || !validPwd || !validMatch}
+          loading={isLoading}
         >
           Sign Up
         </Button>
       </form>
+
       <Divider className="poppins-regular">Are you an existing user?</Divider>
       <Button
         block
         size="large"
         icon={<UserOutlined className="account-icon-signup" />}
         onClick={() => navigate("/login")}
+        disabled={isLoading}
       >
         Log In
       </Button>
