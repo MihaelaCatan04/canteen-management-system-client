@@ -9,6 +9,7 @@ import OrderHistoryPage from "./pages/OrderHistoryPage/OrderHistoryPage.jsx";
 import Page404 from "./pages/Page404/Page404.jsx";
 import Page429 from "./pages/Page429/Page429.jsx";
 import Page403 from "./pages/Page403/Page403.jsx";
+import TransactionHistoryPage from "./pages/TransactionHistoryPage/TransactionHistoryPage";
 
 const ROLES = {
   "Customer": "customer",
@@ -26,6 +27,7 @@ function App() {
         {/* Later to be replaced with verified customers */}
         <Route path="/order" element={<MainPage />} />
         <Route path="/order-history" element={<OrderHistoryPage />} />
+        <Route path="/transaction-history" element={<TransactionHistoryPage />} />
       </Route>
       </Route>
       <Route path="/forbidden" element={<Page403 />} />
