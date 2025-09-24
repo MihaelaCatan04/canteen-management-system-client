@@ -8,10 +8,10 @@ export const API_ENDPOINTS = {
   USER: {
     PROFILE: "/user/me/",
   },
-  WALLET: {
+  WALLETS: {
     BALANCE: "/wallets/me/",
   },
-  MENU: {
+  MENUS: {
     LIST: "/menus/",
   }
 };

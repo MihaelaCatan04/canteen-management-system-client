@@ -1,17 +1,17 @@
-import { Card, Col, Typography, Badge } from "antd";
+import { Card, Col, Typography } from "antd";
 import "./CurrentBalance.css";
 import { useEffect, useState } from "react";
-import axios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
+import { walletsService } from "../../../services/WalletsService";
 
 const { Title, Text } = Typography;
 
 const CurrentBalance = () => {
   const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { auth } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,25 +20,29 @@ const CurrentBalance = () => {
     const controller = new AbortController();
 
     const getBalance = async () => {
-      const user_id = auth?.user_id;
-
-      if (!user_id) {
+      if (!auth?.user_id) {
         console.log("No user_id found");
+        setLoading(false);
         return;
       }
 
       try {
-        const response = await axiosPrivate.get(`/wallets/me/`, {
-          signal: controller.signal,
-          withCredentials: true,
-        });
+        setLoading(true);
+        setError(null);
+
+        const data = await walletsService.getBalance();
+
         if (isMounted) {
-          setBalance(response?.data.current_balance);
+          setBalance(data.current_balance || 0);
         }
       } catch (err) {
-        if (err.name !== "CanceledError") {
+        if (isMounted) {
           console.error("Error fetching balance:", err);
-          navigate("/login", { state: { from: location }, replace: true });
+          setError(err.message);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
         }
       }
     };
@@ -49,7 +53,57 @@ const CurrentBalance = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [auth?.user_id, axiosPrivate]);
+  }, [auth?.user_id, navigate, location]);
+
+  if (loading) {
+    return (
+      <Col xs={24} md={16}>
+        <Card className="current-balance-card">
+          <div>
+            <Text className="current-balance-text poppins-medium">
+              Current Balance
+            </Text>
+            <div className="balance-container">
+              <div className="balance-amount">
+                <Title
+                  className="poppins-bold"
+                  level={2}
+                  style={{ color: "white", margin: "0", fontSize: "2rem" }}
+                >
+                  Loading...
+                </Title>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </Col>
+    );
+  }
+
+  if (error) {
+    return (
+      <Col xs={24} md={16}>
+        <Card className="current-balance-card">
+          <div>
+            <Text className="current-balance-text poppins-medium">
+              Current Balance
+            </Text>
+            <div className="balance-container">
+              <div className="balance-amount">
+                <Title
+                  className="poppins-bold"
+                  level={2}
+                  style={{ color: "white", margin: "0", fontSize: "2rem" }}
+                >
+                  Error loading balance
+                </Title>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </Col>
+    );
+  }
 
   return (
     <Col xs={24} md={16}>

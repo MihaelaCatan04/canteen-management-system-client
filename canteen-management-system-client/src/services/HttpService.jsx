@@ -1,6 +1,6 @@
 import axiosPublic, { axiosPrivate } from "../api/axios";
 
-class HttpService {
+export class HttpService {
   async publicPost(url, data, config = {}) {
     try {
       const response = await axiosPublic.post(url, data, config);
