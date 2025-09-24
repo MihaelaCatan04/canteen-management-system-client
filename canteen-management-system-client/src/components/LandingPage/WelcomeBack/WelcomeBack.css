@@ -1,17 +1,23 @@
 .icon-container {
   width: 64px;
   height: 64px;
-  background-color: #1890ff;
-  border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
 }
 
-.icon {
+.icon,
+.icon-container svg {
   font-size: 32px;
-  color: white;
-  margin-bottom: 0px;
+  color: #fff;
+  margin: 0;
+  line-height: 1;
+  display: block;
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .welcome-col {

@@ -140,7 +140,7 @@
     align-items: flex-start;
     gap: 4px;
   }
-  
+
   .item-controls {
     gap: 10px;
   }
@@ -164,7 +164,7 @@
   .item-card {
     margin-bottom: 0.75rem;
   }
-  
+
   .item-controls {
     gap: 8px;
     margin-top: 12px;
@@ -189,7 +189,7 @@
   .product-list {
     padding-left: 0.75rem;
   }
-  
+
   .item-controls {
     gap: 6px;
     margin-top: 10px;

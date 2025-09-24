@@ -11,11 +11,7 @@ const TransactionHistoryCardContainer = ({ transactions }) => {
       key: "orderId",
       align: "center",
       render: (text) => (
-        <span
-          className="poppins-medium2 order-id-text"
-        >
-          {text}
-        </span>
+        <span className="poppins-medium2 order-id-text">{text}</span>
       ),
     },
     {
@@ -62,11 +58,7 @@ const TransactionHistoryCardContainer = ({ transactions }) => {
       key: "date",
       align: "center",
       render: (date) => (
-        <span
-          className="poppins-medium date-text"
-        >
-          {date}
-        </span>
+        <span className="poppins-medium date-text">{date}</span>
       ),
     },
     {
@@ -98,9 +90,7 @@ const TransactionHistoryCardContainer = ({ transactions }) => {
       key: "balance",
       align: "center",
       render: (balance) => (
-        <span
-          className="poppins-medium2 balance-text"
-        >
+        <span className="poppins-medium2 balance-text">
           ${balance.toFixed(2)}
         </span>
       ),

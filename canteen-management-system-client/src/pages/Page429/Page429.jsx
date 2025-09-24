@@ -29,7 +29,7 @@ const Page429 = () => {
         <div className="error-code poppins-extrabold">ERROR 429</div>
         <div className="error-title poppins-medium">Too Many Requests</div>
         <div className="error-description poppins-regular">
-          You've made too many requests in a short time. 
+          You've made too many requests in a short time.
           <br />
           Please wait a moment before trying again.
         </div>
