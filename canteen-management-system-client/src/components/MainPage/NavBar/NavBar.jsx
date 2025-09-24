@@ -54,7 +54,7 @@ const NavBar = () => {
     setIsDropdownOpen(false);
     try {
       await axiosPrivate.post("/auth/logout/", {
-        withCredentials: true
+        withCredentials: true,
       });
 
       setAuth({});
@@ -75,7 +75,8 @@ const NavBar = () => {
     const getUserName = async () => {
       try {
         const response = await axiosPrivate.get("/users/me", {
-          signal: controller.signal, withCredentials: true
+          signal: controller.signal,
+          withCredentials: true,
         });
         if (isMounted) {
           setName(response?.data.first_name);
@@ -107,7 +108,7 @@ const NavBar = () => {
           color: "#000",
           cursor: "pointer",
         }}
-        onClick={() => navigate("/order")} 
+        onClick={() => navigate("/order")}
       >
         TrayGo
       </Title>
@@ -154,9 +155,9 @@ const NavBar = () => {
                 <div
                   className="dropdown-item poppins-medium"
                   onClick={handleLogOut}
-                  style={{ 
+                  style={{
                     opacity: isLoggingOut ? 0.6 : 1,
-                    cursor: isLoggingOut ? 'not-allowed' : 'pointer'
+                    cursor: isLoggingOut ? "not-allowed" : "pointer",
                   }}
                 >
                   Log Out

@@ -9,7 +9,7 @@ const WelcomeBack = () => {
     <Col span={24} className="welcome-col">
       <Row justify="center" align="middle" className="welcome-row">
         <Col>
-          <div className="icon-container">
+          <div className="icon-container" style={{borderRadius: '50%', backgroundColor: "#3B82F6"}}>
             <UserOutlined className="icon" />
           </div>
         </Col>

@@ -64,8 +64,12 @@ const PopUpOrder = ({ isOpen, closePopup, selectedDate, selectedTimeSlot }) => {
             <strong className="poppins-bold">Pick-up Time:</strong>
           </Col>
           <Col span={8} className="poppins-regular">
-            <p style={{ margin: 0 }}>{`${MONTHS[selectedDate.getMonth()]} ${selectedDate.getDate()}, ${selectedDate.getFullYear()}`}</p>
-            <p style={{ margin: 0 }}>{selectedTimeSlot?.time || "No time selected"}</p>
+            <p style={{ margin: 0 }}>{`${
+              MONTHS[selectedDate.getMonth()]
+            } ${selectedDate.getDate()}, ${selectedDate.getFullYear()}`}</p>
+            <p style={{ margin: 0 }}>
+              {selectedTimeSlot?.time || "No time selected"}
+            </p>
           </Col>
         </Row>
         <div className="popup-divider" />

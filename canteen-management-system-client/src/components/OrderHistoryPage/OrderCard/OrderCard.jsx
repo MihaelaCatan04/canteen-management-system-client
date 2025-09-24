@@ -5,11 +5,11 @@ const OrderCard = ({ order }) => {
   const statusStyles = {
     Pending: { backgroundColor: "#F1E5C0", color: "#755F3B" },
     Cancelled: { backgroundColor: "#EBBEBE", color: "#782B21" },
-    Completed: { backgroundColor: "#B9DEB9", color: "#465742" },
+    Processed: { backgroundColor: "#B9DEB9", color: "#465742" },
   };
 
   return (
-    <Card className="order-card" bodyStyle={{ padding: "1rem" }}>
+    <Card className="order-card" style={{ padding: "1rem" }}>
       <div className="order-header">
         <div>
           <p className="order-id poppins-medium2">{order.id}</p>

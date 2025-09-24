@@ -12,8 +12,8 @@ import Page403 from "./pages/Page403/Page403.jsx";
 import TransactionHistoryPage from "./pages/TransactionHistoryPage/TransactionHistoryPage";
 
 const ROLES = {
-  "Customer": "customer",
-  "ConfirmedCustomer": "confirmedCustomer"
+  Customer: "customer",
+  ConfirmedCustomer: "confirmedCustomer",
 };
 
 function App() {
@@ -23,17 +23,19 @@ function App() {
       <Route path="/login" element={<LandingPage />} />
       <Route path="/register" element={<LandingPage />} />
       <Route element={<PersistentLogIn />}>
-      <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
-        {/* Later to be replaced with verified customers */}
-        <Route path="/order" element={<MainPage />} />
-        <Route path="/order-history" element={<OrderHistoryPage />} />
-        <Route path="/transaction-history" element={<TransactionHistoryPage />} />
-      </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
+          {/* Later to be replaced with verified customers */}
+          <Route path="/order" element={<MainPage />} />
+          <Route path="/order-history" element={<OrderHistoryPage />} />
+          <Route
+            path="/transaction-history"
+            element={<TransactionHistoryPage />}
+          />
+        </Route>
       </Route>
       <Route path="/forbidden" element={<Page403 />} />
       <Route path="/429" element={<Page429 />} />
       <Route path="*" element={<Page404 />} />
-      
     </Routes>
   );
 }

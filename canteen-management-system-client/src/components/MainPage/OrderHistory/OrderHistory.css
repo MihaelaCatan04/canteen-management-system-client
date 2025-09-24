@@ -39,7 +39,7 @@
   .order-history-container {
     gap: 10px;
   }
-  
+
   .icon-container {
     padding: 1.25rem;
   }
@@ -51,15 +51,15 @@
     gap: 8px;
     align-items: center;
   }
-  
+
   .icon-container {
     padding: 1rem;
   }
-  
+
   .order-history-title {
     font-size: 1.125rem !important;
   }
-  
+
   .order-history-subtitle {
     font-size: 0.875rem !important;
   }
@@ -69,15 +69,15 @@
   .order-history-container {
     gap: 6px;
   }
-  
+
   .icon-container {
     padding: 0.75rem;
   }
-  
+
   .order-history-title {
     font-size: 1rem !important;
   }
-  
+
   .order-history-subtitle {
     font-size: 0.8rem !important;
   }

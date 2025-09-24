@@ -164,9 +164,9 @@ const MainPage = () => {
 
   return (
     <MainPageLayout>
-      <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
+      <Row gutter={[16, 16]} style={{ marginBottom: "20px", alignItems: "stretch" }}>
         <CurrentBalance />
-        <Col xs={24} sm={8} md={8}>
+        <Col xs={24} sm={8} md={8} style={{ display: "flex" }}>
           <OrderHistory onClick={handleOrderHistoryClick} />
         </Col>
       </Row>
@@ -191,7 +191,12 @@ const MainPage = () => {
         menuItems={menuItems}
         openPopup={openPopup}
       />
-      <PopUpOrder isOpen={isOpen} closePopup={closePopup} selectedDate={selectedDate} selectedTimeSlot={selectedTimeSlot} />
+      <PopUpOrder
+        isOpen={isOpen}
+        closePopup={closePopup}
+        selectedDate={selectedDate}
+        selectedTimeSlot={selectedTimeSlot}
+      />
     </MainPageLayout>
   );
 };

@@ -88,7 +88,7 @@ const SignUpForm = () => {
         }
       );
       const accessToken = response?.data?.access;
-      const role = ["customer"];  // Change this later
+      const role = ["customer"]; // Change this later
       const email = response?.data?.email;
       setAuth({ email, accessToken, role });
       setUser("");

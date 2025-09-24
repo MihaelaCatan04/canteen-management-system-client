@@ -2,8 +2,8 @@
   border-radius: 1rem;
   border: 1px solid #cecece;
   background: #fff;
-  width: 100%;              /* make it responsive */
-  padding: 1rem;            /* add some breathing room */
+  width: 100%; /* make it responsive */
+  padding: 1rem; /* add some breathing room */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

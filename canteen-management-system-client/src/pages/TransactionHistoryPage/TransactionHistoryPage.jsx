@@ -2,7 +2,7 @@ import MainPageLayout from "../../layouts/MainPage/MainPage";
 import TransactionHistoryCardContainer from "../../components/TransactionHistoryPage/TransactionHistoryCardContainer/TransactionHistoryCardContainer";
 
 const TransactionHistoryPage = () => {
-    const transactions = [
+  const transactions = [
     {
       key: "1",
       orderId: "#ORD004",
@@ -40,11 +40,11 @@ const TransactionHistoryPage = () => {
       status: "Completed",
     },
   ];
-    return (
-        <MainPageLayout>
-            <TransactionHistoryCardContainer transactions={transactions} />
-        </MainPageLayout>
-    );
-}
- 
+  return (
+    <MainPageLayout>
+      <TransactionHistoryCardContainer transactions={transactions} />
+    </MainPageLayout>
+  );
+};
+
 export default TransactionHistoryPage;

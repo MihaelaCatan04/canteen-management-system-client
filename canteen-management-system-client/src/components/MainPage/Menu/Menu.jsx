@@ -6,7 +6,13 @@ import { Row, Col, Image } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import OrderTotal from "../OrderTotal/OrderTotal.jsx";
 
-const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems, openPopup }) => {
+const Menu = ({
+  selectedTimeSlot,
+  selectedDate,
+  selectedSlot,
+  menuItems,
+  openPopup,
+}) => {
   const [items, setItems] = useState(menuItems || {});
 
   useEffect(() => {
@@ -115,13 +121,13 @@ const Menu = ({ selectedTimeSlot, selectedDate, selectedSlot, menuItems, openPop
               </Col>
             </Row>
 
-            {/* <Image
+            <Image
               src="../../../images/food.svg"
               alt="food"
               width="100%"
               style={{ borderRadius: "12px 12px 0 0" }}
               preview={false}
-            /> */}
+            />
 
             <Row gutter={[16, 16]} className="menu-items-row">
               {group.menu_items.map((item, index) => (

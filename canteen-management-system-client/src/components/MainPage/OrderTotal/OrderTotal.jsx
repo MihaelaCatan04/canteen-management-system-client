@@ -27,7 +27,7 @@ const OrderTotal = ({
   selectedDate,
   selectedTimeSlot,
   handleRemoveItem,
-  openPopup
+  openPopup,
 }) => {
   const getCategoryCounts = () => {
     const counts = {};
