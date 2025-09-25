@@ -1,3 +1,4 @@
+import { axiosPrivate } from "../api/axios";
 import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 

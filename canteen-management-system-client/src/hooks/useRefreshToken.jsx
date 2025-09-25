@@ -1,25 +1,26 @@
-import axios from "../api/axios";
+import axiosPublic from "../api/axios";
 import useAuth from "./useAuth";
 import { jwtDecode } from "jwt-decode";
+import { httpService } from "../services/HttpService";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const refresh = async () => {
-    const response = await axios.post(
-      "/auth/refresh/cookie/",
+    const response = await axiosPublic.post(
+      "/auth/refresh/",
       {},
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
+      { withCredentials: true }
     );
-    const accessToken = response?.data?.access;
+    const accessToken = response?.data?.access || response?.data?.token || null;
+    if (!accessToken) throw new Error("No access token in refresh response");
+    httpService.setAuthToken(accessToken);
     const decoded = jwtDecode(accessToken);
     setAuth((prev) => ({
       ...prev,
       accessToken,
       user_id: decoded.user_id,
-      role: [decoded.role],
+      role: decoded.role ? [decoded.role] : prev.role,
+      isVerified: decoded.is_verified,
     }));
     return accessToken;
   };

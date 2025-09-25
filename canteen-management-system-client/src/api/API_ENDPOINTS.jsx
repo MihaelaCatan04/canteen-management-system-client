@@ -1,8 +1,8 @@
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: "/auth/login/cookie/",
-    REGISTER: "/auth/register/cookie/",
-    REFRESH: "/auth/refresh/cookie/",
+    LOGIN: "/auth/login/",
+    REGISTER: "/auth/register/",
+    REFRESH: "/auth/refresh/",
     LOGOUT: "/auth/logout/",
   },
   USER: {
@@ -17,5 +17,8 @@ export const API_ENDPOINTS = {
   ORDERS: {
     CREATE: "/orders/",
     LIST: "/orders/",
+  },
+  TRANSACTIONS: {
+    LIST: "/wallets/me/transactions/",
   },
 };

@@ -1,6 +1,7 @@
 import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 import { jwtDecode } from "jwt-decode";
+import axiosPublic from "../api/axios";
 
 export class AuthService {
   async login(email, password) {
@@ -45,20 +46,18 @@ export class AuthService {
 
   async refreshToken() {
     try {
-      const data = await httpService.publicPost(API_ENDPOINTS.AUTH.REFRESH);
-      const accessToken = data?.access;
-
-      if (accessToken) {
-        httpService.setAuthToken(accessToken);
-        const user_id = jwtDecode(accessToken).user_id;
-        const role = [jwtDecode(accessToken).role];
-        const isVerified = jwtDecode(accessToken).is_verified;
-        return { user_id, accessToken, role, isVerified };
+      const res = await axiosPublic.post(
+        API_ENDPOINTS.AUTH.REFRESH,
+        {},
+        { withCredentials: true }
+      );
+      const newToken = res?.data?.access;
+      if (newToken) {
+        httpService.setAuthToken(newToken);
       }
-
-      throw new Error("No access token received");
+      return res?.data;
     } catch (err) {
-      httpService.removeAuthToken();
+      console.error("refresh token failed", err);
       throw err;
     }
   }
