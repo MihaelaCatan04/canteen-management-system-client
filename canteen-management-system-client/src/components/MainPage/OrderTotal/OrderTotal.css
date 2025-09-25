@@ -133,7 +133,6 @@
   gap: 0.5rem;
 }
 
-/* Tablet responsiveness */
 @media (max-width: 1024px) {
   .order-total-header {
     flex-direction: column;
@@ -146,7 +145,6 @@
   }
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .order-total-card .ant-row {
     flex-direction: column;

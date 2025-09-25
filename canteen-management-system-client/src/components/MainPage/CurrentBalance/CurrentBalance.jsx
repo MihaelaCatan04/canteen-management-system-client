@@ -33,7 +33,7 @@ const CurrentBalance = () => {
         const data = await walletsService.getBalance();
 
         if (isMounted) {
-          setBalance(data.current_balance || 0);
+          setBalance(data.available_balance || 0);
         }
       } catch (err) {
         if (isMounted) {

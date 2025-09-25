@@ -12,6 +12,10 @@ export const API_ENDPOINTS = {
     BALANCE: "/wallets/me/",
   },
   MENUS: {
-    LIST: "/menus/",
-  }
+    LIST: "/menus",
+  },
+  ORDERS: {
+    CREATE: "/orders/",
+    LIST: "/orders/",
+  },
 };
