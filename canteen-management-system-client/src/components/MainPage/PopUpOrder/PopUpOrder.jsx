@@ -82,7 +82,7 @@ const PopUpOrder = (props) => {
         <div className="popup-divider" />
 
         <div className="popup-actions">
-          <Button className="close-btn" onClick={() => closePopup && closePopup()}>
+          <Button className="btn-ok" onClick={() => closePopup && closePopup()}>
             OK
           </Button>
         </div>

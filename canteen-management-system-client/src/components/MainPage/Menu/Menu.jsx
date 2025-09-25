@@ -19,6 +19,14 @@ const Menu = ({
 }) => {
   const [items, setItems] = useState(null);
 
+  const imageMap = {
+    "Main Course": "../../../images/main.png",
+    "Desserts": "../../../images/sweets.png",
+    "Beverages": "../../../images/drinks.png",
+    "Salads": "../../../images/salads.png",
+    "Appetizers": "../../../images/appet.png"
+  }
+
   useEffect(() => {
     if (!menuItems) return;
 
@@ -288,7 +296,7 @@ const Menu = ({
               </Row> 
 
               <Image
-                src={category.image || menu.image || "../../../images/food.svg"}
+                src={imageMap[category.name] || "../../../images/main.png"}
                 alt={category.name}
                 width="100%"
                 style={{ borderRadius: "12px 12px 0 0", marginTop: 12 }}

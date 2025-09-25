@@ -199,294 +199,297 @@ const OrderTotal = ({
 
   return (
     <Card className="order-total-card">
-      <Row
-        className="order-total-header"
-        justify="space-between"
-        style={{ width: "100%", marginBottom: "16px", marginRight: "0" }}
-      >
-        <Col>
-          <Title
-            level={4}
-            style={{ marginBottom: 0, lineHeight: "2rem" }}
-            className="poppins-medium2 title-order-total"
-          >
-            Order <span style={{ color: "#3577E9" }}>Total</span>
-          </Title>
-        </Col>
-        <Col style={{ textAlign: "right" }}>
-          <Text className="poppins-regular text-order-date">
-            {`Preordering for: ${dateString} • `}
-            <span className="poppins-medium text-order-time">{selectedTimeSlot.time}</span>
-          </Text>
-        </Col>
-      </Row>
+      <div className="order-total-inner">
+        <Row
+          className="order-total-header"
+          justify="space-between"
+          style={{ width: "100%", marginBottom: "16px", marginRight: "0" }}
+        >
+          <Col>
+            <Title
+              level={4}
+              style={{ marginBottom: 0, lineHeight: "2rem" }}
+              className="poppins-medium2 title-order-total"
+            >
+              Order <span style={{ color: "#3577E9" }}>Total</span>
+            </Title>
+          </Col>
+          <Col style={{ textAlign: "right" }}>
+            <Text className="poppins-regular text-order-date">
+              {`Preordering for: ${dateString} • `}
+              <span className="poppins-medium text-order-time">{selectedTimeSlot.time}</span>
+            </Text>
+          </Col>
+        </Row>
 
-      <Row gutter={[32, 16]} style={{ width: "100%" }}>
-        <Col xs={24} lg={16}>
-          <Card className="items-card" size="small" style={{ padding: "10px" }}>
-            {items.map((item, index) => {
-              const resolved = resolveForHandlers(item);
-              const qty = Number(item.qty) || 0;
-              const remaining = Number(item.remaining_quantity) || 0;
+        <Row gutter={[32, 16]} style={{ width: "100%" }}>
+          <Col xs={24} lg={16}>
+            <Card className="items-card" size="small" style={{ padding: "10px" }}>
+              {items.map((item, index) => {
+                const resolved = resolveForHandlers(item);
+                const qty = Number(item.qty) || 0;
+                const remaining = Number(item.remaining_quantity) || 0;
 
-              const onDec = () => {
-                if (!resolved) return;
-                if (resolved.type === "nested") {
-                  handleQuantityChange(
-                    resolved.menuIndex,
-                    resolved.categoryIndex,
-                    resolved.itemIndex,
-                    -1
-                  );
-                } else {
-                  handleQuantityChange(
-                    resolved.groupIndex,
-                    resolved.itemIndex,
-                    -1
-                  );
-                }
-              };
+                const onDec = () => {
+                  if (!resolved) return;
+                  if (resolved.type === "nested") {
+                    handleQuantityChange(
+                      resolved.menuIndex,
+                      resolved.categoryIndex,
+                      resolved.itemIndex,
+                      -1
+                    );
+                  } else {
+                    handleQuantityChange(
+                      resolved.groupIndex,
+                      resolved.itemIndex,
+                      -1
+                    );
+                  }
+                };
 
-              const onInc = () => {
-                if (!resolved) return;
-                if (resolved.type === "nested") {
-                  handleQuantityChange(
-                    resolved.menuIndex,
-                    resolved.categoryIndex,
-                    resolved.itemIndex,
-                    1
-                  );
-                } else {
-                  handleQuantityChange(
-                    resolved.groupIndex,
-                    resolved.itemIndex,
-                    1
-                  );
-                }
-              };
+                const onInc = () => {
+                  if (!resolved) return;
+                  if (resolved.type === "nested") {
+                    handleQuantityChange(
+                      resolved.menuIndex,
+                      resolved.categoryIndex,
+                      resolved.itemIndex,
+                      1
+                    );
+                  } else {
+                    handleQuantityChange(
+                      resolved.groupIndex,
+                      resolved.itemIndex,
+                      1
+                    );
+                  }
+                };
 
-              const onRemove = () => {
-                if (!resolved) return;
-                if (resolved.type === "nested") {
-                  handleRemoveItem(
-                    resolved.menuIndex,
-                    resolved.categoryIndex,
-                    resolved.itemIndex
-                  );
-                } else {
-                  handleRemoveItem(resolved.groupIndex, resolved.itemIndex);
-                }
-              };
+                const onRemove = () => {
+                  if (!resolved) return;
+                  if (resolved.type === "nested") {
+                    handleRemoveItem(
+                      resolved.menuIndex,
+                      resolved.categoryIndex,
+                      resolved.itemIndex
+                    );
+                  } else {
+                    handleRemoveItem(resolved.groupIndex, resolved.itemIndex);
+                  }
+                };
 
-              return (
-                <div
-                  key={index}
-                  style={{
-                    padding: "12px 16px",
-                    borderBottom:
-                      index < items.length - 1 ? "1px solid #f0f0f0" : "none",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                  }}
-                >
-                  <div style={{ flex: 1, paddingRight: "16px" }}>
-                    <Text
-                      className="poppins-medium"
-                      style={{ fontSize: "16px", fontWeight: "500" }}
-                    >
-                      {item.item_name}
-                    </Text>
-                    <br />
-                    <Text
-                      className="poppins-regular"
-                      style={{ fontSize: "14px", color: "#6b7280" }}
-                    >
-                      {item.item_description}
-                    </Text>
-                  </div>
+                return (
                   <div
+                    key={index}
                     style={{
+                      padding: "12px 16px",
+                      borderBottom:
+                        index < items.length - 1 ? "1px solid #f0f0f0" : "none",
                       display: "flex",
-                      alignItems: "flex-end",
-                      gap: "8px",
-                      flexShrink: 0,
+                      justifyContent: "space-between",
+                      width: "100%",
                     }}
                   >
-                    <Button
-                      icon={<MinusOutlined />}
-                      size="small"
-                      shape="square"
+                    <div style={{ flex: 1, paddingRight: "16px" }}>
+                      <Text
+                        className="poppins-medium"
+                        style={{ fontSize: "16px", fontWeight: "500" }}
+                      >
+                        {item.item_name}
+                      </Text>
+                      <br />
+                      <Text
+                        className="poppins-regular"
+                        style={{ fontSize: "14px", color: "#6b7280" }}
+                      >
+                        {item.item_description}
+                      </Text>
+                    </div>
+                    <div
                       style={{
-                        backgroundColor: "#3b82f6",
-                        borderColor: "#3b82f6",
-                        color: "#fff",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "0.5rem",
-                      }}
-                      onClick={onDec}
-                      disabled={qty <= 0}
-                    />
-                    <Text
-                      strong
-                      style={{
-                        fontSize: "16px",
-                        minWidth: "20px",
-                        textAlign: "center",
-                        display: "inline-block",
+                        display: "flex",
+                        alignItems: "flex-end",
+                        gap: "8px",
+                        flexShrink: 0,
                       }}
                     >
-                      {qty}
-                    </Text>
-                    <Button
-                      icon={<PlusOutlined />}
-                      size="small"
-                      shape="square"
-                      style={{
-                        backgroundColor: "#3b82f6",
-                        borderColor: "#3b82f6",
-                        color: "#fff",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "0.5rem",
-                      }}
-                      onClick={onInc}
-                      disabled={remaining <= 0}
-                    />
+                      <Button
+                        icon={<MinusOutlined />}
+                        size="small"
+                        shape="square"
+                        style={{
+                          backgroundColor: "#3b82f6",
+                          borderColor: "#3b82f6",
+                          color: "#fff",
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "0.5rem",
+                        }}
+                        onClick={onDec}
+                        disabled={qty <= 0}
+                      />
+                      <Text
+                        strong
+                        style={{
+                          fontSize: "16px",
+                          minWidth: "20px",
+                          textAlign: "center",
+                          display: "inline-block",
+                        }}
+                      >
+                        {qty}
+                      </Text>
+                      <Button
+                        icon={<PlusOutlined />}
+                        size="small"
+                        shape="square"
+                        style={{
+                          backgroundColor: "#3b82f6",
+                          borderColor: "#3b82f6",
+                          color: "#fff",
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "0.5rem",
+                        }}
+                        onClick={onInc}
+                        disabled={remaining <= 0}
+                      />
 
-                    <Button
-                      icon={<CloseOutlined />}
-                      size="small"
-                      shape="square"
-                      style={{
-                        backgroundColor: "#ef4444",
-                        borderColor: "#ef4444",
-                        color: "#fff",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "0.5rem",
-                      }}
-                      onClick={onRemove}
-                    />
+                      <Button
+                        icon={<CloseOutlined />}
+                        size="small"
+                        shape="square"
+                        style={{
+                          backgroundColor: "#ef4444",
+                          borderColor: "#ef4444",
+                          color: "#fff",
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "0.5rem",
+                        }}
+                        onClick={onRemove}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </Card>
-        </Col>
+                );
+              })}
+            </Card>
+          </Col>
 
-        <Col xs={24} lg={8}>
-          <Card className="summary-card" size="small" style={{ marginBottom: 16, minWidth: '300px' }}>
-            <div style={{ width: "100%", padding: "8px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "12px",
-                }}
-              >
-                <Text
-                  className="poppins-medium"
-                  style={{ fontSize: "18px", fontWeight: "600" }}
-                >
-                  Total Products
-                </Text>
+          <Col xs={24} lg={8} className="right-col">
+            <Card className="summary-card" size="small" style={{ marginBottom: 16, minWidth: '300px' }}>
+              <div style={{ width: "100%", padding: "8px" }}>
                 <div
                   style={{
-                    backgroundColor: "#3b82f6",
-                    color: "#fff",
-                    borderRadius: "50%",
-                    width: "28px",
-                    height: "28px",
                     display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "16px",
-                    fontWeight: "600",
+                    marginBottom: "12px",
                   }}
                 >
-                  {totalItemCount}
-                </div>
-              </div>
-
-              <ul
-                className="product-list poppins-regular"
-                style={{ marginBottom: "24px", paddingLeft: "16px", listStyle: "disc" }}
-              >
-                {Object.entries(categoryCounts).map(([categoryKey, count]) => (
-                  <li
-                    key={categoryKey}
-                    style={{ marginBottom: "6px", fontSize: "15px" }}
+                  <Text
+                    className="poppins-medium"
+                    style={{ fontSize: "18px", fontWeight: "600" }}
                   >
-                    {count} {getCategoryDisplayName(categoryKey, count)}
-                  </li>
-                ))}
-              </ul>
+                    Total Products
+                  </Text>
+                  <div
+                    style={{
+                      backgroundColor: "#3b82f6",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      width: "28px",
+                      height: "28px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {totalItemCount}
+                  </div>
+                </div>
 
-              <div style={{ marginBottom: "20px" }}>
-                <Title
-                  level={5}
-                  style={{ margin: 0, fontSize: "20px" }}
-                  className="poppins-bold"
+                <ul
+                  className="product-list poppins-regular"
+                  style={{ marginBottom: "24px", paddingLeft: "16px", listStyle: "disc" }}
                 >
-                  TOTAL: <span style={{ color: "#3b82f6" }}>{total} MDL</span>
-                </Title>
-              </div>
+                  {Object.entries(categoryCounts).map(([categoryKey, count]) => (
+                    <li
+                      key={categoryKey}
+                      style={{ marginBottom: "6px", fontSize: "15px" }}
+                    >
+                      {count} {getCategoryDisplayName(categoryKey, count)}
+                    </li>
+                  ))}
+                </ul>
 
-              <Button
-                className="cancel-btn"
-                onClick={clearData}
-                block
+                <div style={{ marginBottom: "20px" }}>
+                  <Title
+                    level={5}
+                    style={{ margin: 0, fontSize: "20px" }}
+                    className="poppins-bold"
+                  >
+                    TOTAL: <span style={{ color: "#3b82f6" }}>{total} MDL</span>
+                  </Title>
+                </div>
+
+                <Button
+                  className="cancel-btn"
+                  onClick={clearData}
+                  block
+                  style={{
+                    backgroundColor: "#D9D9D9",
+                    borderColor: "#D9D9D9",
+                    color: "#374151",
+                    fontFamily: "Poppins",
+                    fontWeight: "500",
+                    fontStyle: "normal",
+                    marginBottom: "16px",
+                    height: "40px",
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Card>
+            {errorMessage && (
+              <div
+                className="order-error poppins-regular"
                 style={{
-                  backgroundColor: "#D9D9D9",
-                  borderColor: "#D9D9D9",
-                  color: "#374151",
-                  fontFamily: "Poppins",
-                  fontWeight: "500",
-                  fontStyle: "normal",
-                  marginBottom: "16px",
-                  height: "40px",
+                  color: "#b91c1c",
+                  background: "#fff1f2",
+                  padding: "8px 12px",
+                  borderRadius: 6,
+                  marginBottom: 12,
+                  wordBreak: "break-word",
                 }}
               >
-                Cancel
-              </Button>
-            </div>
-          </Card>
-          {errorMessage && (
-            <div
-              className="order-error poppins-regular"
+                {errorMessage}
+              </div>
+            )}
+            <Button
+              type="primary"
+              block
+              disabled={isSubmitting}
+              className="confirm-order-btn"
               style={{
-                color: "#b91c1c",
-                background: "#fff1f2",
-                padding: "8px 12px",
-                borderRadius: 6,
-                marginBottom: 12,
-                wordBreak: "break-word",
+                backgroundColor: "#3b82f6",
+                borderColor: "#3b82f6",
+                fontFamily: "Poppins",
+                fontWeight: "500",
+                fontStyle: "normal",
+                height: "40px",
               }}
+              onClick={placeOrder}
             >
-              {errorMessage}
-            </div>
-          )}
-          <Button
-            type="primary"
-            block
-            disabled={isSubmitting}
-            style={{
-              backgroundColor: "#3b82f6",
-              borderColor: "#3b82f6",
-              fontFamily: "Poppins",
-              fontWeight: "500",
-              fontStyle: "normal",
-              height: "40px",
-            }}
-            onClick={placeOrder}
-          >
-            {isSubmitting ? "Placing order..." : "Confirm Order"}
-          </Button>
-        </Col>
-      </Row>
+              {isSubmitting ? "Placing order..." : "Confirm Order"}
+            </Button>
+          </Col>
+        </Row>
+      </div>
     </Card>
   );
 };
