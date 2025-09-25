@@ -6,6 +6,7 @@ import { Card } from "antd";
 const { Title, Text } = Typography;
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { authService } from "../../../services/AuthService";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const NavBar = () => {
@@ -45,7 +46,6 @@ const NavBar = () => {
   const handleChangePassword = () => {
     console.log("Change Password clicked");
     setIsDropdownOpen(false);
-    // Add logic here
   };
 
   const handleLogOut = async () => {
@@ -53,10 +53,7 @@ const NavBar = () => {
     setIsLoggingOut(true);
     setIsDropdownOpen(false);
     try {
-      await axiosPrivate.post("/auth/logout/", {
-        withCredentials: true,
-      });
-
+      await authService.logout();
       setAuth({});
       navigate("/login", { replace: true });
     } catch (error) {

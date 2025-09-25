@@ -64,7 +64,7 @@ export class AuthService {
 
   async logout() {
     try {
-      await httpService.privatePost(API_ENDPOINTS.AUTH.LOGOUT);
+      await axiosPublic.post(API_ENDPOINTS.AUTH.LOGOUT, {}, { withCredentials: true });
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
