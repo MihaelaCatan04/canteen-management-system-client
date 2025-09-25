@@ -1,48 +1,82 @@
+import React, { useEffect, useState } from "react";
 import MainPageLayout from "../../layouts/MainPage/MainPage";
 import TransactionHistoryCardContainer from "../../components/TransactionHistoryPage/TransactionHistoryCardContainer/TransactionHistoryCardContainer";
+import { transactionService } from "../../services/TransactionService";
+
+const MONTHS_SHORT = [
+  "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
+];
+
+const mapApiTransaction = (tx) => {
+  const typeMap = {
+    refund: "Refund",
+    payment: "Payment",
+    hold: "Payment", 
+    deposit: "Deposit",
+  };
+
+  const parseNumber = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const signed = "signed_amount" in tx ? parseNumber(tx.signed_amount) : (parseNumber(tx.amount) * (tx.type === "refund" ? 1 : -1));
+  const remaining = parseNumber(tx.remaining_balance);
+
+  const d = tx.created_at ? new Date(tx.created_at) : null;
+  const dateStr = d
+    ? `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+    : "";
+
+  return {
+    key: tx.id,
+    orderId: tx.order_no ?? "",
+    type: typeMap[tx.type] ?? (tx.type ? String(tx.type).charAt(0).toUpperCase() + String(tx.type).slice(1) : ""),
+    date: dateStr,
+    amount: signed, 
+    balance: remaining,
+    status: tx.status ? String(tx.status).charAt(0).toUpperCase() + String(tx.status).slice(1) : "",
+  };
+};
 
 const TransactionHistoryPage = () => {
-  const transactions = [
-    {
-      key: "1",
-      orderId: "#ORD004",
-      type: "Refund",
-      date: "Jan 17, 2024",
-      amount: -63.0,
-      balance: 745.0,
-      status: "Cancelled",
-    },
-    {
-      key: "2",
-      orderId: "#ORD003",
-      type: "Payment",
-      date: "Jan 16, 2024",
-      amount: -73.5,
-      balance: 682.0,
-      status: "Completed",
-    },
-    {
-      key: "3",
-      orderId: "",
-      type: "Deposit",
-      date: "Jan 16, 2024",
-      amount: 255.5,
-      balance: 755.5,
-      status: "Completed",
-    },
-    {
-      key: "4",
-      orderId: "",
-      type: "Deposit",
-      date: "Jan 15, 2024",
-      amount: 500.0,
-      balance: 500.0,
-      status: "Completed",
-    },
-  ];
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const data = await transactionService.getTransactions();
+        if (!mounted) return;
+
+        const rawList = Array.isArray(data?.results)
+          ? data.results
+          : Array.isArray(data)
+          ? data
+          : data?.transactions
+          ? data.transactions
+          : [];
+
+        const list = rawList.map(mapApiTransaction);
+        setTransactions(list);
+      } catch (err) {
+        console.error("Failed to load transactions:", err);
+        if (!mounted) return;
+        setTransactions([]);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <MainPageLayout>
-      <TransactionHistoryCardContainer transactions={transactions} />
+      <TransactionHistoryCardContainer transactions={transactions} loading={loading} />
     </MainPageLayout>
   );
 };

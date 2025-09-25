@@ -19,6 +19,11 @@
 
 .menu-items-row {
   margin-top: 30px;
+  align-items: stretch;
+}
+
+.menu-items-row .ant-col {
+  display: flex;
 }
 
 .menu-item-card {
@@ -26,9 +31,18 @@
   border: 1px solid #e5e7eb;
   background: #fff;
   display: flex;
-  padding: 0.5rem;
   flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+  padding: 0.5rem;
   margin-bottom: 16px;
+}
+
+.menu-item-card .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 16px;
 }
 
 .menu-item-header {
@@ -38,6 +52,10 @@
   margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.menu-item-card .menu-item-header {
+  margin-bottom: 12px;
 }
 
 .quantity-controls {
@@ -56,10 +74,24 @@
   line-height: 1.25rem;
 }
 
+.menu-item-card .ant-card-body > .ant-row:last-of-type {
+  margin-top: auto;
+}
+
+.menu-item-card .item-description {
+  margin-bottom: 8px;
+  color: #6b7280;
+}
+
 .item-price {
   color: #3473e5;
   line-height: 1.75rem;
   text-align: left;
+}
+
+.menu-item-card .ant-card-body > .ant-text[type="danger"] {
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 @media (max-width: 1024px) {

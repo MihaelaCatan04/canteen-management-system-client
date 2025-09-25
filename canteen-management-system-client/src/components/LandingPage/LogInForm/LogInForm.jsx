@@ -4,14 +4,12 @@ import {
   UserOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Divider, Input, Row, Typography } from "antd";
+import { Button, Col, Divider, Input, Row } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect } from "react";
-import axios from "../../../api/axios";
-import { jwtDecode } from "jwt-decode";
 import useAuth from "../../../hooks/useAuth";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-const LOGIN_URL = "/auth/login/cookie/";
+import { useNavigate, useLocation } from "react-router-dom";
+import { authService } from "../../../services/AuthService";
 
 const LogInForm = () => {
   const navigate = useNavigate();
@@ -24,9 +22,10 @@ const LogInForm = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -35,35 +34,23 @@ const LogInForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ email: user, password: pwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      const accessToken = response?.data?.access;
-      const user_id = jwtDecode(accessToken).user_id;
-      const role = [jwtDecode(accessToken).role];
-      setAuth({ user_id, accessToken, role });
+      const authData = await authService.login(user, pwd);
+
+      setAuth(authData);
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Invalid email or password");
-      } else {
-        setErrMsg("Login Failed");
-      }
-      errRef.current.focus();
+      setErrMsg(err.message);
+      errRef.current?.focus();
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <>
       <p
@@ -89,6 +76,7 @@ const LogInForm = () => {
           onChange={(e) => setUser(e.target.value)}
           value={user}
           required
+          disabled={isLoading}
         />
         <label className="login-label poppins-regular" htmlFor="password">
           Password:
@@ -103,11 +91,11 @@ const LogInForm = () => {
           className="login-input"
           id="password"
           type="password"
-          classNames={"login-input"}
           autoComplete="off"
           onChange={(e) => setPwd(e.target.value)}
           value={pwd}
           required
+          disabled={isLoading}
         />
         <Row justify="start" className="login-row">
           <Col>
@@ -123,6 +111,7 @@ const LogInForm = () => {
           className="login-button"
           icon={<UserOutlined className="account-icon-login" />}
           htmlType="submit"
+          loading={isLoading}
         >
           Log In
         </Button>
@@ -133,6 +122,7 @@ const LogInForm = () => {
         size="large"
         icon={<UserAddOutlined className="create-account-icon-login" />}
         onClick={() => navigate("/register")}
+        disabled={isLoading}
       >
         Create Account
       </Button>

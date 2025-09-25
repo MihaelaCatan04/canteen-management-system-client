@@ -83,6 +83,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  width: 100%;
 }
 
 .btn-ok {
@@ -92,15 +93,6 @@
 
 .btn-ok:hover {
   background: #1e4db7;
-}
-
-.btn-close {
-  background: #e5e7eb;
-  color: #333;
-}
-
-.btn-close:hover {
-  background: #d1d5db;
 }
 
 @keyframes fadeIn {

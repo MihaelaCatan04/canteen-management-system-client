@@ -1,8 +1,9 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import "./PopUpOrder.css";
-import { Card } from "antd";
-import { Col, Row } from "antd";
+import { Card, Row, Col, Button } from "antd";
+
+
 const MONTHS = [
   "January",
   "February",
@@ -17,8 +18,12 @@ const MONTHS = [
   "November",
   "December",
 ];
-const PopUpOrder = ({ isOpen, closePopup, selectedDate, selectedTimeSlot }) => {
+const PopUpOrder = (props) => {
+  const { isOpen, closePopup, selectedDate, selectedTimeSlot, orderData } = props;
+
   if (!isOpen) return null;
+
+  const orderToShow = orderData ?? null;
 
   return createPortal(
     <div className="popup-overlay">
@@ -58,29 +63,28 @@ const PopUpOrder = ({ isOpen, closePopup, selectedDate, selectedTimeSlot }) => {
 
         <Row className="popup-details" align="top" gutter={[16, 16]}>
           <Col span={8} className="poppins-regular">
-            <strong className="poppins-bold">ORDER ID:</strong> #3823e
+            <strong className="poppins-bold">ORDER ID:</strong>{" "}
+            {orderToShow.order_no ?? "—"}
           </Col>
           <Col span={8} className="poppins-regular">
             <strong className="poppins-bold">Pick-up Time:</strong>
-          </Col>
-          <Col span={8} className="poppins-regular">
-            <p style={{ margin: 0 }}>{`${
-              MONTHS[selectedDate.getMonth()]
-            } ${selectedDate.getDate()}, ${selectedDate.getFullYear()}`}</p>
-            <p style={{ margin: 0 }}>
-              {selectedTimeSlot?.time || "No time selected"}
-            </p>
+            <div style={{ marginTop: 6 }}>
+              {orderToShow?.reservation_time
+                ? new Date(orderToShow.reservation_time).toLocaleString()
+                : selectedDate
+                ? `${MONTHS[new Date(selectedDate).getMonth()]} ${new Date(
+                    selectedDate
+                  ).getDate()}, ${new Date(selectedDate).getFullYear()} ${selectedTimeSlot?.time || selectedTimeSlot || ""}`
+                : "No date selected"}
+            </div>
           </Col>
         </Row>
         <div className="popup-divider" />
 
         <div className="popup-actions">
-          <button onClick={closePopup} className="btn btn-ok">
+          <Button className="btn-ok" onClick={() => closePopup && closePopup()}>
             OK
-          </button>
-          {/* <button onClick={closePopup} className="btn btn-close">
-            Close
-          </button> */}
+          </Button>
         </div>
       </Card>
     </div>,
