@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Row, Col, Typography, Divider, Space } from "antd";
 import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
 import "./OrderTotal.css";
-import OrdersService from "../../../services/OrdersService.jsx";
+import { orderService } from "../../../services/OrderService.jsx";
 
 const { Title, Text } = Typography;
 
@@ -98,18 +98,16 @@ const OrderTotal = ({
         return;
       }
 
-      const data = await OrdersService.createOrder(payload);
+      const data = await orderService.createOrder(payload);
       if (typeof clearData === "function") {
         try {
           clearData();
-        } catch (e) {
-        }
+        } catch (e) {}
       }
       if (typeof onResetSelections === "function") {
         try {
           onResetSelections();
-        } catch (e) {
-        }
+        } catch (e) {}
       }
       if (typeof openPopup === "function") {
         try {
@@ -166,7 +164,6 @@ const OrderTotal = ({
     : "No date selected";
   const timeString = selectedTimeSlot || "No time selected";
 
-
   const resolveForHandlers = (item) => {
     if (
       item &&
@@ -217,14 +214,20 @@ const OrderTotal = ({
           <Col style={{ textAlign: "right" }}>
             <Text className="poppins-regular text-order-date">
               {`Preordering for: ${dateString} • `}
-              <span className="poppins-medium text-order-time">{selectedTimeSlot.time}</span>
+              <span className="poppins-medium text-order-time">
+                {selectedTimeSlot.time}
+              </span>
             </Text>
           </Col>
         </Row>
 
         <Row gutter={[32, 16]} style={{ width: "100%" }}>
           <Col xs={24} lg={16}>
-            <Card className="items-card" size="small" style={{ padding: "10px" }}>
+            <Card
+              className="items-card"
+              size="small"
+              style={{ padding: "10px" }}
+            >
               {items.map((item, index) => {
                 const resolved = resolveForHandlers(item);
                 const qty = Number(item.qty) || 0;
@@ -378,7 +381,11 @@ const OrderTotal = ({
           </Col>
 
           <Col xs={24} lg={8} className="right-col">
-            <Card className="summary-card" size="small" style={{ marginBottom: 16, minWidth: '300px' }}>
+            <Card
+              className="summary-card"
+              size="small"
+              style={{ marginBottom: 16, minWidth: "300px" }}
+            >
               <div style={{ width: "100%", padding: "8px" }}>
                 <div
                   style={{
@@ -414,16 +421,22 @@ const OrderTotal = ({
 
                 <ul
                   className="product-list poppins-regular"
-                  style={{ marginBottom: "24px", paddingLeft: "16px", listStyle: "disc" }}
+                  style={{
+                    marginBottom: "24px",
+                    paddingLeft: "16px",
+                    listStyle: "disc",
+                  }}
                 >
-                  {Object.entries(categoryCounts).map(([categoryKey, count]) => (
-                    <li
-                      key={categoryKey}
-                      style={{ marginBottom: "6px", fontSize: "15px" }}
-                    >
-                      {count} {getCategoryDisplayName(categoryKey, count)}
-                    </li>
-                  ))}
+                  {Object.entries(categoryCounts).map(
+                    ([categoryKey, count]) => (
+                      <li
+                        key={categoryKey}
+                        style={{ marginBottom: "6px", fontSize: "15px" }}
+                      >
+                        {count} {getCategoryDisplayName(categoryKey, count)}
+                      </li>
+                    )
+                  )}
                 </ul>
 
                 <div style={{ marginBottom: "20px" }}>
