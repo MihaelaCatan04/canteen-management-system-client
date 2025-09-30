@@ -1,41 +1,36 @@
-import React, { createContext, useEffect, useState } from "react";
-import useRefreshToken from "../hooks/useRefreshToken";
+import React, { createContext, useState } from "react";
+import axiosPublic from "../api/axios";
+import { jwtDecode } from "jwt-decode";
 import { httpService } from "../services/HttpService";
+import { useCallback } from "react";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
-  const [loadingAuth, setLoadingAuth] = useState(true);
-  const refresh = useRefreshToken();
 
-  useEffect(() => {
-    let mounted = true;
-    const restore = async () => {
-      try {
-        const newAccess = await refresh();
-        if (!mounted) return;
-        if (newAccess) {
-          httpService.setAuthToken(newAccess);
-        }
-      } catch (err) {
-        console.warn("refresh failed", err);
-      } finally {
-        if (mounted) setLoadingAuth(false);
-      }
-    };
-    restore();
-    return () => {
-      mounted = false;
-    };
-  }, []); 
-
-  if (loadingAuth) {
-    return null;
-  }
+  const refresh = useCallback(async () => {
+    const response = await axiosPublic.post(
+      "/auth/refresh/",
+      {},
+      { withCredentials: true }
+    );
+    const accessToken = response?.data?.access || null;
+    if (!accessToken) throw new Error("No access token in refresh response");
+    httpService.setAuthToken(accessToken);
+    const decoded = jwtDecode(accessToken);
+    setAuth((prev) => ({
+      ...prev,
+      accessToken,
+      user_id: decoded.user_id,
+      role: decoded.role ? [decoded.role] : prev.role,
+      isVerified: decoded.is_verified,
+    }));
+    return accessToken;
+  }, [setAuth]);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, refresh }}>
       {children}
     </AuthContext.Provider>
   );

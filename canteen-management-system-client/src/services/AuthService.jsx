@@ -2,9 +2,10 @@ import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 import { jwtDecode } from "jwt-decode";
 import axiosPublic from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 export class AuthService {
-  async login(email, password) {
+  async login(email, password, setAuth) {
     try {
       const data = await httpService.publicPost(API_ENDPOINTS.AUTH.LOGIN, {
         email,
@@ -12,19 +13,28 @@ export class AuthService {
       });
 
       const accessToken = data?.access;
-      const user_id = jwtDecode(accessToken).user_id;
-      const role = [jwtDecode(accessToken).role];
-      const isVerified = jwtDecode(accessToken).is_verified;
-
+      const decoded = jwtDecode(accessToken);
+      const user_id = decoded.user_id;
+      const role = [decoded.role];
+      const isVerified = decoded.verified;
+      
+      const authData = {
+        accessToken,
+        user_id,
+        role,
+        isVerified,
+      };
+      
+      setAuth(authData);
       httpService.setAuthToken(accessToken);
 
-      return { user_id, accessToken, role, isVerified };
+      return authData;
     } catch (err) {
       throw this.handleLoginError(err);
     }
   }
 
-  async register(email, password, password2) {
+  async register(email, password, password2, setAuth) {
     try {
       const data = await httpService.publicPost(
         API_ENDPOINTS.AUTH.REGISTER,
@@ -32,9 +42,17 @@ export class AuthService {
       );
 
       const accessToken = data?.access;
-      const user_id = jwtDecode(accessToken).user_id;
-      const role = [jwtDecode(accessToken).role];
-      const isVerified = jwtDecode(accessToken).is_verified;
+      const decoded = jwtDecode(accessToken);
+      const user_id = decoded.user_id;
+      const role = [decoded.role];
+      const isVerified = decoded.verified;
+      
+      setAuth({
+        accessToken,
+        user_id,
+        role,
+        isVerified,
+      });
 
       httpService.setAuthToken(accessToken);
 

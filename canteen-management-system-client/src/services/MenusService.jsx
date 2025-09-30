@@ -7,7 +7,6 @@ export class MenusService {
       const data = await httpService.privateGet(API_ENDPOINTS.MENUS.LIST, {
         params: { week_offset: offset },
       });
-      console.log("Fetched menus data:", data);
       return data;
     } catch (error) {
       console.error("Error fetching menus:", error);
@@ -23,7 +22,6 @@ export class MenusService {
       
       const filteredMenus = this.filterMenusByDate(data, selectedDate);
       
-      console.log("Filtered menus for date:", filteredMenus);
       return filteredMenus;
     } catch (error) {
       console.error("Error fetching date menus:", error);
@@ -43,7 +41,6 @@ export class MenusService {
         selectedTimeSlot
       );
       
-      console.log("Filtered menus for time slot:", filteredMenus);
       return filteredMenus;
     } catch (error) {
       console.error("Error fetching time slot menus:", error);
@@ -58,13 +55,6 @@ export class MenusService {
     
     const timeDiff = selectedWeekStart.getTime() - currentWeekStart.getTime();
     const weekDiff = Math.round(timeDiff / (7 * 24 * 60 * 60 * 1000));
-    
-    console.log("Week offset calculation:");
-    console.log("Current date:", currentDate);
-    console.log("Current week start:", currentWeekStart);
-    console.log("Selected date:", selectedDate);
-    console.log("Selected week start:", selectedWeekStart);
-    console.log("Week offset calculated:", weekDiff);
     return weekDiff;
   }
 
@@ -79,20 +69,14 @@ export class MenusService {
 
   filterMenusByDate(menuData, selectedDate) {
     if (!menuData?.results || !selectedDate) {
-      console.log("No menu data or selected date:", { menuData: menuData?.results?.length, selectedDate });
       return { ...menuData, results: [] };
     }
 
-    console.log("Raw menu data received:", menuData);
-    console.log("Total menus in response:", menuData.results.length);
-
     const selectedDateStr = this.formatDateToString(selectedDate);
-    console.log("Filtering for date only:", selectedDateStr);
 
     menuData.results.forEach(menu => {
       const startTime = new Date(menu.start_time);
       const menuDateStr = this.formatDateToString(startTime);
-      console.log(`Menu "${menu.name}": ${menu.start_time} -> ${menuDateStr}`);
     });
 
     const filteredResults = menuData.results.filter((menu) => {
@@ -100,12 +84,10 @@ export class MenusService {
       const menuDateStr = this.formatDateToString(startTime);
       const isCorrectDate = menuDateStr === selectedDateStr;
       
-      console.log(`Menu ${menu.name}: Date ${menuDateStr}, Selected: ${selectedDateStr}, Match: ${isCorrectDate}`);
       
       return isCorrectDate;
     });
 
-    console.log(`Filtered ${filteredResults.length} menus out of ${menuData.results.length} total menus`);
 
     const transformedResults = this.transformMenuData(filteredResults);
 
@@ -117,16 +99,8 @@ export class MenusService {
 
   filterMenusByDateAndTime(menuData, selectedDate, selectedTimeSlot) {
     if (!menuData?.results || !selectedDate || !selectedTimeSlot) {
-      console.log("Missing required data:", { 
-        menuResults: menuData?.results?.length, 
-        selectedDate, 
-        selectedTimeSlot 
-      });
       return { ...menuData, results: [] };
     }
-
-    console.log("Raw menu data for time filtering:", menuData);
-    console.log("Total menus in response:", menuData.results.length);
 
     const selectedDateStr = this.formatDateToString(selectedDate);
     
@@ -134,13 +108,10 @@ export class MenusService {
       ? selectedTimeSlot 
       : selectedTimeSlot.timeValue || selectedTimeSlot;
 
-    console.log("Filtering for date:", selectedDateStr, "time:", selectedTimeValue);
-
     menuData.results.forEach(menu => {
       const startTime = new Date(menu.start_time);
       const endTime = new Date(menu.end_time);
       const menuDateStr = this.formatDateToString(startTime);
-      console.log(`Menu "${menu.name}": ${menu.start_time} -> ${menuDateStr}, Time: ${startTime.getHours()}:${startTime.getMinutes().toString().padStart(2, '0')} - ${endTime.getHours()}:${endTime.getMinutes().toString().padStart(2, '0')}`);
     });
 
     const filteredResults = menuData.results.filter((menu) => {
@@ -151,7 +122,6 @@ export class MenusService {
       const isCorrectDate = menuDateStr === selectedDateStr;
       
       if (!isCorrectDate) {
-        console.log(`Menu ${menu.name}: Wrong date - ${menuDateStr} vs ${selectedDateStr}`);
         return false;
       }
 
@@ -163,12 +133,10 @@ export class MenusService {
         selectedTimeInMinutes >= startTimeInMinutes && 
         selectedTimeInMinutes < endTimeInMinutes;
 
-      console.log(`Menu ${menu.name}: Date match: ${isCorrectDate}, Time range: ${startTimeInMinutes}-${endTimeInMinutes}, Selected: ${selectedTimeInMinutes}, Within range: ${isWithinTimeRange}`);
       
       return isWithinTimeRange;
     });
 
-    console.log(`Filtered ${filteredResults.length} menus out of ${menuData.results.length} total menus for time slot`);
 
     const transformedResults = this.transformMenuData(filteredResults);
 
@@ -222,7 +190,6 @@ export class MenusService {
     const day = d.getDate().toString().padStart(2, '0');
     
     const formatted = `${year}-${month}-${day}`;
-    console.log(`Date formatting: ${date} -> ${formatted}`);
     return formatted;
   }
 
@@ -236,7 +203,6 @@ export class MenusService {
     }
     
     const totalMinutes = hours * 60 + minutes;
-    console.log(`Time conversion: ${timeString} -> ${totalMinutes} minutes`);
     return totalMinutes;
   }
 }

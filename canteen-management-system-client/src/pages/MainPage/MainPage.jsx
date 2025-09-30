@@ -46,13 +46,11 @@ const MainPage = () => {
   ];
 
   const handleDateSelect = (date) => {
-    console.log("Date selected:", date);
     setSelectedDate(date);
     setSelectedTimeSlot(null);
   };
 
   const handleTimeSlotSelect = (timeSlot) => {
-    console.log("Time slot selected:", timeSlot);
     setSelectedTimeSlot(timeSlot.timeValue || timeSlot);
   };
 

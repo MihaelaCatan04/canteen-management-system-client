@@ -11,11 +11,14 @@ const PersistentLogIn = () => {
 
   useEffect(() => {
     let isMounted = true;
+
     const verifyRefreshToken = async () => {
       try {
-        await refresh();
+        if (!auth?.accessToken) {
+          await refresh();
+        }
       } catch (err) {
-        console.error(err);
+        console.error("Token refresh failed:", err);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -23,8 +26,16 @@ const PersistentLogIn = () => {
       }
     };
 
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
-  }, []);
+    if (auth?.accessToken) {
+      setIsLoading(false);
+    } else {
+      verifyRefreshToken();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); 
 
   return (
     <>

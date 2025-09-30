@@ -8,7 +8,6 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
 
   const fetchMenus = async (date, timeSlot) => {
     if (!date) {
-      console.log("No date selected, clearing menu items");
       setMenuItems(null);
       return;
     }
@@ -20,24 +19,22 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
       let data;
       
       if (!timeSlot) {
-        console.log("Fetching menus for date only:", date);
         data = await menusService.getMenusByDate(date);
       } else {
-        console.log("Fetching menus for date and time slot:", date, timeSlot);
         data = await menusService.getMenusByTimeSlot(date, timeSlot);
       }
       
-      if (data?.results) {
-        data.results.forEach((menu, index) => {
-          console.log(`Menu ${index + 1}:`, {
-            id: menu.id,
-            name: menu.name,
-            start_time: menu.start_time,
-            end_time: menu.end_time,
-            type: menu.type
-          });
-        });
-      }
+      // if (data?.results) {
+      //   data.results.forEach((menu, index) => {
+      //     console.log(`Menu ${index + 1}:`, {
+      //       id: menu.id,
+      //       name: menu.name,
+      //       start_time: menu.start_time,
+      //       end_time: menu.end_time,
+      //       type: menu.type
+      //     });
+      //   });
+      // }
       
       setMenuItems(data);
     } catch (err) {
@@ -53,8 +50,6 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
   };
 
   useEffect(() => {
-    console.log("=== USE EFFECT TRIGGERED ===");
-    console.log("Dependencies changed:", { selectedDate, selectedTimeSlot });
     fetchMenus(selectedDate, selectedTimeSlot);
   }, [selectedDate, selectedTimeSlot]);
 
@@ -63,7 +58,6 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
     loading,
     error,
     refetch: () => {
-      console.log("Manual refetch triggered");
       return fetchMenus(selectedDate, selectedTimeSlot);
     }
   };
