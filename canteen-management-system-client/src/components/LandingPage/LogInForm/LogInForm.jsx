@@ -10,6 +10,7 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../../../services/AuthService";
+import { jwtDecode } from "jwt-decode";
 
 const LogInForm = () => {
   const navigate = useNavigate();
@@ -37,9 +38,7 @@ const LogInForm = () => {
     setIsLoading(true);
 
     try {
-      const authData = await authService.login(user, pwd);
-
-      setAuth(authData);
+      await authService.login(user, pwd, setAuth);
       setUser("");
       setPwd("");
       navigate(from, { replace: true });

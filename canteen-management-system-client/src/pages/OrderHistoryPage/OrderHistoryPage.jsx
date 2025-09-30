@@ -16,7 +16,6 @@ const OrderHistoryPage = () => {
         const data = await orderService.getOrders();
         if (!mounted) return;
         setOrders(data?.results);
-        console.log(data?.results);
       } catch (e) {
         console.error("Failed to load orders:", e);
         if (!mounted) return;
