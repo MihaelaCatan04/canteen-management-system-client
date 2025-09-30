@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { menusService } from "../services/MenusService";
 
-export const useMenus = (selectedDate, selectedTimeSlot) => {
+export const useMenus = (selectedDate, selectedTimeSlot, weekIndex) => {
   const [menuItems, setMenuItems] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMenus = async (date, timeSlot) => {
+  const fetchMenus = async (date, timeSlot, weekIndex) => {
     if (!date) {
       setMenuItems(null);
       return;
@@ -16,12 +16,13 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
       setLoading(true);
       setError(null);
       
+      let rawData;
+      rawData = await menusService.getMenus(weekIndex);
       let data;
-      
       if (!timeSlot) {
-        data = await menusService.getMenusByDate(date);
+        data = await menusService.getMenusByDate(date, rawData);
       } else {
-        data = await menusService.getMenusByTimeSlot(date, timeSlot);
+        data = await menusService.getMenusByTimeSlot(date, timeSlot, rawData);
       }
       
       // if (data?.results) {
@@ -38,10 +39,7 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
       
       setMenuItems(data);
     } catch (err) {
-      console.error("=== ERROR FETCHING MENUS ===");
       console.error("Error details:", err);
-      console.error("Error message:", err.message);
-      console.error("Error stack:", err.stack);
       setError(err.message);
       setMenuItems(null);
     } finally {
@@ -50,8 +48,8 @@ export const useMenus = (selectedDate, selectedTimeSlot) => {
   };
 
   useEffect(() => {
-    fetchMenus(selectedDate, selectedTimeSlot);
-  }, [selectedDate, selectedTimeSlot]);
+    fetchMenus(selectedDate, selectedTimeSlot, weekIndex);
+  }, [weekIndex]);
 
   return {
     menuItems,

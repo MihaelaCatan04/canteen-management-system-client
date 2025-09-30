@@ -15,7 +15,6 @@ const Menu = ({
   error,
   openPopup,
   onRefresh,
-  selectedSlot
 }) => {
   const [items, setItems] = useState(null);
 
@@ -218,7 +217,7 @@ const Menu = ({
     );
   }
 
-  if (!selectedTimeSlot && !selectedSlot) {
+  if (!selectedTimeSlot) {
     return (
       <div className="menu-container">
         <div className="no-selection-container"></div>
@@ -261,7 +260,7 @@ const Menu = ({
     { id: 19, time: "5:00 PM - 5:30 PM", name: "Dinner", timeValue: "17:00" },
   ];
 
-  const currentTimeSlot = timeSlots.find(slot => slot.timeValue === selectedTimeSlot) || selectedSlot;
+  const currentTimeSlot = timeSlots.find(slot => slot.timeValue === selectedTimeSlot);
   const timeSlotName = currentTimeSlot?.name || "Selected Time";
 
   return (

@@ -15,13 +15,13 @@ const MainPage = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [weekIndex, setWeekIndex] = useState(0);
+  const [weekIndex, setWeekIndex] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [orderData, setOrderData] = useState(null);
   
   const navigate = useNavigate();
 
-  const { menuItems, loading: menuLoading, error: menuError, refetch } = useMenus(selectedDate, selectedTimeSlot);
+  const { menuItems, loading: menuLoading, error: menuError, refetch } = useMenus(selectedDate, selectedTimeSlot, weekIndex);
 
   const timeSlots = [
     { id: 1, time: "8:00 AM - 8:30 AM", name: "Breakfast", timeValue: "08:00" },
