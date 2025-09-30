@@ -4,6 +4,7 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 import "./CalendarSlotContainer.css";
+import { menusService } from "../../../services/MenusService";
 
 const CalendarSlotContainer = ({
   selectedDate: propSelectedDate,
@@ -56,6 +57,9 @@ const CalendarSlotContainer = ({
       const lastDate = lastDayOfMonth.getDate();
 
       const dates = [];
+
+      const weekOffset = menusService.calculateWeekOffset(selectedDate);
+      setCurrentWeekIndex(weekOffset);
 
       if (firstDayWeekday > 0) {
         const prevMonthLastDay = new Date(
@@ -132,18 +136,6 @@ const CalendarSlotContainer = ({
     return date ? date.status : "Available";
   };
 
-  const getMenusForDate = async (weekIdx) => {
-    //   try {
-    //   const response = await axios.get('/menus', {
-    //     params: weekIdx !== undefined ? { week_offset: weekIdx } : {}
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error('Error fetching menus:', error);
-    // }
-    console.log("Fetching menus for week index:", weekIdx);
-  };
-
   const handleDateSelect = (dayDate) => {
     if (
       getDateStatus(dayDate.getDate()) !== "Past" &&
@@ -152,7 +144,6 @@ const CalendarSlotContainer = ({
       setSelectedDate(dayDate);
       onDateSelect(dayDate);
       setWeekIndex(currentWeekIndex);
-      getMenusForDate(currentWeekIndex);
     }
   };
 
@@ -173,14 +164,18 @@ const CalendarSlotContainer = ({
 
   const handlePreviousWeek = () => {
     if (currentWeekIndex > 0) {
-      setCurrentWeekIndex(currentWeekIndex - 1);
+      const newIndex = currentWeekIndex - 1;
+      setCurrentWeekIndex(newIndex);
+      setWeekIndex(newIndex);
     }
   };
   const maxWeeks = Math.ceil(weekDates.length / 7);
 
   const handleNextWeek = () => {
     if (currentWeekIndex < maxWeeks - 1) {
-      setCurrentWeekIndex(currentWeekIndex + 1);
+      const newIndex = currentWeekIndex + 1;
+      setCurrentWeekIndex(newIndex);
+      setWeekIndex(newIndex);
     }
   };
 

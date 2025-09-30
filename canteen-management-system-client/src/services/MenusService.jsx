@@ -2,8 +2,9 @@ import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 
 export class MenusService {
-  async getMenus(offset = 0) {
+  async getMenus(offset = 1) {
     try {
+      console.log("Fetching menus with offset:", offset);
       const data = await httpService.privateGet(API_ENDPOINTS.MENUS.LIST, {
         params: { week_offset: offset },
       });
@@ -14,11 +15,8 @@ export class MenusService {
     }
   }
 
-  async getMenusByDate(selectedDate) {
+  async getMenusByDate(selectedDate, data) {
     try {
-      const weekOffset = this.calculateWeekOffset(selectedDate);
-      
-      const data = await this.getMenus(weekOffset);
       
       const filteredMenus = this.filterMenusByDate(data, selectedDate);
       return filteredMenus;
@@ -28,12 +26,8 @@ export class MenusService {
     }
   }
 
-  async getMenusByTimeSlot(selectedDate, selectedTimeSlot) {
+  async getMenusByTimeSlot(selectedDate, selectedTimeSlot, data) {
     try {
-      const weekOffset = this.calculateWeekOffset(selectedDate);
-      
-      const data = await this.getMenus(weekOffset);
-      
       const filteredMenus = this.filterMenusByDateAndTime(
         data,
         selectedDate,
@@ -53,7 +47,7 @@ export class MenusService {
     const selectedWeekStart = this.getWeekStart(selectedDate);
     
     const timeDiff = selectedWeekStart.getTime() - currentWeekStart.getTime();
-    const weekDiff = Math.round(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    const weekDiff = Math.round(timeDiff / (7 * 24 * 60 * 60 * 1000)) + 1;
     return weekDiff;
   }
 
