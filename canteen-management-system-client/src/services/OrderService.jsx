@@ -11,6 +11,16 @@ export class OrderService {
             throw error;
         }
     }
+
+    async createOrder(payload) {
+        try {
+            const res = await httpService.privatePost(API_ENDPOINTS.ORDERS.CREATE, payload);
+            return res;
+        } catch (err) {
+            console.error("Error creating order:", err);
+            throw err;
+        }
+    }
 }
 
 export const orderService = new OrderService();

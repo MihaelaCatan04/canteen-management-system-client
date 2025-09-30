@@ -21,7 +21,6 @@ export class MenusService {
       const data = await this.getMenus(weekOffset);
       
       const filteredMenus = this.filterMenusByDate(data, selectedDate);
-      
       return filteredMenus;
     } catch (error) {
       console.error("Error fetching date menus:", error);
