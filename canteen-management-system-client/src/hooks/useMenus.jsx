@@ -5,58 +5,93 @@ export const useMenus = (selectedDate, selectedTimeSlot, weekIndex) => {
   const [menuItems, setMenuItems] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [rawData, setRawData] = useState(null);
 
-  const fetchMenus = async (date, timeSlot, weekIndex) => {
-    if (!date) {
-      setMenuItems(null);
-      return;
-    }
+  useEffect(() => {
+    const fetchMenus = async () => {
+      if (weekIndex === null || weekIndex === undefined) {
+        setRawData(null);
+        setMenuItems(null);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await menusService.getMenus(weekIndex);
+        setRawData(data);
+      } catch (err) {
+        console.error("Error fetching menus:", err);
+        setError(err.message);
+        setRawData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenus();
+  }, [weekIndex]);
+
+  useEffect(() => {
+    const filterAndSetMenus = async () => {
+
+
+      if (!rawData) {
+        setMenuItems(null);
+        return;
+      }
+
+      if (!selectedDate) {
+        setMenuItems(null);
+        return;
+      }
+
+      try {
+        let filteredData;
+
+        if (!selectedTimeSlot) {
+          filteredData = await menusService.getMenusByDate(selectedDate, rawData);
+        } else {
+          filteredData = await menusService.getMenusByTimeSlot(
+            selectedDate,
+            selectedTimeSlot,
+            rawData
+          );
+        }
+
+        setMenuItems(filteredData);
+      } catch (err) {
+        console.error("Error filtering menus:", err);
+        setError(err.message);
+        setMenuItems(null);
+      }
+    };
+
+    filterAndSetMenus();
+  }, [rawData, selectedDate, selectedTimeSlot]);
+
+  const refetch = async () => {
+    if (weekIndex === null || weekIndex === undefined) return;
 
     try {
       setLoading(true);
       setError(null);
-      
-      let rawData;
-      rawData = await menusService.getMenus(weekIndex);
-      let data;
-      if (!timeSlot) {
-        data = await menusService.getMenusByDate(date, rawData);
-      } else {
-        data = await menusService.getMenusByTimeSlot(date, timeSlot, rawData);
-      }
-      
-      // if (data?.results) {
-      //   data.results.forEach((menu, index) => {
-      //     console.log(`Menu ${index + 1}:`, {
-      //       id: menu.id,
-      //       name: menu.name,
-      //       start_time: menu.start_time,
-      //       end_time: menu.end_time,
-      //       type: menu.type
-      //     });
-      //   });
-      // }
-      
-      setMenuItems(data);
+
+      const data = await menusService.getMenus(weekIndex);
+      setRawData(data);
     } catch (err) {
-      console.error("Error details:", err);
+      console.error("Error refetching menus:", err);
       setError(err.message);
-      setMenuItems(null);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchMenus(selectedDate, selectedTimeSlot, weekIndex);
-  }, [weekIndex]);
-
   return {
     menuItems,
     loading,
     error,
-    refetch: () => {
-      return fetchMenus(selectedDate, selectedTimeSlot);
-    }
+    refetch,
   };
 };

@@ -2,9 +2,8 @@ import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 
 export class MenusService {
-  async getMenus(offset = 1) {
+  async getMenus(offset = 0) {
     try {
-      console.log("Fetching menus with offset:", offset);
       const data = await httpService.privateGet(API_ENDPOINTS.MENUS.LIST, {
         params: { week_offset: offset },
       });
@@ -36,7 +35,6 @@ export class MenusService {
       
       return filteredMenus;
     } catch (error) {
-      console.error("Error fetching time slot menus:", error);
       throw error;
     }
   }
@@ -47,7 +45,7 @@ export class MenusService {
     const selectedWeekStart = this.getWeekStart(selectedDate);
     
     const timeDiff = selectedWeekStart.getTime() - currentWeekStart.getTime();
-    const weekDiff = Math.round(timeDiff / (7 * 24 * 60 * 60 * 1000)) + 1;
+    const weekDiff = Math.round(timeDiff / (7 * 24 * 60 * 60 * 1000));
     return weekDiff;
   }
 
@@ -66,24 +64,15 @@ export class MenusService {
     }
 
     const selectedDateStr = this.formatDateToString(selectedDate);
-
-    menuData.results.forEach(menu => {
-      const startTime = new Date(menu.start_time);
-      const menuDateStr = this.formatDateToString(startTime);
-    });
-
     const filteredResults = menuData.results.filter((menu) => {
       const startTime = new Date(menu.start_time);
       const menuDateStr = this.formatDateToString(startTime);
       const isCorrectDate = menuDateStr === selectedDateStr;
       
-      
       return isCorrectDate;
     });
 
-
     const transformedResults = this.transformMenuData(filteredResults);
-
     return {
       ...menuData,
       results: transformedResults
@@ -156,11 +145,12 @@ export class MenusService {
 
           itemsByCategory[categoryName].items.push({
             id: menuItem.id,
-            name: menuItem.item_name,
-            description: menuItem.item_description,
-            base_price: menuItem.item_base_price,
+            item_name: menuItem.item_name,
+            item_description: menuItem.item_description,
+            item_base_price: menuItem.item_base_price,
             quantity: menuItem.quantity,
-            remaining_quantity: menuItem.remaining_quantity
+            remaining_quantity: menuItem.remaining_quantity,
+            category: categoryName
           });
         });
       }
@@ -191,7 +181,6 @@ export class MenusService {
     const [hours, minutes] = cleanTimeString.split(':').map(Number);
     
     if (isNaN(hours) || isNaN(minutes)) {
-      console.error("Invalid time format:", timeString);
       return 0;
     }
     

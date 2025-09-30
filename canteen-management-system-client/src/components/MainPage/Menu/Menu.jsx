@@ -15,9 +15,9 @@ const Menu = ({
   error,
   openPopup,
   onRefresh,
+  selectedSlot
 }) => {
   const [items, setItems] = useState(null);
-
   const imageMap = {
     "Main Course": "../../../images/main.png",
     "Desserts": "../../../images/sweets.png",
@@ -27,46 +27,24 @@ const Menu = ({
   }
 
   useEffect(() => {
-    if (!menuItems) return;
+    
+    if (!menuItems) {
+      setItems(null);
+      return;
+    }
 
     const transformed = {
       ...menuItems,
-      results: (menuItems.results || []).map(menu => {
-        const normalize = (raw) => ({
-          id: raw.id,
-          item_name: raw.item_name || raw.name || raw.item?.name || "",
-          item_description: raw.item_description || raw.description || raw.item?.description || "",
-          item_base_price: raw.item_base_price ?? raw.override_price ?? raw.base_price ?? raw.item?.base_price ?? "0",
-          quantity: raw.quantity ?? raw.item?.quantity ?? 0,
-          remaining_quantity: raw.remaining_quantity ?? raw.remaining_quantity ?? raw.item?.remaining_quantity ?? raw.quantity ?? 0,
-          category: raw.category || raw.item?.category || "Other",
-          qty: 0
-        });
-
-        if (Array.isArray(menu.categories) && menu.categories.length) {
-          return {
-            ...menu,
-            categories: menu.categories.map(cat => ({
-              ...cat,
-              name: cat.name || cat.id || "Other",
-              items: (cat.items || []).map(i => normalize(i))
-            }))
-          };
-        }
-
-        if (Array.isArray(menu.menu_items)) {
-          const map = {};
-          menu.menu_items.forEach(mi => {
-            const normalized = normalize(mi);
-            const cname = normalized.category || "Other";
-            if (!map[cname]) map[cname] = { name: cname, items: [] };
-            map[cname].items.push(normalized);
-          });
-          return { ...menu, categories: Object.values(map) };
-        }
-
-        return { ...menu, categories: [] };
-      })
+      results: (menuItems.results || []).map(menu => ({
+        ...menu,
+        categories: (menu.categories || []).map(category => ({
+          ...category,
+          items: (category.items || []).map(item => ({
+            ...item,
+            qty: 0
+          }))
+        }))
+      }))
     };
 
     setItems(transformed);
@@ -217,7 +195,7 @@ const Menu = ({
     );
   }
 
-  if (!selectedTimeSlot) {
+  if (!selectedTimeSlot && !selectedSlot) {
     return (
       <div className="menu-container">
         <div className="no-selection-container"></div>
@@ -260,7 +238,7 @@ const Menu = ({
     { id: 19, time: "5:00 PM - 5:30 PM", name: "Dinner", timeValue: "17:00" },
   ];
 
-  const currentTimeSlot = timeSlots.find(slot => slot.timeValue === selectedTimeSlot);
+  const currentTimeSlot = timeSlots.find(slot => slot.timeValue === selectedTimeSlot) || selectedSlot;
   const timeSlotName = currentTimeSlot?.name || "Selected Time";
 
   return (
