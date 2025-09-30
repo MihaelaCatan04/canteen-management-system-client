@@ -52,10 +52,6 @@ const TransactionHistoryPage = () => {
 
         const rawList = Array.isArray(data?.results)
           ? data.results
-          : Array.isArray(data)
-          ? data
-          : data?.transactions
-          ? data.transactions
           : [];
 
         const list = rawList.map(mapApiTransaction);
