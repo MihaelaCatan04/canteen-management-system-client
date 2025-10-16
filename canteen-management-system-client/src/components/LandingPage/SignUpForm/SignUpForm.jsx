@@ -73,9 +73,13 @@ const SignUpForm = () => {
     setIsLoading(true);
 
     try {
-      const authData = await authService.register(user, pwd, matchPwd);
+      const authData = await authService.register(
+        user,
+        pwd,
+        matchPwd,
+        setAuth
+      );
 
-      setAuth(authData);
       setUser("");
       setPwd("");
       setMatchPwd("");

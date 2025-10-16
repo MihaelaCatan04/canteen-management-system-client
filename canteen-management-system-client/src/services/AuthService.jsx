@@ -2,7 +2,6 @@ import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 import { jwtDecode } from "jwt-decode";
 import axiosPublic from "../api/axios";
-import useAuth from "../hooks/useAuth";
 
 export class AuthService {
   async login(email, password, setAuth) {
