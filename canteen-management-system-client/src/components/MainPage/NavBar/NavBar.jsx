@@ -43,8 +43,14 @@ const NavBar = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+
   const handleChangePassword = () => {
     console.log("Change Password clicked");
+    setIsDropdownOpen(false);
+  };
+
+  const handleEnableMFA = () => {
+    console.log("Enable MFA clicked");
     setIsDropdownOpen(false);
   };
 
@@ -147,6 +153,13 @@ const NavBar = () => {
                   onClick={handleChangePassword}
                 >
                   Change Password
+                </div>
+                <div className="dropdown-divider"></div>
+                <div
+                  className="dropdown-item poppins-medium"
+                  onClick={handleEnableMFA}
+                >
+                  Enable MFA
                 </div>
                 <div className="dropdown-divider"></div>
                 <div
