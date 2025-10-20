@@ -5,6 +5,13 @@ export const API_ENDPOINTS = {
     REFRESH: "/auth/refresh/",
     LOGOUT: "/auth/logout/",
   },
+  MFA: {
+    SETUP_START: "/auth/mfa/setup/start",
+    SETUP_CONFIRM: "/auth/mfa/setup/confirm",
+    VERIFY: "/auth/mfa/verify",
+    DISABLE: "/auth/mfa/disable",
+    REGENERATE_CODES: "/auth/mfa/setup/regenerate",
+  },
   USER: {
     PROFILE: "/user/me/",
   },
