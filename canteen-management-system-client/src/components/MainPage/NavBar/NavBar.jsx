@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NavBar.css";
-import { Typography, Avatar, Space } from "antd";
+import { Typography, Avatar, Space, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 const { Title, Text } = Typography;
@@ -8,6 +8,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { authService } from "../../../services/AuthService";
 import { useNavigate, useLocation } from "react-router-dom";
+import MFASetup from "../MFASetup/MFASetup";
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,6 +21,8 @@ const NavBar = () => {
   const location = useLocation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { auth, setAuth } = useAuth();
+  const [showMFASetup, setShowMFASetup] = useState(false);
+  const [mfaEnabled, setMfaEnabled] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -50,8 +53,18 @@ const NavBar = () => {
   };
 
   const handleEnableMFA = () => {
-    console.log("Enable MFA clicked");
+    setShowMFASetup(true);
     setIsDropdownOpen(false);
+  };
+
+  const handleManageMFA = () => {
+    console.log("Manage MFA clicked");
+    setIsDropdownOpen(false);
+  };
+
+  const handleMFASetupComplete = () => {
+    setShowMFASetup(false);
+    setMfaEnabled(true);
   };
 
   const handleLogOut = async () => {
@@ -84,6 +97,7 @@ const NavBar = () => {
         if (isMounted) {
           setName(response?.data.first_name);
           setSurname(response?.data.last_name);
+          setMfaEnabled(response?.data.mfa_enabled || false);
         }
       } catch (err) {
         if (err.name !== "CanceledError") {
@@ -157,9 +171,9 @@ const NavBar = () => {
                 <div className="dropdown-divider"></div>
                 <div
                   className="dropdown-item poppins-medium"
-                  onClick={handleEnableMFA}
+                  onClick={mfaEnabled ? handleManageMFA : handleEnableMFA}
                 >
-                  Enable MFA
+                  {mfaEnabled ? "Manage MFA" : "Enable MFA"}
                 </div>
                 <div className="dropdown-divider"></div>
                 <div
@@ -177,6 +191,17 @@ const NavBar = () => {
           </div>
         </Space>
       </div>
+
+      <Modal
+        open={showMFASetup}
+        onCancel={() => setShowMFASetup(false)}
+        footer={null}
+        width={600}
+        centered
+        destroyOnClose
+      >
+        <MFASetup onComplete={handleMFASetupComplete} />
+      </Modal>
     </div>
   );
 };
