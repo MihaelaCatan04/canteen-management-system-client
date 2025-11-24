@@ -25,6 +25,8 @@ export const AuthProvider = ({ children }) => {
       user_id: decoded.user_id,
       role: decoded.role ? [decoded.role] : prev.role,
       isVerified: decoded.is_verified,
+      // Keep existing mfaEnabled state if present
+      mfaEnabled: prev.mfaEnabled,
     }));
     return accessToken;
   }, [setAuth]);

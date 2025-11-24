@@ -3,11 +3,14 @@ import { useState, useEffect } from "react";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import useAuth from "../../hooks/useAuth";
 import { Spin, Typography } from "antd";
+import { httpService } from "../../services/HttpService";
+import { API_ENDPOINTS } from "../../api/API_ENDPOINTS";
+import axiosPublic from "../../api/axios";
 
 const PersistentLogIn = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -15,7 +18,29 @@ const PersistentLogIn = () => {
     const verifyRefreshToken = async () => {
       try {
         if (!auth?.accessToken) {
-          await refresh();
+          // Get new access token from refresh token
+          const newAccessToken = await refresh();
+          
+          // Fetch user profile to get MFA status
+          if (newAccessToken && isMounted) {
+            try {
+              const response = await axiosPublic.get(API_ENDPOINTS.USER.PROFILE, {
+                headers: {
+                  Authorization: `Bearer ${newAccessToken}`
+                },
+                withCredentials: true
+              });
+              
+              if (isMounted && response?.data) {
+                setAuth(prev => ({
+                  ...prev,
+                  mfaEnabled: !!response.data.mfa_enabled
+                }));
+              }
+            } catch (profileErr) {
+              console.error("Failed to fetch user profile:", profileErr);
+            }
+          }
         }
       } catch (err) {
         console.error("Token refresh failed:", err);

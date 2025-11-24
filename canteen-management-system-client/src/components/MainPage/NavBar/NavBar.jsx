@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NavBar.css";
-import { Typography, Avatar, Space } from "antd";
+import { Typography, Avatar, Space, Modal, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 const { Title, Text } = Typography;
@@ -8,6 +8,9 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { authService } from "../../../services/AuthService";
 import { useNavigate, useLocation } from "react-router-dom";
+import MFASetup from "../MFASetup/MFASetup";
+import MFAManage from "../MFAManage/MFAManage";
+import { API_ENDPOINTS } from "../../../api/API_ENDPOINTS";
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,6 +23,9 @@ const NavBar = () => {
   const location = useLocation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { auth, setAuth } = useAuth();
+  const [showMFASetup, setShowMFASetup] = useState(false);
+  const [showMFAManage, setShowMFAManage] = useState(false);
+  const [mfaEnabled, setMfaEnabled] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,9 +49,47 @@ const NavBar = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+
   const handleChangePassword = () => {
     console.log("Change Password clicked");
     setIsDropdownOpen(false);
+  };
+
+  const handleEnableMFA = () => {
+    setShowMFASetup(true);
+    setIsDropdownOpen(false);
+  };
+
+  const handleManageMFA = () => {
+    setShowMFAManage(true);
+    setIsDropdownOpen(false);
+  };
+
+  const handleMFASetupComplete = async () => {
+    setShowMFASetup(false);
+    message.success("MFA has been enabled successfully");
+    // Refetch user data to get the updated MFA status from backend
+    try {
+      await getUserData();
+    } catch (err) {
+      console.error("Failed to refresh user data after MFA setup:", err);
+    }
+  };
+
+  const handleMFADisableSuccess = async (successMessage) => {
+    setShowMFAManage(false);
+    message.success(successMessage);
+    // Refetch user data to get the updated MFA status from backend
+    try {
+      await getUserData();
+    } catch (err) {
+      console.error("Failed to refresh user data after MFA disable:", err);
+    }
+  };
+
+  const handleMFARegenerateSuccess = (successMessage) => {
+    setShowMFAManage(false);
+    message.success(successMessage);
   };
 
   const handleLogOut = async () => {
@@ -65,19 +109,45 @@ const NavBar = () => {
     }
   };
 
+  const getUserData = async () => {
+    try {
+      const response = await axiosPrivate.get(API_ENDPOINTS.USER.PROFILE, {
+        withCredentials: true,
+      });
+      console.log("User data from backend:", response.data);
+      console.log("MFA enabled status:", response?.data.mfa_enabled);
+
+      setName(response?.data.first_name);
+      setSurname(response?.data.last_name);
+      setMfaEnabled(!!response?.data.mfa_enabled);
+
+      return response.data;
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+      if (err.response?.status === 401) {
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+      throw err;
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
 
-    const getUserName = async () => {
+    const fetchUserData = async () => {
       try {
         const response = await axiosPrivate.get("/users/me", {
           signal: controller.signal,
           withCredentials: true,
         });
         if (isMounted) {
+          console.log("Initial user data from backend:", response.data);
+          console.log("Initial MFA enabled status:", response?.data.mfa_enabled);
+
           setName(response?.data.first_name);
           setSurname(response?.data.last_name);
+          setMfaEnabled(!!response?.data.mfa_enabled);
         }
       } catch (err) {
         if (err.name !== "CanceledError") {
@@ -87,7 +157,7 @@ const NavBar = () => {
       }
     };
 
-    getUserName();
+    fetchUserData();
 
     return () => {
       isMounted = false;
@@ -151,6 +221,13 @@ const NavBar = () => {
                 <div className="dropdown-divider"></div>
                 <div
                   className="dropdown-item poppins-medium"
+                  onClick={mfaEnabled ? handleManageMFA : handleEnableMFA}
+                >
+                  {mfaEnabled ? "Manage MFA" : "Enable MFA"}
+                </div>
+                <div className="dropdown-divider"></div>
+                <div
+                  className="dropdown-item poppins-medium"
                   onClick={handleLogOut}
                   style={{
                     opacity: isLoggingOut ? 0.6 : 1,
@@ -164,6 +241,31 @@ const NavBar = () => {
           </div>
         </Space>
       </div>
+
+      <Modal
+        open={showMFASetup}
+        onCancel={() => setShowMFASetup(false)}
+        footer={null}
+        width={600}
+        centered
+        destroyOnClose
+      >
+        <MFASetup onComplete={handleMFASetupComplete} />
+      </Modal>
+
+      <Modal
+        open={showMFAManage}
+        onCancel={() => setShowMFAManage(false)}
+        footer={null}
+        width={700}
+        centered
+        destroyOnClose
+      >
+        <MFAManage
+          onDisableSuccess={handleMFADisableSuccess}
+          onRegenerateSuccess={handleMFARegenerateSuccess}
+        />
+      </Modal>
     </div>
   );
 };
