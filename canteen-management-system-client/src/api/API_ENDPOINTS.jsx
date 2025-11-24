@@ -13,7 +13,7 @@ export const API_ENDPOINTS = {
     REGENERATE_CODES: "/auth/mfa/setup/regenerate",
   },
   USER: {
-    PROFILE: "/user/me/",
+    PROFILE: "/users/me",
   },
   WALLETS: {
     BALANCE: "/wallets/me/",

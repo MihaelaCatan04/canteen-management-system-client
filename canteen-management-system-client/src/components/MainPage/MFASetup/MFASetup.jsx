@@ -187,30 +187,32 @@ const MFASetup = ({ onComplete }) => {
 
           <div className="backup-codes-container">
             {backupCodes.map((code, index) => (
-              <div key={index} className="backup-code poppins-medium">
+              <div key={index} className="backup-code poppins-semibold">
                 {code}
               </div>
             ))}
           </div>
 
-          <Button
-            type="primary"
-            block
-            size="large"
-            onClick={downloadBackupCodes}
-            className="poppins-medium mfa-button"
-          >
-            Download Codes
-          </Button>
+          <Space direction="vertical" style={{ width: '100%' }} size="large">
+            <Button
+              type="primary"
+              block
+              size="large"
+              onClick={downloadBackupCodes}
+              className="poppins-medium mfa-button"
+            >
+              Download Codes
+            </Button>
 
-          <Button 
-            block 
-            size="large" 
-            onClick={onComplete}
-            className="poppins-medium mfa-done-button"
-          >
-            Done
-          </Button>
+            <Button
+              block
+              size="large"
+              onClick={onComplete}
+              className="poppins-medium mfa-done-button"
+            >
+              Done
+            </Button>
+          </Space>
         </>
       )}
     </div>

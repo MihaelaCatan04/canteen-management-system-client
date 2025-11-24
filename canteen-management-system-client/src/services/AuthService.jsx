@@ -11,23 +11,39 @@ export class AuthService {
         password,
       });
 
+      // Check if MFA is required
+      if (data?.mfa_required) {
+        return {
+          requiresMFA: true,
+          mfaTicket: data.mfa_ticket,
+          mfaType: data.mfa_type,
+          message: data.message || "MFA verification required"
+        };
+      }
+
+      // Normal login flow (no MFA)
       const accessToken = data?.access;
       const decoded = jwtDecode(accessToken);
       const user_id = decoded.user_id;
       const role = [decoded.role];
       const isVerified = decoded.verified;
       
+      httpService.setAuthToken(accessToken);
+      
+      // Fetch user profile to get MFA status
+      const userProfile = await httpService.privateGet(API_ENDPOINTS.USER.PROFILE);
+      
       const authData = {
         accessToken,
         user_id,
         role,
         isVerified,
+        mfaEnabled: !!userProfile?.mfa_enabled,
       };
       
       setAuth(authData);
-      httpService.setAuthToken(accessToken);
 
-      return authData;
+      return { requiresMFA: false, ...authData };
     } catch (err) {
       throw this.handleLoginError(err);
     }
@@ -58,6 +74,40 @@ export class AuthService {
       return { user_id, accessToken, role, isVerified };
     } catch (err) {
       throw new Error(err.message || "Registration failed");
+    }
+  }
+
+  async verifyMFA(ticket, code, setAuth) {
+    try {
+      const data = await httpService.publicPost(API_ENDPOINTS.MFA.VERIFY, {
+        ticket,
+        code,
+      });
+
+      const accessToken = data?.access;
+      const decoded = jwtDecode(accessToken);
+      const user_id = decoded.user_id;
+      const role = [decoded.role];
+      const isVerified = decoded.verified;
+      
+      httpService.setAuthToken(accessToken);
+      
+      // Fetch user profile to get MFA status
+      const userProfile = await httpService.privateGet(API_ENDPOINTS.USER.PROFILE);
+      
+      const authData = {
+        accessToken,
+        user_id,
+        role,
+        isVerified,
+        mfaEnabled: !!userProfile?.mfa_enabled,
+      };
+      
+      setAuth(authData);
+
+      return authData;
+    } catch (err) {
+      throw new Error(err.message || "MFA verification failed");
     }
   }
 

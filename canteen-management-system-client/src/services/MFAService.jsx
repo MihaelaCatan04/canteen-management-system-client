@@ -18,6 +18,7 @@ export class MFAService {
         API_ENDPOINTS.MFA.SETUP_CONFIRM,
         { code }
       );
+      console.log("MFA confirmation response:", data);
       return data; 
     } catch (error) {
       console.error("Error confirming MFA setup:", error);

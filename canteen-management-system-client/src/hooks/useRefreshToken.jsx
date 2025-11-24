@@ -22,6 +22,8 @@ const useRefreshToken = () => {
       user_id: decoded.user_id,
       role: decoded.role ? [decoded.role] : prev.role,
       isVerified: decoded.verified,
+      // Keep existing mfaEnabled state if present
+      mfaEnabled: prev.mfaEnabled,
     }));
     return accessToken;
   }, [setAuth]);
