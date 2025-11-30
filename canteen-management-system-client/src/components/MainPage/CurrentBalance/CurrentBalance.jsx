@@ -204,7 +204,7 @@ const CurrentBalance = () => {
               <path d="M21 7H3C1.9 7 1 7.9 1 9V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V9C23 7.9 22.1 7 21 7Z" fill="rgba(255,255,255,0.9)" />
               <circle cx="18" cy="14" r="1.5" fill="white" />
             </svg>
-            <Text className="poppins-medium" style={{ color: "white", margin: 0, marginLeft: 8 }}>Add money</Text>
+            <Text className="poppins-medium" style={{ color: "white", margin: 0, marginLeft: 8 }}>Add Balance</Text>
           </div>
         </div>
       </Card>
