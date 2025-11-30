@@ -1,4 +1,5 @@
-import { Card, Col, Typography } from "antd";
+import { Card, Col, Typography, Button, Tooltip, message } from "antd";
+import { WalletOutlined } from "@ant-design/icons";
 import "./CurrentBalance.css";
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
@@ -136,19 +137,20 @@ const CurrentBalance = () => {
             </div>
           </div>
         </div>
-        <div
-          className="view-transactions-button"
-          role="button"
-          tabIndex={0}
-          onClick={() => navigate("/transaction-history")}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              navigate("/transaction-history");
-            }
-          }}
-          style={{ cursor: "pointer" }}
-        >
+          <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 12 }}>
+          <div
+            className="view-transactions-button"
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate("/transaction-history")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                navigate("/transaction-history");
+              }
+            }}
+            style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="12"
@@ -172,6 +174,38 @@ const CurrentBalance = () => {
           >
             View Transactions
           </Text>
+          </div>
+
+          {/* Add money control styled like View Transactions so visual language matches */}
+          <div
+            className="view-transactions-button"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              const isVerified = Boolean(auth?.isVerified ?? auth?.is_verified ?? auth?.verified ?? false);
+              if (isVerified) {
+                navigate("/add-balance");
+              } else {
+                message.info("Please verify your account to add funds. Use the Verify button in the Menu.");
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                const isVerified = Boolean(auth?.isVerified ?? auth?.is_verified ?? auth?.verified ?? false);
+                if (isVerified) navigate("/add-balance");
+                else message.info("Please verify your account to add funds. Use the Verify button in the Menu.");
+              }
+            }}
+            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+          >
+            {/* wallet SVG icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M21 7H3C1.9 7 1 7.9 1 9V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V9C23 7.9 22.1 7 21 7Z" fill="rgba(255,255,255,0.9)" />
+              <circle cx="18" cy="14" r="1.5" fill="white" />
+            </svg>
+            <Text className="poppins-medium" style={{ color: "white", margin: 0, marginLeft: 8 }}>Add money</Text>
+          </div>
         </div>
       </Card>
     </Col>
