@@ -276,26 +276,6 @@ const Menu = ({
 
   return (
     <div className="menu-container">
-      {!isVerifiedUser && (
-        <Card style={{ marginBottom: 16 }}>
-          <Alert
-            message="Account not verified"
-            description={
-              <div>
-                <div>Your account isn't verified yet. You can view the menu but adding to cart is disabled.</div>
-                <div style={{ marginTop: 8 }}>
-                  <Button type="primary" size="small" onClick={handleResendVerification}>
-                    Verify account
-                  </Button>
-                </div>
-              </div>
-            }
-            type="info"
-            showIcon
-          />
-        </Card>
-      )}
-
       {(items.results || []).map((menu, menuIndex) => (
         (menu.categories || []).map((category, categoryIndex) => {
           const displayTime = menu.start_time && menu.end_time
