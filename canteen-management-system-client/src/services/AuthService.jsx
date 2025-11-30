@@ -140,15 +140,9 @@ export class AuthService {
   }
 
   handleLoginError(err) {
-    if (!err?.response) {
-      return new Error("No Server Response");
-    } else if (err.response?.status === 400) {
-      return new Error("Missing Username or Password");
-    } else if (err.response?.status === 401) {
-      return new Error("Invalid email or password");
-    } else {
-      return new Error("Login Failed");
-    }
+    // The error message is already properly extracted by HttpService.handleError
+    // Just return it as-is
+    return err;
   }
 }
 
