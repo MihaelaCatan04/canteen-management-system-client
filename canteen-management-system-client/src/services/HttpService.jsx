@@ -56,15 +56,45 @@ export class HttpService {
   }
 
   handleError(error) {
-    const errorMessage = {
-      message: error.message || "An error occurred",
+    // Extract error message from backend response
+    let message = "An error occurred";
+    
+    if (error.response?.data) {
+      // Handle different error response formats from backend
+      if (typeof error.response.data === 'string') {
+        message = error.response.data;
+      } else if (error.response.data.detail) {
+        message = error.response.data.detail;
+      } else if (error.response.data.error) {
+        message = error.response.data.error;
+      } else if (error.response.data.message) {
+        message = error.response.data.message;
+      } else if (error.response.data.non_field_errors) {
+        message = Array.isArray(error.response.data.non_field_errors)
+          ? error.response.data.non_field_errors[0]
+          : error.response.data.non_field_errors;
+      } else {
+        // Try to get first field error
+        const firstFieldError = Object.values(error.response.data)[0];
+        if (firstFieldError) {
+          message = Array.isArray(firstFieldError) ? firstFieldError[0] : firstFieldError;
+        }
+      }
+    } else if (error.message) {
+      message = error.message;
+    }
+
+    const errorInfo = {
+      message,
       status: error.response?.status,
       data: error.response?.data,
     };
 
-    console.error("HTTP Error:", errorMessage);
+    console.error("HTTP Error:", errorInfo);
 
-    return new Error(errorMessage.message);
+    const err = new Error(message);
+    err.status = error.response?.status;
+    return err;
   }
 
   setAuthToken(token) {
