@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 import { Row, Col } from "antd";
 
 import MainPageLayout from "../../layouts/MainPage/MainPage";
@@ -70,16 +71,21 @@ const MainPage = () => {
     navigate("/order-history");
   };
   
+  const { auth } = useAuth();
+  const isVerifiedUser = Boolean(auth?.isVerified ?? auth?.verified ?? false);
+
   return (
     <MainPageLayout>
       <Row
         gutter={[16, 16]}
         style={{ marginBottom: "20px", alignItems: "stretch" }}
       >
-        <CurrentBalance />
-        <Col xs={24} sm={8} md={8} style={{ display: "flex" }}>
-          <OrderHistory onClick={handleOrderHistoryClick} />
-        </Col>
+        {isVerifiedUser && <CurrentBalance />}
+        {isVerifiedUser && (
+          <Col xs={24} sm={8} md={8} style={{ display: "flex" }}>
+            <OrderHistory onClick={handleOrderHistoryClick} />
+          </Col>
+        )}
       </Row>
 
       <CalendarSlotContainer

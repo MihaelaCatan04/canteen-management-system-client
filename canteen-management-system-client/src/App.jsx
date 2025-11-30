@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage.jsx";
 import RequireAuth from "./components/LandingPage/RequireAuth/RequireAuth.jsx";
+import RequireVerified from "./components/LandingPage/RequireVerified/RequireVerified.jsx";
 import PersistentLogIn from "./components/PersistentLogIn/PersistentLogIn.jsx";
 import OrderHistoryPage from "./pages/OrderHistoryPage/OrderHistoryPage.jsx";
 import Page404 from "./pages/Page404/Page404.jsx";
@@ -24,13 +25,14 @@ function App() {
       <Route path="/register" element={<LandingPage />} />
       <Route element={<PersistentLogIn />}>
         <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
-          {/* Later to be replaced with verified customers */}
+          {/* Main menu is open to authenticated customers (verified or not) */}
           <Route path="/order" element={<MainPage />} />
-          <Route path="/order-history" element={<OrderHistoryPage />} />
-          <Route
-            path="/transaction-history"
-            element={<TransactionHistoryPage />}
-          />
+
+          {/* Restrict history and transactions to verified customers */}
+          <Route element={<RequireVerified />}>
+            <Route path="/order-history" element={<OrderHistoryPage />} />
+            <Route path="/transaction-history" element={<TransactionHistoryPage />} />
+          </Route>
         </Route>
       </Route>
       <Route path="/forbidden" element={<Page403 />} />
