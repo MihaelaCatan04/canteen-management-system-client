@@ -248,7 +248,7 @@ const NavBar = () => {
         footer={null}
         width={600}
         centered
-        destroyOnClose
+        destroyOnHidden
       >
         <MFASetup onComplete={handleMFASetupComplete} />
       </Modal>
@@ -259,7 +259,7 @@ const NavBar = () => {
         footer={null}
         width={700}
         centered
-        destroyOnClose
+        destroyOnHidden
       >
         <MFAManage
           onDisableSuccess={handleMFADisableSuccess}

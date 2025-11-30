@@ -1,6 +1,5 @@
 import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
-import { jwtDecode } from "jwt-decode";
 import axiosPublic from "../api/axios";
 
 export class AuthService {
@@ -23,6 +22,8 @@ export class AuthService {
 
       // Normal login flow (no MFA)
       const accessToken = data?.access;
+      const mod = await import("jwt-decode");
+      const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
       const decoded = jwtDecode(accessToken);
       const user_id = decoded.user_id;
       const role = [decoded.role];
@@ -57,6 +58,8 @@ export class AuthService {
       );
 
       const accessToken = data?.access;
+      const mod = await import("jwt-decode");
+      const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
       const decoded = jwtDecode(accessToken);
       const user_id = decoded.user_id;
       const role = [decoded.role];
@@ -85,6 +88,8 @@ export class AuthService {
       });
 
       const accessToken = data?.access;
+      const mod = await import("jwt-decode");
+      const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
       const decoded = jwtDecode(accessToken);
       const user_id = decoded.user_id;
       const role = [decoded.role];
@@ -136,6 +141,16 @@ export class AuthService {
       console.error("Logout error:", err);
     } finally {
       httpService.removeAuthToken();
+    }
+  }
+
+  async resendVerification(email) {
+    try {
+      const data = await httpService.publicPost(API_ENDPOINTS.AUTH.RESEND_EMAIL, { email });
+      return data;
+    } catch (err) {
+      console.error("Failed to resend verification email:", err);
+      throw err;
     }
   }
 

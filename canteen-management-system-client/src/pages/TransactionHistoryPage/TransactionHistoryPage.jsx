@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
+import useAuth from "../../hooks/useAuth";
 import MainPageLayout from "../../layouts/MainPage/MainPage";
 import TransactionHistoryCardContainer from "../../components/TransactionHistoryPage/TransactionHistoryCardContainer/TransactionHistoryCardContainer";
 import { transactionService } from "../../services/TransactionService";
@@ -42,6 +45,17 @@ const mapApiTransaction = (tx) => {
 const TransactionHistoryPage = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isVerified = Boolean(auth?.isVerified ?? auth?.verified ?? false);
+    // If user is authenticated but not verified, redirect to menu
+    if (auth && Object.keys(auth).length > 0 && !isVerified) {
+      message.info("Verify your account to view transaction history.");
+      navigate("/order", { replace: true });
+    }
+  }, [auth, navigate]);
 
   useEffect(() => {
     let mounted = true;

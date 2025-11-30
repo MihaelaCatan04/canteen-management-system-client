@@ -1,11 +1,15 @@
 import React from 'react';
-import { Typography, Card, Button, Spin, Alert, Empty } from "antd";
+import { Typography, Card, Button, Spin, Alert, Empty, message } from "antd";
 const { Text, Title } = Typography;
 import "./Menu.css";
 import { useEffect, useState } from "react";
 import { Row, Col, Image } from "antd";
 import { PlusOutlined, MinusOutlined, ReloadOutlined } from "@ant-design/icons";
 import OrderTotal from "../OrderTotal/OrderTotal.jsx";
+import useAuth from "../../../hooks/useAuth";
+import { authService } from "../../../services/AuthService";
+import { httpService } from "../../../services/HttpService";
+import { API_ENDPOINTS } from "../../../api/API_ENDPOINTS";
 
 const Menu = ({
   selectedTimeSlot,
@@ -98,6 +102,35 @@ const Menu = ({
           : menu
       ),
     }));
+  };
+
+  const { auth } = useAuth();
+  const isVerifiedUser = Boolean(auth?.isVerified ?? auth?.verified ?? false);
+
+  const handleResendVerification = async () => {
+    try {
+      // Try to get email from auth or profile
+      let email = auth?.email || null;
+      if (!email) {
+        try {
+          const profile = await httpService.privateGet(API_ENDPOINTS.USER.PROFILE);
+          email = profile?.email || email;
+        } catch (err) {
+          console.warn("Could not fetch profile to get email for resend", err);
+        }
+      }
+
+      if (!email) {
+        message.error("Unable to determine email address for verification. Please contact support.");
+        return;
+      }
+
+      await authService.resendVerification(email);
+      message.success("Verification email sent (if the address exists).");
+    } catch (err) {
+      console.error("Resend verification failed", err);
+      message.error("Failed to send verification email. Try again later.");
+    }
   };
 
   const selectedItems = [];
@@ -243,6 +276,26 @@ const Menu = ({
 
   return (
     <div className="menu-container">
+      {!isVerifiedUser && (
+        <Card style={{ marginBottom: 16 }}>
+          <Alert
+            message="Account not verified"
+            description={
+              <div>
+                <div>Your account isn't verified yet. You can view the menu but adding to cart is disabled.</div>
+                <div style={{ marginTop: 8 }}>
+                  <Button type="primary" size="small" onClick={handleResendVerification}>
+                    Verify account
+                  </Button>
+                </div>
+              </div>
+            }
+            type="info"
+            showIcon
+          />
+        </Card>
+      )}
+
       {(items.results || []).map((menu, menuIndex) => (
         (menu.categories || []).map((category, categoryIndex) => {
           const displayTime = menu.start_time && menu.end_time
@@ -297,7 +350,9 @@ const Menu = ({
                             }
                             size="small"
                             shape="square"
-                            disabled={!item.qty || item.qty <= 0}
+                            disabled={!isVerifiedUser || !item.qty || item.qty <= 0}
+                            tabIndex={isVerifiedUser ? 0 : -1}
+                            aria-disabled={!isVerifiedUser}
                             style={{
                               backgroundColor: "#2563eb",
                               borderColor: "#2563eb",
@@ -306,21 +361,23 @@ const Menu = ({
                             }}
                           />
                           <Text>{item.qty || 0}</Text>
-                          <Button
-                            icon={<PlusOutlined />}
-                            onClick={() =>
-                              handleQuantityChange(menuIndex, categoryIndex, itemIndex, 1)
-                            }
-                            size="small"
-                            shape="square"
-                            disabled={parseInt(item.remaining_quantity) <= 0}
-                            style={{
-                              backgroundColor: "#2563eb",
-                              borderColor: "#2563eb",
-                              color: "#fff",
-                              borderRadius: "0.5rem",
-                            }}
-                          />
+                           <Button
+                             icon={<PlusOutlined />}
+                             onClick={() =>
+                               handleQuantityChange(menuIndex, categoryIndex, itemIndex, 1)
+                             }
+                             size="small"
+                             shape="square"
+                             disabled={!isVerifiedUser || parseInt(item.remaining_quantity) <= 0}
+                             tabIndex={isVerifiedUser ? 0 : -1}
+                             aria-disabled={!isVerifiedUser}
+                             style={{
+                               backgroundColor: "#2563eb",
+                               borderColor: "#2563eb",
+                               color: "#fff",
+                               borderRadius: "0.5rem",
+                             }}
+                           />
                         </div>
                       </div>
 
@@ -335,20 +392,28 @@ const Menu = ({
                           </Text>
                         </Col>
                         <Col>
-                          <Button
-                            onClick={() => addToCart(menuIndex, categoryIndex, itemIndex)}
-                            type="primary"
-                            size="small"
-                            disabled={parseInt(item.remaining_quantity) <= 0}
-                            style={{
-                              backgroundColor: "#2563eb",
-                              borderColor: "#2563eb",
-                              padding: "1rem",
-                              borderRadius: "0.5rem",
-                            }}
-                          >
-                            + Add
-                          </Button>
+                          {isVerifiedUser ? (
+                            <Button
+                              onClick={() => addToCart(menuIndex, categoryIndex, itemIndex)}
+                              type="primary"
+                              size="small"
+                              disabled={parseInt(item.remaining_quantity) <= 0}
+                              tabIndex={isVerifiedUser ? 0 : -1}
+                              aria-disabled={!isVerifiedUser}
+                              style={{
+                                backgroundColor: "#2563eb",
+                                borderColor: "#2563eb",
+                                padding: "1rem",
+                                borderRadius: "0.5rem",
+                              }}
+                            >
+                              + Add
+                            </Button>
+                          ) : (
+                            <Button type="default" size="small" disabled tabIndex={-1} aria-disabled style={{ padding: "1rem", borderRadius: "0.5rem" }}>
+                              View
+                            </Button>
+                          )}
                         </Col>
                       </Row>
 
@@ -366,20 +431,22 @@ const Menu = ({
         })
       ))}
 
-      <OrderTotal
-        selectedItems={selectedItems}
-        total={total}
-        handleQuantityChange={(menuIndex, categoryIndex, itemIndex, delta) =>
-          handleQuantityChange(menuIndex, categoryIndex, itemIndex, delta)
-        }
-        clearData={clearData}
-        selectedDate={selectedDate}
-        selectedTimeSlot={currentTimeSlot}
-        handleRemoveItem={(menuIndex, categoryIndex, itemIndex) =>
-          handleRemoveItem(menuIndex, categoryIndex, itemIndex)
-        }
-        openPopup={openPopup}
-      />
+      {isVerifiedUser && (
+        <OrderTotal
+          selectedItems={selectedItems}
+          total={total}
+          handleQuantityChange={(menuIndex, categoryIndex, itemIndex, delta) =>
+            handleQuantityChange(menuIndex, categoryIndex, itemIndex, delta)
+          }
+          clearData={clearData}
+          selectedDate={selectedDate}
+          selectedTimeSlot={currentTimeSlot}
+          handleRemoveItem={(menuIndex, categoryIndex, itemIndex) =>
+            handleRemoveItem(menuIndex, categoryIndex, itemIndex)
+          }
+          openPopup={openPopup}
+        />
+      )}
     </div>
   );
 };
