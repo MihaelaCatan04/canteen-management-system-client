@@ -1,0 +1,46 @@
+.microsoft-login-container {
+  width: 100%;
+}
+
+.microsoft-login-button {
+  background-color: #2f2f2f;
+  border-color: #2f2f2f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+}
+
+.microsoft-login-button:hover {
+  background-color: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.microsoft-login-button:focus {
+  background-color: #2f2f2f !important;
+  border-color: #2f2f2f !important;
+  color: #ffffff !important;
+}
+
+.microsoft-login-button:active {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.microsoft-login-button:disabled {
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  color: #666666 !important;
+}
+
+.microsoft-icon {
+  font-size: 18px;
+}
+
+.microsoft-error-alert {
+  margin-bottom: 12px;
+}

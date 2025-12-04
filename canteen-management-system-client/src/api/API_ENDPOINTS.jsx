@@ -5,6 +5,8 @@ export const API_ENDPOINTS = {
     REFRESH: "/auth/refresh/",
     LOGOUT: "/auth/logout/",
     RESEND_EMAIL: "/auth/email/resend/",
+    MICROSOFT: "/auth/microsoft",
+    MICROSOFT_CALLBACK: "/auth/microsoft/callback",
   },
   MFA: {
     SETUP_START: "/auth/mfa/setup/start",
