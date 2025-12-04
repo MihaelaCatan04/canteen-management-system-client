@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../../services/AuthService";
 import useAuth from "../../../hooks/useAuth";
+import MicrosoftLoginButton from "../MicrosoftLoginButton/MicrosoftLoginButton";
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
 const PWD_REGEX =
@@ -229,6 +230,10 @@ const SignUpForm = () => {
         >
           Sign Up
         </Button>
+        
+        {/* microsoft oauth signup/login */}
+        <Divider className="poppins-regular">Or</Divider>
+        <MicrosoftLoginButton disabled={isLoading} />
       </form>
 
       <Divider className="poppins-regular">Are you an existing user?</Divider>
