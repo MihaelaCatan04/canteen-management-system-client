@@ -15,6 +15,8 @@ import MicrosoftCallback from "./pages/MicrosoftCallback/MicrosoftCallback.jsx";
 import MFARedirect from "./pages/MFARedirect/MFARedirect.jsx";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail.jsx";
 import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword/ResetPassword.jsx";
 import "./api/Interceptors";
 const ROLES = {
   Customer: "customer",
@@ -34,6 +36,9 @@ function App() {
       {/* email verification routes */}
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/resend-verification" element={<ResendVerification />} />
+      {/* password reset routes */}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<PersistentLogIn />}>
         <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
           {/* Main menu is open to authenticated customers (verified or not) */}
