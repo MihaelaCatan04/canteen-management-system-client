@@ -8,7 +8,7 @@ import { Button, Col, Divider, Input, Row } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams, Link } from "react-router-dom";
 import { authService } from "../../../services/AuthService";
 import { jwtDecode } from "jwt-decode";
 import MicrosoftLoginButton from "../MicrosoftLoginButton/MicrosoftLoginButton";
@@ -182,9 +182,9 @@ const LogInForm = () => {
           />
           <Row justify="start" className="login-row">
             <Col>
-              <a href="#" className="forgot-link poppins-medium">
+              <Link to="/forgot-password" className="forgot-link poppins-medium">
                 Forgot password?
-              </a>
+              </Link>
             </Col>
           </Row>
           <Button

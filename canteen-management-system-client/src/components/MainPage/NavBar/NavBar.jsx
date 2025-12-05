@@ -10,6 +10,7 @@ import { authService } from "../../../services/AuthService";
 import { useNavigate, useLocation } from "react-router-dom";
 import MFASetup from "../MFASetup/MFASetup";
 import MFAManage from "../MFAManage/MFAManage";
+import ChangePassword from "../ChangePassword/ChangePassword";
 import { API_ENDPOINTS } from "../../../api/API_ENDPOINTS";
 
 const NavBar = () => {
@@ -25,6 +26,7 @@ const NavBar = () => {
   const { auth, setAuth } = useAuth();
   const [showMFASetup, setShowMFASetup] = useState(false);
   const [showMFAManage, setShowMFAManage] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const [mfaEnabled, setMfaEnabled] = useState(false);
 
   useEffect(() => {
@@ -51,8 +53,12 @@ const NavBar = () => {
 
 
   const handleChangePassword = () => {
-    console.log("Change Password clicked");
+    setShowChangePassword(true);
     setIsDropdownOpen(false);
+  };
+
+  const handleChangePasswordComplete = () => {
+    setShowChangePassword(false);
   };
 
   const handleEnableMFA = () => {
@@ -265,6 +271,17 @@ const NavBar = () => {
           onDisableSuccess={handleMFADisableSuccess}
           onRegenerateSuccess={handleMFARegenerateSuccess}
         />
+      </Modal>
+
+      <Modal
+        open={showChangePassword}
+        onCancel={() => setShowChangePassword(false)}
+        footer={null}
+        width={500}
+        centered
+        destroyOnHidden
+      >
+        <ChangePassword onComplete={handleChangePasswordComplete} />
       </Modal>
     </div>
   );

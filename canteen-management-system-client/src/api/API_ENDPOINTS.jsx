@@ -8,6 +8,9 @@ export const API_ENDPOINTS = {
     EMAIL_RESEND: "/auth/email/resend/",
     MICROSOFT: "/auth/microsoft",
     MICROSOFT_CALLBACK: "/auth/microsoft/callback",
+    PASSWORD_CHANGE: "/auth/password/change/",
+    PASSWORD_RESET: "/auth/password/reset/",
+    PASSWORD_RESET_CONFIRM: "/auth/password/reset/confirm/",
   },
   MFA: {
     SETUP_START: "/auth/mfa/setup/start",

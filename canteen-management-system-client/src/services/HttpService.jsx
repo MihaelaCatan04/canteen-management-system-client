@@ -94,6 +94,7 @@ export class HttpService {
 
     const err = new Error(message);
     err.status = error.response?.status;
+    err.data = error.response?.data;
     return err;
   }
 
