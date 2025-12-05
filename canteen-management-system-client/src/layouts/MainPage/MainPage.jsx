@@ -1,4 +1,5 @@
 import NavBar from "../../components/MainPage/NavBar/NavBar";
+import VerificationBanner from "../../components/MainPage/VerificationBanner/VerificationBanner";
 import "./MainPage.css";
 
 const MainPageLayout = ({ children }) => {
@@ -6,7 +7,10 @@ const MainPageLayout = ({ children }) => {
     <div>
       <NavBar />
       <div className="mainpage-layout">
-        <div className="mainpage-content">{children}</div>
+        <div className="mainpage-content">
+          <VerificationBanner />
+          {children}
+        </div>
       </div>
     </div>
   );
