@@ -191,9 +191,19 @@ export class AuthService {
     }
   }
 
+  async verifyEmail(token) {
+    try {
+      const data = await httpService.publicPost(API_ENDPOINTS.AUTH.EMAIL_VERIFY, { token });
+      return data;
+    } catch (err) {
+      console.error("Failed to verify email:", err);
+      throw err;
+    }
+  }
+
   async resendVerification(email) {
     try {
-      const data = await httpService.publicPost(API_ENDPOINTS.AUTH.RESEND_EMAIL, { email });
+      const data = await httpService.publicPost(API_ENDPOINTS.AUTH.EMAIL_RESEND, { email });
       return data;
     } catch (err) {
       console.error("Failed to resend verification email:", err);
