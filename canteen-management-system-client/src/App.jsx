@@ -13,6 +13,8 @@ import Page403 from "./pages/Page403/Page403.jsx";
 import TransactionHistoryPage from "./pages/TransactionHistoryPage/TransactionHistoryPage";
 import MicrosoftCallback from "./pages/MicrosoftCallback/MicrosoftCallback.jsx";
 import MFARedirect from "./pages/MFARedirect/MFARedirect.jsx";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail.jsx";
+import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
 import "./api/Interceptors";
 const ROLES = {
   Customer: "customer",
@@ -29,6 +31,9 @@ function App() {
       <Route path="/auth/microsoft/callback" element={<MicrosoftCallback />} />
       {/* mfa redirect for microsoft oauth users with mfa enabled */}
       <Route path="/auth/mfa" element={<MFARedirect />} />
+      {/* email verification routes */}
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/resend-verification" element={<ResendVerification />} />
       <Route element={<PersistentLogIn />}>
         <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
           {/* Main menu is open to authenticated customers (verified or not) */}
