@@ -1,0 +1,35 @@
+.verification-banner-wrapper {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .verification-banner-wrapper {
+    padding: 0;
+  }
+}
+
+.verification-banner {
+  border-radius: 8px;
+}
+
+.verification-banner-message {
+  color: #000;
+  font-size: 0.875rem;
+}
+
+.verification-banner-description {
+  color: #4f4f4f;
+  font-size: 0.875rem;
+}
+
+.verification-banner-link {
+  padding: 0;
+  height: auto;
+  color: #3678eb;
+  font-size: 0.875rem;
+}
+
+.verification-banner-link:hover {
+  color: #1d4ed8;
+}
