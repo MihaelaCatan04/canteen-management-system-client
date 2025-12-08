@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useRefreshToken from "../../hooks/useRefreshToken";
+import useTokenRefresh from "../../hooks/useTokenRefresh";
 import useAuth from "../../hooks/useAuth";
 import { Spin, Typography } from "antd";
 import { httpService } from "../../services/HttpService";
@@ -11,6 +12,9 @@ const PersistentLogIn = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth, setAuth } = useAuth();
+  
+  // Automatically refresh token before expiration
+  useTokenRefresh();
 
   useEffect(() => {
     let isMounted = true;
