@@ -24,6 +24,8 @@ export const API_ENDPOINTS = {
   },
   WALLETS: {
     BALANCE: "/wallets/me/",
+    CREATE_CHECKOUT_SESSION: "/wallets/stripe/create-checkout-session/",
+    SESSION_STATUS: "/wallets/stripe/session-status/",
   },
   MENUS: {
     LIST: "/menus",

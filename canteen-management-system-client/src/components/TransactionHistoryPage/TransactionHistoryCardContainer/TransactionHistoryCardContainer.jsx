@@ -73,7 +73,7 @@ const TransactionHistoryCardContainer = ({ transactions }) => {
           Deposit: "#399121",
         };
         const color = typeColorMap[record?.type] ?? "#111827";
-        const formatted = `$${Math.abs(amount).toFixed(2)}`;
+        const formatted = `${Math.abs(amount).toFixed(2)} MDL`;
         return (
           <span
             style={{ color, lineHeight: "1.5rem", fontSize: "1rem" }}
