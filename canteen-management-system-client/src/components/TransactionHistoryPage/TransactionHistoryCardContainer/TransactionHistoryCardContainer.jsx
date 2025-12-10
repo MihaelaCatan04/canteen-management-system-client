@@ -91,7 +91,7 @@ const TransactionHistoryCardContainer = ({ transactions }) => {
       align: "center",
       render: (balance) => (
         <span className="poppins-medium2 balance-text">
-          ${balance.toFixed(2)}
+          {balance.toFixed(2)} MDL
         </span>
       ),
     },
