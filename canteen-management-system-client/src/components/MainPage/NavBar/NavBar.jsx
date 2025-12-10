@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NavBar.css";
-import { Typography, Avatar, Space, Modal, message } from "antd";
+import { Typography, Avatar, Space, Modal, message, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 const { Title, Text } = Typography;

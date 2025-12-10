@@ -11,6 +11,7 @@ import Page404 from "./pages/Page404/Page404.jsx";
 import Page429 from "./pages/Page429/Page429.jsx";
 import Page403 from "./pages/Page403/Page403.jsx";
 import TransactionHistoryPage from "./pages/TransactionHistoryPage/TransactionHistoryPage";
+import AddBalancePage from "./pages/AddBalancePage/AddBalancePage.jsx";
 import MicrosoftCallback from "./pages/MicrosoftCallback/MicrosoftCallback.jsx";
 import MFARedirect from "./pages/MFARedirect/MFARedirect.jsx";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail.jsx";
@@ -48,6 +49,7 @@ function App() {
           <Route element={<RequireVerified />}>
             <Route path="/order-history" element={<OrderHistoryPage />} />
             <Route path="/transaction-history" element={<TransactionHistoryPage />} />
+            <Route path="/add-balance" element={<AddBalancePage />} />
           </Route>
         </Route>
       </Route>
