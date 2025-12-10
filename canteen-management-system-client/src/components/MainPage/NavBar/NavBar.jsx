@@ -24,6 +24,7 @@ const NavBar = () => {
   const location = useLocation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { auth, setAuth } = useAuth();
+  const isVerified = Boolean(auth?.isVerified ?? auth?.verified ?? false);
   const [showMFASetup, setShowMFASetup] = useState(false);
   const [showMFAManage, setShowMFAManage] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -218,20 +219,24 @@ const NavBar = () => {
 
             {isDropdownOpen && (
               <Card ref={dropdownRef} className="dropdown-menu">
-                <div
-                  className="dropdown-item poppins-medium"
-                  onClick={handleChangePassword}
-                >
-                  Change Password
-                </div>
-                <div className="dropdown-divider"></div>
-                <div
-                  className="dropdown-item poppins-medium"
-                  onClick={mfaEnabled ? handleManageMFA : handleEnableMFA}
-                >
-                  {mfaEnabled ? "Manage MFA" : "Enable MFA"}
-                </div>
-                <div className="dropdown-divider"></div>
+                {isVerified && (
+                  <>
+                    <div
+                      className="dropdown-item poppins-medium"
+                      onClick={handleChangePassword}
+                    >
+                      Change Password
+                    </div>
+                    <div className="dropdown-divider"></div>
+                    <div
+                      className="dropdown-item poppins-medium"
+                      onClick={mfaEnabled ? handleManageMFA : handleEnableMFA}
+                    >
+                      {mfaEnabled ? "Manage MFA" : "Enable MFA"}
+                    </div>
+                    <div className="dropdown-divider"></div>
+                  </>
+                )}
                 <div
                   className="dropdown-item poppins-medium"
                   onClick={handleLogOut}
