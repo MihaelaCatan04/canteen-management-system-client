@@ -1,0 +1,90 @@
+.resend-verification-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.resend-verification-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 48px 32px;
+  max-width: 450px;
+  width: 100%;
+}
+
+.resend-verification-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.resend-icon {
+  font-size: 48px;
+  color: #3678eb;
+  margin-bottom: 16px;
+}
+
+.resend-title {
+  font-size: 1.5rem;
+  color: #000;
+  margin: 0 0 8px 0;
+}
+
+.resend-subtitle {
+  font-size: 1rem;
+  color: #4f4f4f;
+  margin: 0;
+}
+
+.resend-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.resend-input {
+  border-radius: 8px;
+}
+
+.resend-error {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 8px 12px;
+  background-color: #fff2f0;
+  border-radius: 8px;
+  border: 1px solid #ffccc7;
+}
+
+.resend-button {
+  margin-top: 8px;
+}
+
+.back-link {
+  text-align: center;
+  color: #4f4f4f;
+}
+
+.back-link:hover {
+  color: #3678eb;
+}
+
+.resend-verification-container .ant-result {
+  padding: 48px 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.resend-verification-container .ant-result-title {
+  color: #000;
+  font-size: 1.5rem;
+}
+
+.resend-verification-container .ant-result-subtitle {
+  color: #4f4f4f;
+  font-size: 1rem;
+}

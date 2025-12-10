@@ -3,8 +3,9 @@ import {
   LockOutlined,
   UserOutlined,
   UserAddOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Input } from "antd";
+import { Button, Divider, Input, Result } from "antd";
 import "./SignUpForm.css";
 import { useRef, useState, useEffect } from "react";
 import {
@@ -16,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../../services/AuthService";
 import useAuth from "../../../hooks/useAuth";
+import MicrosoftLoginButton from "../MicrosoftLoginButton/MicrosoftLoginButton";
 
 const USER_REGEX = /^[a-z]+\.([a-z]+\d*)@[a-z]+\.utm\.md$/;
 const PWD_REGEX =
@@ -41,6 +43,8 @@ const SignUpForm = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
 
   useEffect(() => {
     userRef.current?.focus();
@@ -80,10 +84,12 @@ const SignUpForm = () => {
         setAuth
       );
 
+      // Store email for success message
+      setRegisteredEmail(user);
       setUser("");
       setPwd("");
       setMatchPwd("");
-      navigate("/order", { replace: true });
+      setRegistrationSuccess(true);
     } catch (err) {
       setErrMsg(err.message);
       errRef.current?.focus();
@@ -91,6 +97,42 @@ const SignUpForm = () => {
       setIsLoading(false);
     }
   };
+
+  // Show success message after registration
+  if (registrationSuccess) {
+    return (
+      <div className="registration-success">
+        <Result
+          icon={<MailOutlined style={{ color: "#3678eb" }} />}
+          title={<span className="poppins-medium">Registration Successful!</span>}
+          subTitle={
+            <span className="poppins-regular">
+              Please check your email ({registeredEmail}) to verify your account.
+            </span>
+          }
+          extra={[
+            <Button
+              type="primary"
+              size="large"
+              key="order"
+              onClick={() => navigate("/order")}
+              className="poppins-medium"
+            >
+              Continue to Menu
+            </Button>,
+            <Button
+              size="large"
+              key="resend"
+              onClick={() => navigate("/resend-verification")}
+              className="poppins-medium"
+            >
+              Resend Verification Email
+            </Button>,
+          ]}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -229,6 +271,10 @@ const SignUpForm = () => {
         >
           Sign Up
         </Button>
+        
+        {/* microsoft oauth signup/login */}
+        <Divider className="poppins-regular">Or</Divider>
+        <MicrosoftLoginButton disabled={isLoading} />
       </form>
 
       <Divider className="poppins-regular">Are you an existing user?</Divider>

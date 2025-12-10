@@ -8,13 +8,15 @@ import { Button, Col, Divider, Input, Row } from "antd";
 import "./LogInForm.css";
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams, Link } from "react-router-dom";
 import { authService } from "../../../services/AuthService";
 import { jwtDecode } from "jwt-decode";
+import MicrosoftLoginButton from "../MicrosoftLoginButton/MicrosoftLoginButton";
 
 const LogInForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const from = location.state?.from?.pathname || "/order";
   const { setAuth } = useAuth();
   const userRef = useRef();
@@ -25,10 +27,35 @@ const LogInForm = () => {
   const [errMsg, setErrMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
-  // MFA state
+  // mfa state
   const [requiresMFA, setRequiresMFA] = useState(false);
   const [mfaTicket, setMfaTicket] = useState("");
   const [mfaCode, setMfaCode] = useState("");
+  const [isMicrosoftMFA, setIsMicrosoftMFA] = useState(false);
+
+  // check for mfa redirect from microsoft oauth or error params
+  useEffect(() => {
+    const mfaParam = searchParams.get("mfa");
+    const ticketParam = searchParams.get("ticket");
+    const errorParam = searchParams.get("error");
+
+    // handle error from microsoft callback
+    if (errorParam) {
+      const errorMessages = {
+        microsoft_auth_failed: "Microsoft authentication failed. Please try again.",
+        no_token: "No authentication token received. Please try again.",
+        callback_failed: "Failed to complete Microsoft login. Please try again."
+      };
+      setErrMsg(errorMessages[errorParam] || "An error occurred during login.");
+    }
+
+    // handle mfa redirect from microsoft oauth
+    if (mfaParam === "true" && ticketParam) {
+      setRequiresMFA(true);
+      setMfaTicket(ticketParam);
+      setIsMicrosoftMFA(true);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     userRef.current?.focus();
@@ -46,12 +73,13 @@ const LogInForm = () => {
       const result = await authService.login(user, pwd, setAuth);
       
       if (result.requiresMFA) {
-        // MFA is required, show MFA input
+        // mfa is required, show mfa input
         setRequiresMFA(true);
         setMfaTicket(result.mfaTicket);
-        setErrMsg(""); // Clear any previous errors
+        setIsMicrosoftMFA(false);
+        setErrMsg(""); // clear any previous errors
       } else {
-        // Login successful without MFA
+        // login successful without mfa
         setUser("");
         setPwd("");
         navigate(from, { replace: true });
@@ -71,12 +99,17 @@ const LogInForm = () => {
     try {
       await authService.verifyMFA(mfaTicket, mfaCode, setAuth);
       
-      // MFA verification successful
+      // mfa verification successful
       setUser("");
       setPwd("");
       setMfaCode("");
       setRequiresMFA(false);
       setMfaTicket("");
+      setIsMicrosoftMFA(false);
+      
+      // clear microsoft mfa pending flag
+      sessionStorage.removeItem("microsoft_mfa_pending");
+      
       navigate(from, { replace: true });
     } catch (err) {
       setErrMsg(err.message || "Invalid MFA code");
@@ -91,6 +124,11 @@ const LogInForm = () => {
     setMfaTicket("");
     setMfaCode("");
     setErrMsg("");
+    setIsMicrosoftMFA(false);
+    
+    // clear microsoft mfa pending flag and query params
+    sessionStorage.removeItem("microsoft_mfa_pending");
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -104,7 +142,7 @@ const LogInForm = () => {
       </p>
       
       {!requiresMFA ? (
-        // Regular login form
+        // regular login form
         <form onSubmit={handleSubmit}>
           <label className="login-label poppins-regular" htmlFor="email">
             Email Address:
@@ -144,9 +182,9 @@ const LogInForm = () => {
           />
           <Row justify="start" className="login-row">
             <Col>
-              <a href="#" className="forgot-link poppins-medium">
+              <Link to="/forgot-password" className="forgot-link poppins-medium">
                 Forgot password?
-              </a>
+              </Link>
             </Col>
           </Row>
           <Button
@@ -160,10 +198,19 @@ const LogInForm = () => {
           >
             Log In
           </Button>
+          
+          {/* microsoft oauth login */}
+          <Divider className="poppins-regular">Or</Divider>
+          <MicrosoftLoginButton disabled={isLoading} />
         </form>
       ) : (
-        // MFA verification form
+        // mfa verification form
         <form onSubmit={handleMFASubmit}>
+          {isMicrosoftMFA && (
+            <p className="poppins-regular" style={{ marginBottom: '16px', color: '#666' }}>
+              Your Microsoft account requires two-factor authentication.
+            </p>
+          )}
           <label className="login-label poppins-regular" htmlFor="mfa-code">
             Two-Factor Authentication Code:
           </label>

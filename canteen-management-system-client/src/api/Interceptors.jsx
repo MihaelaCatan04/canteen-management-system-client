@@ -33,6 +33,29 @@ axiosPrivate.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
+
+    // Handle 403 errors - check if it's due to unverified email
+    if (error?.response?.status === 403) {
+      const token = axiosPrivate.defaults.headers.common["Authorization"];
+      if (token && typeof token === "string" && token.startsWith("Bearer ")) {
+        try {
+          const accessToken = token.replace("Bearer ", "");
+          const mod = await import("jwt-decode");
+          const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
+          const decoded = jwtDecode(accessToken);
+          
+          // If user is not verified, redirect to resend verification page
+          if (decoded && !decoded.verified) {
+            window.location.href = "/resend-verification";
+            return Promise.reject(error);
+          }
+        } catch (decodeError) {
+          // If token decoding fails, just return the error
+          console.error("Failed to decode token:", decodeError);
+        }
+      }
+    }
+
     return Promise.reject(error);
   }
 );

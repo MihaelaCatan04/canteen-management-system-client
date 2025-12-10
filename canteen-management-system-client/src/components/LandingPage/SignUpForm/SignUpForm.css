@@ -59,3 +59,37 @@
 .hide {
   display: none;
 }
+
+.registration-success {
+  text-align: center;
+}
+
+.registration-success .ant-result {
+  padding: 16px 0;
+}
+
+.registration-success .ant-result-icon {
+  margin-bottom: 16px;
+}
+
+.registration-success .ant-result-icon .anticon {
+  font-size: 48px;
+}
+
+.registration-success .ant-result-title {
+  color: #000;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.registration-success .ant-result-subtitle {
+  color: #4f4f4f;
+  font-size: 0.875rem;
+}
+
+.registration-success .ant-result-extra {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
