@@ -3,50 +3,38 @@ import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
 import axiosPublic from "../api/axios";
 
 export class AuthService {
-  // get microsoft oauth authorization url from backend
-  async getMicrosoftAuthUrl() {
+  // Authenticate with Microsoft - fetches user profile using MS token
+  // The backend validates the Microsoft token and returns user info
+  async authenticateWithMicrosoft(microsoftAccessToken, setAuth) {
     try {
-      const data = await httpService.publicGet(API_ENDPOINTS.AUTH.MICROSOFT);
-      
-      // store state in session storage for csrf validation
-      if (data?.state) {
-        sessionStorage.setItem('oauth_state', data.state);
-      }
-      
-      return data;
-    } catch (err) {
-      throw new Error(err.message || "Failed to get Microsoft auth URL");
-    }
-  }
+      // Call /users/me with Microsoft token to validate and get user info
+      // The backend's MicrosoftBearerAuthentication will validate the token
+      const response = await axiosPublic.get(API_ENDPOINTS.USER.PROFILE, {
+        headers: {
+          Authorization: `Bearer ${microsoftAccessToken}`,
+        },
+      });
 
-  // process microsoft oauth callback tokens
-  async processMicrosoftCallback(accessToken, setAuth) {
-    try {
-      const mod = await import("jwt-decode");
-      const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
-      const decoded = jwtDecode(accessToken);
-      const user_id = decoded.user_id;
-      const role = [decoded.role];
-      const isVerified = decoded.verified;
-      
-      httpService.setAuthToken(accessToken);
-      
-      // fetch user profile to get mfa status
-      const userProfile = await httpService.privateGet(API_ENDPOINTS.USER.PROFILE);
-      
+      const userProfile = response.data;
+
+      // Set auth state for Microsoft user
       const authData = {
-        accessToken,
-        user_id,
-        role,
-        isVerified,
-        mfaEnabled: !!userProfile?.mfa_enabled,
+        // No app JWT - we use Microsoft token directly
+        accessToken: null,
+        microsoftToken: microsoftAccessToken,
+        isMicrosoftAuth: true,
+        user_id: userProfile.id,
+        email: userProfile.email,
+        role: [userProfile.role || "customer"],
+        isVerified: userProfile.is_verified ?? userProfile.verified ?? true, // MS users are typically verified
+        mfaEnabled: !!userProfile.mfa_enabled,
       };
-      
+
       setAuth(authData);
 
       return authData;
     } catch (err) {
-      throw new Error(err.message || "Failed to process Microsoft login");
+      throw new Error(err.response?.data?.detail || err.message || "Failed to authenticate with Microsoft");
     }
   }
 
@@ -83,6 +71,7 @@ export class AuthService {
       
       const authData = {
         accessToken,
+        isMicrosoftAuth: false,
         user_id,
         role,
         isVerified,
@@ -114,6 +103,7 @@ export class AuthService {
       
       setAuth({
         accessToken,
+        isMicrosoftAuth: false,
         user_id,
         role,
         isVerified,
@@ -149,6 +139,7 @@ export class AuthService {
       
       const authData = {
         accessToken,
+        isMicrosoftAuth: false,
         user_id,
         role,
         isVerified,

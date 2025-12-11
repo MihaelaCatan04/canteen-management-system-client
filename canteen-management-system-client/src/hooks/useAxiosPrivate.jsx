@@ -1,7 +1,8 @@
 import { axiosPrivate } from "../api/axios";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
+import { useMicrosoftAuth } from "./useMicrosoftAuth";
 
 // Shared state to avoid concurrent refresh attempts
 let isRefreshing = false;
@@ -19,12 +20,36 @@ function onRefreshed(token) {
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
   const { auth } = useAuth();
+  const { getAccessToken: getMsToken } = useMicrosoftAuth();
+
+  // Get the appropriate token based on auth type
+  const getToken = useCallback(async () => {
+    if (auth?.isMicrosoftAuth) {
+      // For Microsoft users, get fresh token from MSAL
+      return await getMsToken();
+    }
+    // For regular users, use the stored access token
+    return auth?.accessToken;
+  }, [auth?.isMicrosoftAuth, auth?.accessToken, getMsToken]);
+
+  // Refresh token based on auth type
+  const refreshToken = useCallback(async () => {
+    if (auth?.isMicrosoftAuth) {
+      // For Microsoft users, get fresh token from MSAL
+      return await getMsToken();
+    }
+    // For regular users, use the refresh endpoint
+    return await refresh();
+  }, [auth?.isMicrosoftAuth, getMsToken, refresh]);
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
-      (config) => {
+      async (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
+          const token = await getToken();
+          if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+          }
         }
         return config;
       },
@@ -44,7 +69,7 @@ const useAxiosPrivate = () => {
           if (!isRefreshing) {
             isRefreshing = true;
             try {
-              const newAccessToken = await refresh();
+              const newAccessToken = await refreshToken();
               isRefreshing = false;
               onRefreshed(newAccessToken);
               prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
@@ -74,7 +99,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [auth, refresh]);
+  }, [auth, getToken, refreshToken]);
 
   return axiosPrivate;
 };

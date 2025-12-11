@@ -1,23 +1,30 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useCallback } from "react";
 import axiosPublic from "../api/axios";
 import { httpService } from "../services/HttpService";
-import { useCallback } from "react";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
 
+  // Refresh token for regular (non-Microsoft) users
   const refresh = useCallback(async () => {
+    // Microsoft users don't use this refresh - they use MSAL's acquireTokenSilent
+    if (auth?.isMicrosoftAuth) {
+      throw new Error("Microsoft users should refresh via MSAL");
+    }
+
     const response = await axiosPublic.post("/auth/refresh/", {}, { withCredentials: true });
     const accessToken = response?.data?.access || null;
     if (!accessToken) throw new Error("No access token in refresh response");
     httpService.setAuthToken(accessToken);
+    
     // Dynamic import to handle both named and default exports from jwt-decode
     const mod = await import("jwt-decode");
     const jwtDecode = mod?.default ?? mod?.jwtDecode ?? mod;
     const decoded = jwtDecode(accessToken);
     const verifiedValue = decoded.is_verified ?? decoded.verified ?? false;
+    
     setAuth((prev) => ({
       ...prev,
       accessToken,
@@ -31,10 +38,16 @@ export const AuthProvider = ({ children }) => {
       mfaEnabled: prev.mfaEnabled,
     }));
     return accessToken;
-  }, [setAuth]);
+  }, [auth?.isMicrosoftAuth]);
+
+  // Clear auth state (used for logout)
+  const clearAuth = useCallback(() => {
+    setAuth({});
+    httpService.removeAuthToken();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, refresh }}>
+    <AuthContext.Provider value={{ auth, setAuth, refresh, clearAuth }}>
       {children}
     </AuthContext.Provider>
   );

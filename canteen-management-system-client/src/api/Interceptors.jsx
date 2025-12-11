@@ -1,21 +1,36 @@
 import { axiosPrivate } from "./axios";
 import { authService } from "../services/AuthService";
 
+// Global request interceptor
+// Note: For Microsoft users, the useAxiosPrivate hook handles token injection
+// This interceptor is a fallback for regular users
 axiosPrivate.interceptors.request.use(
   (config) => {
-    // axiosPrivate.defaults.headers.common["Authorization"] is set by HttpService.setAuthToken
-    // keep request as-is (or attach fallback token from context if you expose it globally)
+    // The Authorization header is set by:
+    // 1. useAxiosPrivate hook (for both regular and Microsoft users)
+    // 2. httpService.setAuthToken for regular users
     return config;
   },
   (error) => Promise.reject(error)
 );
 
+// Global response interceptor
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     const prevRequest = error?.config;
 
+    // Only attempt refresh for regular (non-Microsoft) auth
+    // Microsoft auth refresh is handled by useAxiosPrivate with MSAL
     if (error?.response?.status === 401 && !prevRequest?.sent) {
+      // Check if this is a Microsoft auth request by looking at the token
+      const authHeader = prevRequest?.headers?.["Authorization"];
+      if (authHeader && typeof authHeader === "string") {
+        // Microsoft tokens are typically longer and have different structure
+        // For now, we'll let useAxiosPrivate handle the retry
+        // This interceptor is mainly for non-hook based calls
+      }
+
       prevRequest.sent = true;
       try {
         const newAuthData = await authService.refreshToken();
@@ -50,8 +65,9 @@ axiosPrivate.interceptors.response.use(
             return Promise.reject(error);
           }
         } catch (decodeError) {
-          // If token decoding fails, just return the error
-          console.error("Failed to decode token:", decodeError);
+          // If token decoding fails (e.g., Microsoft token), just return the error
+          // Microsoft tokens can't be decoded with jwt-decode
+          console.debug("Token decode skipped (may be Microsoft token):", decodeError.message);
         }
       }
     }
