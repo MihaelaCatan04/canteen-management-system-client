@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+defaults:
+  run:
+    working-directory: ./canteen-management-system-client
+
 jobs:
   test:
     name: Build and Test
@@ -24,6 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: './canteen-management-system-client/package-lock.json'
       
       - name: Install dependencies
         run: npm ci
@@ -45,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-build
-          path: ./dist
+          path: ./canteen-management-system-client/dist
           retention-days: 7
   
   security-check:
