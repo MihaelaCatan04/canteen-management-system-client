@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { walletsService } from "../../services/WalletsService";
+import config from "../../config/env";
 
 const { Title, Text } = Typography;
 
-// Initialize Stripe with your publishable key
-const stripePromise = loadStripe("pk_test_51Rh3loFo0T5zwQpbtUeKIxnEiyF8pI7edziDCA73kegC2Osm6GoqXB3uaXhdTAIMF0Mi8FB0eTZBJmlUZ2hu1e6z00gV0EkWO0");
+// Initialize Stripe with your publishable key from environment variables
+const stripePromise = loadStripe(config.STRIPE_PUBLISHABLE_KEY);
 
 const AddBalanceForm = () => {
   const [form] = Form.useForm();
