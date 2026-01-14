@@ -19,7 +19,7 @@ A modern React-based web application for managing canteen orders, payments, and 
 - [Default Credentials (Academic Purposes)](#default-credentials-academic-purposes)
 - [Troubleshooting](#troubleshooting)
 
-## ✨ Features
+## Features
 
 - **User Authentication**: Secure login/registration with JWT tokens
 - **Role-Based Access Control (RBAC)**: Different permissions for students, staff, and admins
@@ -33,7 +33,7 @@ A modern React-based web application for managing canteen orders, payments, and 
 - **Real-time Health Checks**: API availability monitoring
 - **Error Boundaries**: Graceful error handling
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Framework**: React 18.3.1
 - **Build Tool**: Vite 7.2.4
@@ -45,7 +45,7 @@ A modern React-based web application for managing canteen orders, payments, and 
 - **Date/Time**: Luxon 3.7.2
 - **Icons**: Font Awesome 7.0.1
 
-## 📦 Prerequisites
+## Prerequisites
 
 - **Node.js**: 18.x or 20.x (LTS recommended)
 - **npm**: 9.x or higher
@@ -110,8 +110,8 @@ VITE_APP_ENV=development
 ### Environment Files
 
 - `.env.example` - Template with all variables (commit to git)
-- `.env.development` - Development defaults (commit to git)
-- `.env.production` - Production defaults (commit to git)
+- `.env.development` - Development defaults (commit to git for academic purposes)
+- `.env.production` - Production defaults (commit to git for academic purposes)
 - `.env.local` - Local overrides (DO NOT commit, automatically ignored)
 
 ## 🏃 Running the Application
@@ -133,7 +133,7 @@ npm run build
 npm run preview
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 
@@ -160,7 +160,7 @@ Current test coverage:
 - Error boundaries (planned)
 - Health check service (planned)
 
-## 🏗 Building for Production
+## Building for Production
 
 ### Build Command
 
@@ -176,7 +176,7 @@ This creates an optimized production build in the `dist/` directory.
 VITE_API_BASE_URL=https://api.production.com npm run build
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Build Docker Image
 
@@ -247,7 +247,7 @@ canteen-management-system-client/
 └── README.md                  # This file
 ```
 
-## 🔒 Security Features
+## Security Features
 
 ### Implemented Security Measures
 
@@ -292,7 +292,7 @@ canteen-management-system-client/
 - **Session Security**: HTTP-only cookies prevent JS access
 - **Rate Limiting**: Backend implements rate limiting (client respects 429 responses)
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### GitHub Actions Workflow (Planned)
 
@@ -320,9 +320,9 @@ npm run test:run
 npm run build
 ```
 
-## 🔑 Default Credentials (Academic Purposes)
+## Default Credentials (Academic Purposes)
 
-**⚠️ FOR DEMONSTRATION/TESTING ONLY - NOT FOR PRODUCTION USE**
+** FOR DEMONSTRATION/TESTING ONLY - NOT FOR PRODUCTION USE**
 
 ### Test Accounts
 
@@ -353,7 +353,7 @@ ZIP: Any 5 digits (e.g., 12345)
 
 **Note**: These accounts must be created in your backend database. Stripe test mode is enabled by default for development.
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -408,13 +408,13 @@ npm run build
 - Check backend API logs for server errors
 - Verify all environment variables are set correctly
 
-## 📝 Additional Documentation
+## Additional Documentation
 
 - [Stripe Integration Guide](../../STRIPE_INTEGRATION_GUIDE.md)
 - [Security Portfolio](../../Security_Portfolio/)
 - [Backend Documentation](../../canteen-management-system-server/README.md)
 
-## 🤝 Contributing
+## Contributing
 
 1. Create a feature branch (`git checkout -b feature/amazing-feature`)
 2. Make your changes
@@ -425,11 +425,8 @@ npm run build
 7. Push to branch (`git push origin feature/amazing-feature`)
 8. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is for academic purposes as part of a university assignment.
 
 ---
-
-**Last Updated**: January 2026  
-**Maintained by**: Mihaela (PBL Project)
