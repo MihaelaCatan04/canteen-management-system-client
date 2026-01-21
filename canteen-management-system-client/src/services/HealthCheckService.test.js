@@ -61,30 +61,25 @@ describe('HealthCheckService', () => {
   });
 
   describe('performStartupCheck', () => {
-    it('should log success message when API is healthy', async () => {
-      const consoleSpy = vi.spyOn(console, 'log');
+    it('should return healthy status when API is healthy', async () => {
       axios.get.mockResolvedValue({
         status: 200,
         data: { message: 'OK' }
       });
 
-      await healthCheckService.performStartupCheck();
+      const result = await healthCheckService.performStartupCheck();
 
-      expect(consoleSpy).toHaveBeenCalledWith('✅ API health check passed');
-      consoleSpy.mockRestore();
+      expect(result.healthy).toBe(true);
+      expect(result.status).toBe(200);
     });
 
-    it('should log warning when API is unhealthy', async () => {
-      const warnSpy = vi.spyOn(console, 'warn');
+    it('should return unhealthy status when API is unhealthy', async () => {
       axios.get.mockRejectedValue(new Error('Connection refused'));
 
-      await healthCheckService.performStartupCheck();
+      const result = await healthCheckService.performStartupCheck();
 
-      expect(warnSpy).toHaveBeenCalledWith(
-        '⚠️ API health check failed:',
-        'Connection refused'
-      );
-      warnSpy.mockRestore();
+      expect(result.healthy).toBe(false);
+      expect(result.message).toBe('Connection refused');
     });
   });
 
