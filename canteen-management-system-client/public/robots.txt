@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://traygo.app/sitemap.xml
