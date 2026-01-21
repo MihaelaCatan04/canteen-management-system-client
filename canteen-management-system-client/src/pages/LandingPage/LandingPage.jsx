@@ -3,11 +3,15 @@ import LandingPageLeft from "../../components/LandingPage/LandingPageLeft/Landin
 import LandingPageRight from "../../components/LandingPage/LandingPageRight/LandingPageRight";
 import { useState, useEffect } from "react";
 import { Spin, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const LandingPage = () => {
   const [right, setRight] = useState(null);
   const [left, setLeft] = useState(null);
   const [isPending, setIsPending] = useState(true);
+  const { auth } = useAuth();
+  const navigate = useNavigate();
   // useEffect(() => {
   //   setTimeout(() => {
   //     setRight(<LandingPageRight />);
@@ -17,10 +21,16 @@ const LandingPage = () => {
   // }, []);
 
   useEffect(() => {
+    // Redirect authenticated users to the main app
+    if (auth?.accessToken) {
+      navigate("/order", { replace: true });
+      return;
+    }
+
     setRight(<LandingPageRight />);
     setLeft(<LandingPageLeft />);
     setIsPending(false);
-  }, []);
+  }, [auth, navigate]);
   if (isPending) {
     return (
       <div
