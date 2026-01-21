@@ -28,25 +28,26 @@ const ROLES = {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LandingPage />} />
-      <Route path="/register" element={<LandingPage />} />
-      {/* microsoft oauth callback route */}
+      {/* Public routes - with auth check for redirect */}
+      <Route element={<PersistentLogIn />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LandingPage />} />
+        <Route path="/register" element={<LandingPage />} />
+      </Route>
+      
+      {/* OAuth and other public routes without auth check */}
       <Route path="/auth/microsoft/callback" element={<MicrosoftCallback />} />
-      {/* mfa redirect for microsoft oauth users with mfa enabled */}
       <Route path="/auth/mfa" element={<MFARedirect />} />
-      {/* email verification routes */}
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/resend-verification" element={<ResendVerification />} />
-      {/* password reset routes */}
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      
+      {/* Protected routes */}
       <Route element={<PersistentLogIn />}>
         <Route element={<RequireAuth allowedRoles={[ROLES.Customer]} />}>
-          {/* Main menu is open to authenticated customers (verified or not) */}
           <Route path="/order" element={<MainPage />} />
 
-          {/* Restrict history and transactions to verified customers */}
           <Route element={<RequireVerified />}>
             <Route path="/order-history" element={<OrderHistoryPage />} />
             <Route path="/transaction-history" element={<TransactionHistoryPage />} />
@@ -55,6 +56,8 @@ function App() {
           </Route>
         </Route>
       </Route>
+      
+      {/* Error pages */}
       <Route path="/forbidden" element={<Page403 />} />
       <Route path="/429" element={<Page429 />} />
       <Route path="*" element={<Page404 />} />
