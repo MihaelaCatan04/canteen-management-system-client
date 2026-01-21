@@ -24,7 +24,6 @@ const MFASetup = ({ onComplete }) => {
     setLoading(true);
     try {
       const data = await mfaService.startMFASetup();
-      console.log("MFA Setup Response:", data);
       const qrCodeData = data.qr_code.startsWith('data:image')
         ? data.qr_code
         : `data:image/png;base64,${data.qr_code}`;

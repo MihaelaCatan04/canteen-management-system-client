@@ -7,7 +7,6 @@ export class OrderService {
             const data = await httpService.privateGet(API_ENDPOINTS.ORDERS.LIST);
             return data;
         } catch (error) {
-            console.error("Error fetching orders:", error);
             throw error;
         }
     }
@@ -17,7 +16,6 @@ export class OrderService {
             const res = await httpService.privatePost(API_ENDPOINTS.ORDERS.CREATE, payload);
             return res;
         } catch (err) {
-            console.error("Error creating order:", err);
             throw err;
         }
     }

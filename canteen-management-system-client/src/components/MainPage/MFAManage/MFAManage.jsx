@@ -55,9 +55,6 @@ const MFAManage = ({ onDisableSuccess, onRegenerateSuccess }) => {
             errorMessage = err.message;
           }
 
-          console.log("Disable MFA Error:", err);
-          console.log("Error Message:", errorMessage);
-
           // Show user-friendly error message for incorrect password
           if (errorMessage.toLowerCase().includes("invalid password") ||
               errorMessage.toLowerCase().includes("incorrect password")) {

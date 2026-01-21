@@ -9,7 +9,6 @@ export class MenusService {
       });
       return data;
     } catch (error) {
-      console.error("Error fetching menus:", error);
       throw error;
     }
   }
@@ -20,7 +19,6 @@ export class MenusService {
       const filteredMenus = this.filterMenusByDate(data, selectedDate);
       return filteredMenus;
     } catch (error) {
-      console.error("Error fetching date menus:", error);
       throw error;
     }
   }

@@ -51,7 +51,6 @@ axiosPrivate.interceptors.response.use(
           }
         } catch (decodeError) {
           // If token decoding fails, just return the error
-          console.error("Failed to decode token:", decodeError);
         }
       }
     }

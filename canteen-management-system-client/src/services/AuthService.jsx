@@ -176,7 +176,6 @@ export class AuthService {
       }
       return res?.data;
     } catch (err) {
-      console.error("refresh token failed", err);
       throw err;
     }
   }
@@ -185,7 +184,7 @@ export class AuthService {
     try {
       await axiosPublic.post(API_ENDPOINTS.AUTH.LOGOUT, {}, { withCredentials: true });
     } catch (err) {
-      console.error("Logout error:", err);
+      // Logout error handled silently
     } finally {
       httpService.removeAuthToken();
     }
@@ -196,7 +195,6 @@ export class AuthService {
       const data = await httpService.publicPost(API_ENDPOINTS.AUTH.EMAIL_VERIFY, { token });
       return data;
     } catch (err) {
-      console.error("Failed to verify email:", err);
       throw err;
     }
   }
@@ -206,7 +204,6 @@ export class AuthService {
       const data = await httpService.publicPost(API_ENDPOINTS.AUTH.EMAIL_RESEND, { email });
       return data;
     } catch (err) {
-      console.error("Failed to resend verification email:", err);
       throw err;
     }
   }

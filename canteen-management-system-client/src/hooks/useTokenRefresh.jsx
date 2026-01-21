@@ -39,20 +39,16 @@ const useTokenRefresh = () => {
         const refreshBuffer = 60000; // 1 minute
         const refreshIn = Math.max(0, timeUntilExpiry - refreshBuffer);
 
-        console.log(`Token expires in ${Math.round(timeUntilExpiry / 1000)}s. Scheduling refresh in ${Math.round(refreshIn / 1000)}s`);
-
         // Schedule the refresh
         timeoutRef.current = setTimeout(async () => {
           try {
-            console.log("Automatically refreshing token...");
             await refresh();
-            console.log("Token refreshed successfully");
           } catch (error) {
-            console.error("Automatic token refresh failed:", error);
+            // Token refresh failed silently
           }
         }, refreshIn);
       } catch (error) {
-        console.error("Failed to decode token for auto-refresh:", error);
+        // Failed to decode token
       }
     };
 
