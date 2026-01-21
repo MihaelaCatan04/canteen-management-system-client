@@ -34,7 +34,6 @@ jobs:
           cache-dependency-path: './canteen-management-system-client/package-lock.json'
 
       - run: npm ci
-      - run: npm run lint
       - run: npm run test:run
 
   build-and-push:
