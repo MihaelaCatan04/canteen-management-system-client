@@ -42,12 +42,12 @@ const PersistentLogIn = () => {
                 }));
               }
             } catch (profileErr) {
-              console.error("Failed to fetch user profile:", profileErr);
+              // Failed to fetch user profile
             }
           }
         }
       } catch (err) {
-        console.error("Token refresh failed:", err);
+        // Token refresh failed
       } finally {
         if (isMounted) {
           setIsLoading(false);

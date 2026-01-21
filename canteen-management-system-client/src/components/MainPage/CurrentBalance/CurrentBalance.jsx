@@ -22,7 +22,6 @@ const CurrentBalance = () => {
 
     const getBalance = async () => {
       if (!auth?.user_id) {
-        console.log("No user_id found");
         setLoading(false);
         return;
       }
@@ -38,7 +37,6 @@ const CurrentBalance = () => {
         }
       } catch (err) {
         if (isMounted) {
-          console.error("Error fetching balance:", err);
           setError(err.message);
         }
       } finally {

@@ -7,7 +7,6 @@ export class MFAService {
       const data = await httpService.privatePost(API_ENDPOINTS.MFA.SETUP_START);
       return data; 
     } catch (error) {
-      console.error("Error starting MFA setup:", error);
       throw error;
     }
   }
@@ -18,10 +17,8 @@ export class MFAService {
         API_ENDPOINTS.MFA.SETUP_CONFIRM,
         { code }
       );
-      console.log("MFA confirmation response:", data);
       return data; 
     } catch (error) {
-      console.error("Error confirming MFA setup:", error);
       throw error;
     }
   }
@@ -34,7 +31,6 @@ export class MFAService {
       });
       return data; 
     } catch (error) {
-      console.error("Error verifying MFA:", error);
       throw error;
     }
   }
@@ -46,7 +42,6 @@ export class MFAService {
       });
       return data;
     } catch (error) {
-      console.error("Error disabling MFA:", error);
       throw error;
     }
   }
@@ -59,7 +54,6 @@ export class MFAService {
       );
       return data; 
     } catch (error) {
-      console.error("Error regenerating backup codes:", error);
       throw error;
     }
   }

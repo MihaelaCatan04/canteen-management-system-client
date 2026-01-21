@@ -47,14 +47,7 @@ class HealthCheckService {
    * @returns {Promise<Object>} Health check result
    */
   async performStartupCheck() {
-    console.log('🏥 Performing startup health check...');
     const result = await this.checkAPIHealth();
-
-    if (result.healthy) {
-      console.log('✅ API health check passed');
-    } else {
-      console.warn('⚠️ API health check failed:', result.message);
-    }
 
     return result;
   }

@@ -36,7 +36,6 @@ const TopUpReturnPage = () => {
           setStatus("pending");
         }
       } catch (err) {
-        console.error("Error checking session status:", err);
         setStatus("error");
         setError(err.message || "Failed to verify payment status");
       }

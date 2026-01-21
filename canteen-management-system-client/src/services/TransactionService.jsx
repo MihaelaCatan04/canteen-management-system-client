@@ -7,7 +7,6 @@ export class TransactionService {
       const data = await httpService.privateGet(API_ENDPOINTS.TRANSACTIONS.LIST);
       return data;
     } catch (err) {
-      console.error("Error fetching transactions:", err);
       throw err;
     }
   }

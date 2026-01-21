@@ -22,7 +22,6 @@ export const useMenus = (selectedDate, selectedTimeSlot, weekIndex) => {
         const data = await menusService.getMenus(weekIndex);
         setRawData(data);
       } catch (err) {
-        console.error("Error fetching menus:", err);
         setError(err.message);
         setRawData(null);
       } finally {
@@ -62,7 +61,6 @@ export const useMenus = (selectedDate, selectedTimeSlot, weekIndex) => {
 
         setMenuItems(filteredData);
       } catch (err) {
-        console.error("Error filtering menus:", err);
         setError(err.message);
         setMenuItems(null);
       }
@@ -81,7 +79,6 @@ export const useMenus = (selectedDate, selectedTimeSlot, weekIndex) => {
       const data = await menusService.getMenus(weekIndex);
       setRawData(data);
     } catch (err) {
-      console.error("Error refetching menus:", err);
       setError(err.message);
     } finally {
       setLoading(false);

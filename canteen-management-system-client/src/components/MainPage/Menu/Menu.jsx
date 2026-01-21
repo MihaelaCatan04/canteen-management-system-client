@@ -116,7 +116,7 @@ const Menu = ({
           const profile = await httpService.privateGet(API_ENDPOINTS.USER.PROFILE);
           email = profile?.email || email;
         } catch (err) {
-          console.warn("Could not fetch profile to get email for resend", err);
+          // Could not fetch profile
         }
       }
 
@@ -128,7 +128,6 @@ const Menu = ({
       await authService.resendVerification(email);
       message.success("Verification email sent (if the address exists).");
     } catch (err) {
-      console.error("Resend verification failed", err);
       message.error("Failed to send verification email. Try again later.");
     }
   };

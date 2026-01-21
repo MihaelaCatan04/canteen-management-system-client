@@ -22,7 +22,6 @@ const MicrosoftLoginButton = ({ disabled = false, text = "Sign in with Microsoft
         setIsLoading(false);
       }
     } catch (err) {
-      console.error("Failed to initiate Microsoft login:", err);
       setError(err.message || "Failed to initiate Microsoft login");
       setIsLoading(false);
     }

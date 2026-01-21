@@ -79,7 +79,7 @@ const NavBar = () => {
     try {
       await getUserData();
     } catch (err) {
-      console.error("Failed to refresh user data after MFA setup:", err);
+      // Failed to refresh user data
     }
   };
 
@@ -90,7 +90,7 @@ const NavBar = () => {
     try {
       await getUserData();
     } catch (err) {
-      console.error("Failed to refresh user data after MFA disable:", err);
+      // Failed to refresh user data
     }
   };
 
@@ -108,7 +108,6 @@ const NavBar = () => {
       setAuth({});
       navigate("/login", { replace: true });
     } catch (error) {
-      console.error("Logout error:", error);
       setAuth({});
       navigate("/login", { replace: true });
     } finally {
@@ -121,8 +120,6 @@ const NavBar = () => {
       const response = await axiosPrivate.get(API_ENDPOINTS.USER.PROFILE, {
         withCredentials: true,
       });
-      console.log("User data from backend:", response.data);
-      console.log("MFA enabled status:", response?.data.mfa_enabled);
 
       setName(response?.data.first_name);
       setSurname(response?.data.last_name);
@@ -130,7 +127,6 @@ const NavBar = () => {
 
       return response.data;
     } catch (err) {
-      console.error("Error fetching user data:", err);
       if (err.response?.status === 401) {
         navigate("/login", { state: { from: location }, replace: true });
       }
@@ -149,16 +145,12 @@ const NavBar = () => {
           withCredentials: true,
         });
         if (isMounted) {
-          console.log("Initial user data from backend:", response.data);
-          console.log("Initial MFA enabled status:", response?.data.mfa_enabled);
-
           setName(response?.data.first_name);
           setSurname(response?.data.last_name);
           setMfaEnabled(!!response?.data.mfa_enabled);
         }
       } catch (err) {
         if (err.name !== "CanceledError") {
-          console.error("Error fetching user name:", err);
           navigate("/login", { state: { from: location }, replace: true });
         }
       }

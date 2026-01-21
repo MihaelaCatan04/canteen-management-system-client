@@ -17,7 +17,6 @@ const OrderHistoryPage = () => {
         if (!mounted) return;
         setOrders(data?.results);
       } catch (e) {
-        console.error("Failed to load orders:", e);
         if (!mounted) return;
         setOrders(sampleOrders);
       } finally {

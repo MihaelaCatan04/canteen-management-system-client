@@ -71,7 +71,6 @@ const TransactionHistoryPage = () => {
         const list = rawList.map(mapApiTransaction);
         setTransactions(list);
       } catch (err) {
-        console.error("Failed to load transactions:", err);
         if (!mounted) return;
         setTransactions([]);
       } finally {

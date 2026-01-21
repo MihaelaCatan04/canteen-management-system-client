@@ -47,7 +47,6 @@ const AddBalanceForm = () => {
         message.error("Failed to create checkout session");
       }
     } catch (error) {
-      console.error("Error creating checkout session:", error);
       message.error(error.response?.data?.error || "Failed to create checkout session. Please try again.");
     } finally {
       setLoading(false);
@@ -55,7 +54,6 @@ const AddBalanceForm = () => {
   };
 
   const onFinishFailed = (err) => {
-    console.error(err);
     message.error("Please enter a valid amount.");
   };
 

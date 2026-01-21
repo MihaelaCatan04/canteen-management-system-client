@@ -8,7 +8,6 @@ export class WalletsService {
       const data = await httpService.privateGet(API_ENDPOINTS.WALLETS.BALANCE);
       return data;
     } catch (error) {
-      console.error("Error fetching wallet balance:", error);
       throw error;
     }
   }
@@ -21,7 +20,6 @@ export class WalletsService {
       );
       return data;
     } catch (error) {
-      console.error("Error creating checkout session:", error);
       throw error;
     }
   }
@@ -33,7 +31,6 @@ export class WalletsService {
       );
       return data;
     } catch (error) {
-      console.error("Error fetching session status:", error);
       throw error;
     }
   }

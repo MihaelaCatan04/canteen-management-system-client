@@ -90,8 +90,6 @@ export class HttpService {
       data: error.response?.data,
     };
 
-    console.error("HTTP Error:", errorInfo);
-
     const err = new Error(message);
     err.status = error.response?.status;
     err.data = error.response?.data;

@@ -39,7 +39,6 @@ const MicrosoftCallback = () => {
 
         // Handle error from Microsoft or backend
         if (errorParam) {
-          console.error("Microsoft auth error:", errorParam, errorDescription);
           setStatus("error");
           setMessage(errorDescription || errorParam || "Authentication failed");
           setTimeout(() => {
@@ -72,7 +71,6 @@ const MicrosoftCallback = () => {
           navigate("/login", { replace: true });
         }, 3000);
       } catch (err) {
-        console.error("Failed to process Microsoft callback:", err);
         setStatus("error");
         setMessage(err.message || "Failed to complete Microsoft login");
         setTimeout(() => {
