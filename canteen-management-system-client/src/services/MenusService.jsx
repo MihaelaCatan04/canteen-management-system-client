@@ -1,5 +1,6 @@
 import { httpService } from "./HttpService";
 import { API_ENDPOINTS } from "../api/API_ENDPOINTS";
+import { parseServerDate } from "../utils/timezoneOffset";
 
 export class MenusService {
   async getMenus(offset = 0) {
@@ -63,7 +64,7 @@ export class MenusService {
 
     const selectedDateStr = this.formatDateToString(selectedDate);
     const filteredResults = menuData.results.filter((menu) => {
-      const startTime = new Date(menu.start_time);
+      const startTime = parseServerDate(menu.start_time);
       const menuDateStr = this.formatDateToString(startTime);
       const isCorrectDate = menuDateStr === selectedDateStr;
       
@@ -89,14 +90,14 @@ export class MenusService {
       : selectedTimeSlot.timeValue || selectedTimeSlot;
 
     menuData.results.forEach(menu => {
-      const startTime = new Date(menu.start_time);
-      const endTime = new Date(menu.end_time);
+      const startTime = parseServerDate(menu.start_time);
+      const endTime = parseServerDate(menu.end_time);
       const menuDateStr = this.formatDateToString(startTime);
     });
 
     const filteredResults = menuData.results.filter((menu) => {
-      const startTime = new Date(menu.start_time);
-      const endTime = new Date(menu.end_time);
+      const startTime = parseServerDate(menu.start_time);
+      const endTime = parseServerDate(menu.end_time);
       
       const menuDateStr = this.formatDateToString(startTime);
       const isCorrectDate = menuDateStr === selectedDateStr;
