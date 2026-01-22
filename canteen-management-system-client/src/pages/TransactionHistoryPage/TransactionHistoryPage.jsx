@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import MainPageLayout from "../../layouts/MainPage/MainPage";
 import TransactionHistoryCardContainer from "../../components/TransactionHistoryPage/TransactionHistoryCardContainer/TransactionHistoryCardContainer";
 import { transactionService } from "../../services/TransactionService";
+import { parseServerDate } from "../../utils/timezoneOffset";
 
 const MONTHS_SHORT = [
   "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
@@ -26,7 +27,7 @@ const mapApiTransaction = (tx) => {
   const signed = "signed_amount" in tx ? parseNumber(tx.signed_amount) : (parseNumber(tx.amount) * (tx.type === "refund" ? 1 : -1));
   const remaining = parseNumber(tx.remaining_balance);
 
-  const d = tx.created_at ? new Date(tx.created_at) : null;
+  const d = tx.created_at ? parseServerDate(tx.created_at) : null;
   const dateStr = d
     ? `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
     : "";

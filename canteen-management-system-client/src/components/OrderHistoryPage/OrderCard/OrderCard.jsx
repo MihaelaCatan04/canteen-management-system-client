@@ -1,5 +1,6 @@
 import "./OrderCard.css";
 import { Card, Button } from "antd";
+import { parseServerDate } from "../../../utils/timezoneOffset";
 
 const MONTHS = [
   "January","February","March","April","May","June",
@@ -18,7 +19,7 @@ const statusStyles = {
 
 const formatReservation = (reservation_time) => {
   if (!reservation_time) return { date: "", time: "" };
-  const d = new Date(reservation_time);
+  const d = parseServerDate(reservation_time);
   const date = `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 
   const pad = (n) => String(n).padStart(2, "0");
