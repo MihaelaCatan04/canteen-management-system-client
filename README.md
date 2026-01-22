@@ -2,23 +2,6 @@
 
 A modern React-based web application for managing canteen orders, payments, and user accounts.
 
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Configuration](#configuration)
-- [Running the Application](#running-the-application)
-- [Testing](#testing)
-- [Building for Production](#building-for-production)
-- [Docker Deployment](#docker-deployment)
-- [Project Structure](#project-structure)
-- [Security Features](#security-features)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Default Credentials (Academic Purposes)](#default-credentials-academic-purposes)
-- [Troubleshooting](#troubleshooting)
-
 ## Features
 
 - **User Authentication**: Secure login/registration with JWT tokens
@@ -75,7 +58,6 @@ Copy the example environment file and update with your values:
 # Copy the example file
 cp .env.example .env.local
 
-# Edit .env.local with your actual values
 ```
 
 ### 4. Run the Development Server
@@ -109,10 +91,7 @@ VITE_APP_ENV=development
 
 ### Environment Files
 
-- `.env.example` - Template with all variables (commit to git)
-- `.env.development` - Development defaults (commit to git for academic purposes)
-- `.env.production` - Production defaults (commit to git for academic purposes)
-- `.env.local` - Local overrides (DO NOT commit, automatically ignored)
+- `.env.example` - Template with all variables 
 
 ## 🏃 Running the Application
 
@@ -120,17 +99,6 @@ VITE_APP_ENV=development
 
 ```bash
 npm run dev
-```
-
-- Runs on `http://localhost:8080`
-- Hot module replacement enabled
-- Development error messages
-
-### Preview Production Build
-
-```bash
-npm run build
-npm run preview
 ```
 
 ## Testing
@@ -156,9 +124,9 @@ npm run coverage
 Current test coverage:
 - Error pages (Page404, Page403)
 - Authentication components (RequireAuth)
-- API configuration
-- Error boundaries (planned)
-- Health check service (planned)
+- API configuration (API_ENDPOINTS)
+- Error boundaries (ErrorBoundary)
+- Health check service (HealthCheckService)
 
 ## Building for Production
 
@@ -169,12 +137,6 @@ npm run build
 ```
 
 This creates an optimized production build in the `dist/` directory.
-
-### Build with Custom API URL
-
-```bash
-VITE_API_BASE_URL=https://api.production.com npm run build
-```
 
 ## Docker Deployment
 
@@ -234,16 +196,15 @@ canteen-management-system-client/
 │   └── index.css              # Global styles
 ├── .github/
 │   └── workflows/
-│       └── ci.yml             # CI/CD pipeline configuration (planned)
-├── .env.example               # Environment template (planned)
-├── .env.development           # Development config (planned)
-├── .env.production            # Production config (planned)
+│       ├── ci.yml             # Continuous integration workflow
+│       └── cd.yml             # Continuous deployment workflow
+├── .env.example               # Environment template
 ├── .gitignore                 # Git ignore rules
 ├── Dockerfile                 # Docker configuration
 ├── docker-compose.yml         # Docker Compose setup
 ├── package.json               # Dependencies and scripts
 ├── vite.config.js             # Vite configuration
-├── vitest.config.js           # Vitest test configuration (planned)
+├── vitest.config.js           # Vitest test configuration
 └── README.md                  # This file
 ```
 
@@ -281,9 +242,9 @@ canteen-management-system-client/
    - Meaningful user-friendly error pages
 
 7. **Environment Configuration**
-   - No hardcoded secrets (planned)
-   - Environment-based configuration (planned)
-   - Separate dev/prod settings (planned)
+   - No hardcoded secrets
+   - Environment-based configuration
+   - Separate dev/prod settings
 
 ### Risk Mitigation
 
@@ -294,10 +255,11 @@ canteen-management-system-client/
 
 ## CI/CD Pipeline
 
-### GitHub Actions Workflow (Planned)
+### GitHub Actions Workflows
 
-The project will include an automated CI/CD pipeline that:
+The project includes automated CI/CD pipelines:
 
+#### Continuous Integration (ci.yml)
 1. **Runs on**: Push to `main`, `develop`, or `feature/*` branches, and pull requests
 2. **Build Matrix**: Tests on Node.js 18.x and 20.x
 3. **Pipeline Steps**:
@@ -310,120 +272,8 @@ The project will include an automated CI/CD pipeline that:
    - Upload production artifacts
    - Run security audit
 
-### Running CI/CD Locally
-
-```bash
-# Simulate CI/CD pipeline locally
-npm ci
-npm run lint
-npm run test:run
-npm run build
-```
-
-## Default Credentials (Academic Purposes)
-
-** FOR DEMONSTRATION/TESTING ONLY - NOT FOR PRODUCTION USE**
-
-### Test Accounts
-
-These credentials are for academic evaluation purposes:
-
-```
-Student Account:
-Email: student@test.com
-Password: Test123!
-
-Staff Account:
-Email: staff@test.com
-Password: Test123!
-
-Admin Account:
-Email: admin@test.com
-Password: Test123!
-```
-
-### Payment Testing (Stripe Test Mode)
-
-```
-Card Number: 4242 4242 4242 4242
-Expiry: Any future date (e.g., 12/25)
-CVC: Any 3 digits (e.g., 123)
-ZIP: Any 5 digits (e.g., 12345)
-```
-
-**Note**: These accounts must be created in your backend database. Stripe test mode is enabled by default for development.
-
-## Troubleshooting
-
-### Common Issues
-
-#### Application Won't Start
-
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-npm run dev
-```
-
-#### API Connection Error
-
-- Ensure backend is running on the configured `VITE_API_BASE_URL`
-- Check `.env.local` for correct API URL
-- Verify CORS is enabled on the backend
-- Check browser console for specific error messages
-
-#### Tests Failing
-
-```bash
-# Clear test cache
-npm run test:run -- --clearCache
-
-# Run specific test file
-npm test -- Page404.test.jsx
-```
-
-#### Build Errors
-
-```bash
-# Check for TypeScript/ESLint errors
-npm run lint
-
-# Clean build
-rm -rf dist
-npm run build
-```
-
-#### Stripe Not Working
-
-- Verify `VITE_STRIPE_PUBLISHABLE_KEY` is set in `.env.local`
-- Ensure using test mode key (`pk_test_...`)
-- Check browser console for Stripe errors
-- Confirm backend Stripe webhook is configured
-
-### Getting Help
-
-- Check browser DevTools console for errors
-- Review GitHub Actions logs for CI/CD issues
-- Check backend API logs for server errors
-- Verify all environment variables are set correctly
-
-## Additional Documentation
-
-- [Stripe Integration Guide](../../STRIPE_INTEGRATION_GUIDE.md)
-- [Security Portfolio](../../Security_Portfolio/)
-- [Backend Documentation](../../canteen-management-system-server/README.md)
-
-## Contributing
-
-1. Create a feature branch (`git checkout -b feature/amazing-feature`)
-2. Make your changes
-3. Write/update tests
-4. Ensure tests pass (`npm run test:run`)
-5. Ensure lint passes (`npm run lint`)
-6. Commit with meaningful message (`git commit -m 'feat: add amazing feature'`)
-7. Push to branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
+#### Continuous Deployment (cd.yml)
+- Automated deployment pipeline for production releases
 
 ## License
 
