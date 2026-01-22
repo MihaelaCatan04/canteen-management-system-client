@@ -19,7 +19,8 @@ const Menu = ({
   error,
   openPopup,
   onRefresh,
-  selectedSlot
+  selectedSlot,
+  onBalanceRefresh
 }) => {
   const [items, setItems] = useState(null);
   const imageMap = {
@@ -424,6 +425,7 @@ const Menu = ({
             handleRemoveItem(menuIndex, categoryIndex, itemIndex)
           }
           openPopup={openPopup}
+          onBalanceRefresh={onBalanceRefresh}
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Row, Col } from "antd";
 
@@ -19,6 +19,7 @@ const MainPage = () => {
   const [weekIndex, setWeekIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [orderData, setOrderData] = useState(null);
+  const balanceRef = useRef();
   
   const navigate = useNavigate();
 
@@ -80,7 +81,7 @@ const MainPage = () => {
         gutter={[16, 16]}
         style={{ marginBottom: "20px", alignItems: "stretch" }}
       >
-        {isVerifiedUser && <CurrentBalance />}
+        {isVerifiedUser && <CurrentBalance ref={balanceRef} />}
         {isVerifiedUser && (
           <Col xs={24} sm={8} md={8} style={{ display: "flex" }}>
             <OrderHistory onClick={handleOrderHistoryClick} />
@@ -109,6 +110,7 @@ const MainPage = () => {
         menuItems={menuItems}
         openPopup={openPopup}
         onRefresh={refetch}
+        onBalanceRefresh={() => balanceRef.current?.refetch()}
       />
       
       <PopUpOrder

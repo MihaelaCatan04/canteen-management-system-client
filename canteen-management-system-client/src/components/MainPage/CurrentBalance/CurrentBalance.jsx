@@ -1,14 +1,14 @@
 import { Card, Col, Typography, Button, Tooltip, message } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 import "./CurrentBalance.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { walletsService } from "../../../services/WalletsService";
 
 const { Title, Text } = Typography;
 
-const CurrentBalance = () => {
+const CurrentBalance = forwardRef((props, ref) => {
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,42 +16,31 @@ const CurrentBalance = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const getBalance = async () => {
+    if (!auth?.user_id) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await walletsService.getBalance();
+      setBalance(data.available_balance || 0);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    refetch: getBalance
+  }));
+
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    const getBalance = async () => {
-      if (!auth?.user_id) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError(null);
-
-        const data = await walletsService.getBalance();
-
-        if (isMounted) {
-          setBalance(data.available_balance || 0);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err.message);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
     getBalance();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
   }, [auth?.user_id, navigate, location]);
 
   if (loading) {
@@ -208,6 +197,8 @@ const CurrentBalance = () => {
       </Card>
     </Col>
   );
-};
+});
+
+CurrentBalance.displayName = 'CurrentBalance';
 
 export default CurrentBalance;
