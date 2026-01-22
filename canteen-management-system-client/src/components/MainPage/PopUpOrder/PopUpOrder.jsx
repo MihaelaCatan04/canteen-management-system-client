@@ -2,6 +2,7 @@ import React from "react";
 import { createPortal } from "react-dom";
 import "./PopUpOrder.css";
 import { Card, Row, Col, Button } from "antd";
+import { parseServerDate } from "../../../utils/timezoneOffset";
 
 
 const MONTHS = [
@@ -70,7 +71,7 @@ const PopUpOrder = (props) => {
             <strong className="poppins-bold">Pick-up Time:</strong>
             <div style={{ marginTop: 6 }}>
               {orderToShow?.reservation_time
-                ? new Date(orderToShow.reservation_time).toLocaleString()
+                ? parseServerDate(orderToShow.reservation_time).toLocaleString()
                 : selectedDate
                 ? `${MONTHS[new Date(selectedDate).getMonth()]} ${new Date(
                     selectedDate
