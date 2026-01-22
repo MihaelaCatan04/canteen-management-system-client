@@ -32,6 +32,7 @@ const OrderTotal = ({
   handleRemoveItem,
   openPopup,
   onResetSelections,
+  onBalanceRefresh,
 }) => {
   const items = Array.isArray(selectedItems) ? selectedItems : [];
   const [errorMessage, setErrorMessage] = useState(null);
@@ -109,6 +110,11 @@ const OrderTotal = ({
       if (typeof onResetSelections === "function") {
         try {
           onResetSelections();
+        } catch (e) {}
+      }
+      if (typeof onBalanceRefresh === "function") {
+        try {
+          onBalanceRefresh();
         } catch (e) {}
       }
       if (typeof openPopup === "function") {
