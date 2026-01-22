@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Card, Button, Row, Col, Typography, Divider, Space } from "antd";
+import { Card, Button, Row, Col, Typography, Divider, Space, Tooltip } from "antd";
 import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
 import "./OrderTotal.css";
 import { orderService } from "../../../services/OrderService.jsx";
+import useHealthCheck from "../../../hooks/useHealthCheck.jsx";
 
 const { Title, Text } = Typography;
 
@@ -35,6 +36,7 @@ const OrderTotal = ({
   const items = Array.isArray(selectedItems) ? selectedItems : [];
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isHealthy = useHealthCheck();
   const placeOrder = async () => {
     try {
       setErrorMessage(null);
@@ -483,23 +485,25 @@ const OrderTotal = ({
                 {errorMessage}
               </div>
             )}
-            <Button
-              type="primary"
-              block
-              disabled={isSubmitting}
-              className="confirm-order-btn"
-              style={{
-                backgroundColor: "#3b82f6",
-                borderColor: "#3b82f6",
-                fontFamily: "Poppins",
-                fontWeight: "500",
-                fontStyle: "normal",
-                height: "40px",
-              }}
-              onClick={placeOrder}
-            >
-              {isSubmitting ? "Placing order..." : "Confirm Order"}
-            </Button>
+            <Tooltip title={!isHealthy ? "Service temporarily unavailable" : ""}>
+              <Button
+                type="primary"
+                block
+                disabled={isSubmitting || !isHealthy}
+                className="confirm-order-btn"
+                style={{
+                  backgroundColor: "#3b82f6",
+                  borderColor: "#3b82f6",
+                  fontFamily: "Poppins",
+                  fontWeight: "500",
+                  fontStyle: "normal",
+                  height: "40px",
+                }}
+                onClick={placeOrder}
+              >
+                {isSubmitting ? "Placing order..." : "Confirm Order"}
+              </Button>
+            </Tooltip>
           </Col>
         </Row>
       </div>
