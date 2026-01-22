@@ -5,6 +5,11 @@ import { Card } from "antd";
 
 const { Title, Text } = Typography;
 
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 const TimeSlots = ({
   selectedDate: propSelectedDate,
   selectedTimeSlot: propSelectedTimeSlot,
@@ -50,7 +55,7 @@ const TimeSlots = ({
           >
             {`Available Time Slots - ${
               propSelectedDate instanceof Date
-                ? `September ${propSelectedDate.getDate()}, ${propSelectedDate.getFullYear()}`
+                ? `${MONTHS[propSelectedDate.getMonth()]} ${propSelectedDate.getDate()}, ${propSelectedDate.getFullYear()}`
                 : "No Date Selected"
             }`}
           </Title>
