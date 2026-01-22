@@ -27,7 +27,7 @@ function ConnectionBanner() {
       <div className="connection-banner-content">
         <span className="connection-banner-icon">⚠️</span>
         <span className="connection-banner-text">
-          Service temporarily unavailable. Please check your connection.
+          Service temporarily unavailable.
         </span>
       </div>
     </div>
