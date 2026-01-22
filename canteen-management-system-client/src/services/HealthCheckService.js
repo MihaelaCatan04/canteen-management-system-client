@@ -14,7 +14,7 @@ class HealthCheckService {
    */
   async checkAPIHealth() {
     try {
-      const response = await axios.get(`${config.API_BASE_URL}/api/health/`, {
+      const response = await axios.get(`${config.API_BASE_URL}/health`, {
         timeout: 5000,
         validateStatus: (status) => status < 500
       });

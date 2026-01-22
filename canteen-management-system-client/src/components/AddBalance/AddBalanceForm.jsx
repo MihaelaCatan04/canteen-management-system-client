@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Card, Form, InputNumber, Button, Typography, Divider, Row, Col, message, Spin } from "antd";
+import { Card, Form, InputNumber, Button, Typography, Divider, Row, Col, message, Spin, Tooltip } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { walletsService } from "../../services/WalletsService";
 import config from "../../config/env";
+import useHealthCheck from "../../hooks/useHealthCheck.jsx";
 
 const { Title, Text } = Typography;
 
@@ -18,6 +19,7 @@ const AddBalanceForm = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const isHealthy = useHealthCheck();
 
   const onFinish = async (values) => {
     try {
@@ -151,20 +153,23 @@ const AddBalanceForm = () => {
             >
               Cancel
             </Button>
-            <Button
-              type="primary"
-              htmlType="submit"
-              icon={loading ? <Spin size="small" /> : <PlusCircleOutlined />}
-              loading={loading}
-              style={{
-                height: 48,
-                borderRadius: "0.5rem",
-                padding: "0 24px",
-                fontWeight: 600,
-              }}
-            >
-              Continue to Payment
-            </Button>
+            <Tooltip title={!isHealthy ? "Service temporarily unavailable" : ""}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                icon={loading ? <Spin size="small" /> : <PlusCircleOutlined />}
+                loading={loading}
+                disabled={!isHealthy}
+                style={{
+                  height: 48,
+                  borderRadius: "0.5rem",
+                  padding: "0 24px",
+                  fontWeight: 600,
+                }}
+              >
+                Continue to Payment
+              </Button>
+            </Tooltip>
           </div>
         </Form>
         </Card>
