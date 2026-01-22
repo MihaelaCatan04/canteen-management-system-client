@@ -19,6 +19,7 @@ import VerifyEmail from "./pages/VerifyEmail/VerifyEmail.jsx";
 import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword/ResetPassword.jsx";
+import ConnectionBanner from "./components/ConnectionBanner/ConnectionBanner.jsx";
 import "./api/Interceptors";
 const ROLES = {
   Customer: "customer",
@@ -27,9 +28,11 @@ const ROLES = {
 
 function App() {
   return (
-    <Routes>
-      {/* Public routes - with auth check for redirect */}
-      <Route element={<PersistentLogIn />}>
+    <>
+      <ConnectionBanner />
+      <Routes>
+        {/* Public routes - with auth check for redirect */}
+        <Route element={<PersistentLogIn />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LandingPage />} />
         <Route path="/register" element={<LandingPage />} />
@@ -61,7 +64,8 @@ function App() {
       <Route path="/forbidden" element={<Page403 />} />
       <Route path="/429" element={<Page429 />} />
       <Route path="*" element={<Page404 />} />
-    </Routes>
+      </Routes>
+    </>
   );
 }
 export default App;
