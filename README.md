@@ -93,7 +93,7 @@ VITE_APP_ENV=development
 
 - `.env.example` - Template with all variables 
 
-## 🏃 Running the Application
+## Running the Application
 
 ### Development Mode
 
