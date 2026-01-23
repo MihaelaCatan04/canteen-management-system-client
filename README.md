@@ -35,7 +35,7 @@ A modern React-based web application for managing canteen orders, payments, and 
 - **Backend API**: Running on `http://localhost:8000` (or configured URL)
 - **Git**: For version control
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 
@@ -160,7 +160,7 @@ docker-compose up -d
 
 The application will be available at `http://localhost:8080`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 canteen-management-system-client/
